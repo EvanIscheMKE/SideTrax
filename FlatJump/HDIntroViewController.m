@@ -28,18 +28,29 @@
     
     CGRect beginBounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds)/1.65f, CGRectGetMidX(self.view.bounds)/2.25f);
     HDShadowButton *begin = [[HDShadowButton alloc] initWithFrame:beginBounds];
-    begin.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds) + CGRectGetHeight(self.view.bounds)/10);
+    begin.center = CGPointMake(CGRectGetMidX(self.view.bounds),
+                               CGRectGetMidY(self.view.bounds) + CGRectGetHeight(self.view.bounds)/10);
     begin.backgroundColor = [UIColor flatSTRedColor];
+    begin.titleLabel.font = [UIFont fontWithName:@"GillSans" size:CGRectGetHeight(begin.bounds) * .65f];
+    [begin setTitle:@"BEGIN" forState:UIControlStateNormal];
     [begin addTarget:[HDAppDelegate sharedDelegate]
               action:@selector(presentGameViewController)
     forControlEvents:UIControlEventTouchUpInside];
     
-    CGRect leaderboardBounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds)/1.65f, CGRectGetMidX(self.view.bounds)/3.25f);
+    CGRect leaderboardBounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(beginBounds), CGRectGetMidX(self.view.bounds)/3.25f);
     HDShadowButton *leaderboard = [[HDShadowButton alloc] initWithFrame:leaderboardBounds];
+    [leaderboard setTitle:@"LEADERBOARD" forState:UIControlStateNormal];
+    leaderboard.titleLabel.font = [UIFont fontWithName:@"GillSans" size:CGRectGetHeight(leaderboard.bounds) * .45f];
+    leaderboard.center = CGPointMake(CGRectGetMidX(self.view.bounds),
+                                     CGRectGetMaxY(begin.frame) + CGRectGetMidY(leaderboardBounds) + 15.0f);
     leaderboard.backgroundColor = [UIColor flatPeterRiverColor];
-    leaderboard.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMaxY(begin.frame) + CGRectGetMidY(leaderboardBounds) + 15.0f);
+    [leaderboard addTarget:[HDAppDelegate sharedDelegate]
+                    action:@selector(presentLeaderboardViewController:)
+          forControlEvents:UIControlEventTouchUpInside];
     
     for (HDShadowButton *button in @[begin, leaderboard]) {
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        button.titleLabel.textAlignment = NSTextAlignmentCenter;
         [self.view addSubview:button];
     }
     
@@ -50,7 +61,7 @@
     for (NSUInteger i = 0; i < 3; i++) {
         CGRect buttonBounds = CGRectMake(0.0f, 0.0f, buttonSize.width, buttonSize.height);
         HDShadowButton *button = [[HDShadowButton alloc] initWithFrame:buttonBounds];
-        button.center = CGPointMake(kOriginX + (kSeperatorWidth * i), 565.0f);
+        button.center = CGPointMake(kOriginX + (kSeperatorWidth * i), CGRectGetMaxY(leaderboard.frame) + CGRectGetMidX(buttonBounds) + 25.0f);
         [self.view addSubview:button];
         
         switch (i) {

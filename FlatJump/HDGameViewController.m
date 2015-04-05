@@ -28,14 +28,16 @@
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
-    self.gridManager = [[HDGridManager alloc] initWithFileName:@"FilENAME"];
+     self.gridManager = [[HDGridManager alloc] initWithFileName:@"FilENAME"];
     [self.gridManager loadGridWithCallback:^{
         [self _setup];
     }];
 }
 
 - (void)_setup {
+    
     if (!_skView.scene) {
         self.scene = [HDGameScene sceneWithSize:_skView.bounds.size];
         self.scene.gridManager = self.gridManager;

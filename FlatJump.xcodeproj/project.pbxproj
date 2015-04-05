@@ -16,6 +16,7 @@
 		38217C471ACDE9110038156A /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38217C461ACDE9110038156A /* GameKit.framework */; };
 		38217C491ACDE9190038156A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38217C481ACDE9190038156A /* QuartzCore.framework */; };
 		38217C4B1ACDE9240038156A /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38217C4A1ACDE9240038156A /* iAd.framework */; };
+		3862E8E11AD0EFEF00D76B1E /* HDGameCenterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3862E8E01AD0EFEF00D76B1E /* HDGameCenterManager.m */; };
 		389C7D1D1AC5D554005EF91B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D1C1AC5D554005EF91B /* main.m */; };
 		389C7D201AC5D554005EF91B /* HDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D1F1AC5D554005EF91B /* HDAppDelegate.m */; };
 		389C7D231AC5D554005EF91B /* HDGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D221AC5D554005EF91B /* HDGameViewController.m */; };
@@ -68,6 +69,8 @@
 		38217C461ACDE9110038156A /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		38217C481ACDE9190038156A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		38217C4A1ACDE9240038156A /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		3862E8DF1AD0EFEF00D76B1E /* HDGameCenterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDGameCenterManager.h; sourceTree = "<group>"; };
+		3862E8E01AD0EFEF00D76B1E /* HDGameCenterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDGameCenterManager.m; sourceTree = "<group>"; };
 		389C7D171AC5D554005EF91B /* FlatJump.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlatJump.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		389C7D1B1AC5D554005EF91B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		389C7D1C1AC5D554005EF91B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -254,9 +257,9 @@
 			children = (
 				389C7D451AC5D6CA005EF91B /* HDGameScene.h */,
 				389C7D461AC5D6CA005EF91B /* HDGameScene.m */,
-				38B93B3F1ACC9547003A0586 /* Object Nodes */,
 				381D2AA21ACDBAFE009F9F4F /* HDShadowButton.h */,
 				381D2AA31ACDBAFE009F9F4F /* HDShadowButton.m */,
+				38B93B3F1ACC9547003A0586 /* Object Nodes */,
 			);
 			name = Scenes/Nodes;
 			path = FlatJump;
@@ -272,6 +275,8 @@
 				389C7D4A1AC5D869005EF91B /* HDPointsManager.m */,
 				38B93B391ACC869B003A0586 /* HDUpgradeManager.h */,
 				38B93B3A1ACC869B003A0586 /* HDUpgradeManager.m */,
+				3862E8DF1AD0EFEF00D76B1E /* HDGameCenterManager.h */,
+				3862E8E01AD0EFEF00D76B1E /* HDGameCenterManager.m */,
 			);
 			name = Model;
 			path = FlatJump;
@@ -427,6 +432,7 @@
 				389C7D1D1AC5D554005EF91B /* main.m in Sources */,
 				389C7D4B1AC5D869005EF91B /* HDPointsManager.m in Sources */,
 				381D2AA41ACDBAFE009F9F4F /* HDShadowButton.m in Sources */,
+				3862E8E11AD0EFEF00D76B1E /* HDGameCenterManager.m in Sources */,
 				38B93B421ACCBDC7003A0586 /* HDIntroViewController.m in Sources */,
 				389C7D591AC5DB8F005EF91B /* HDObjectNode.m in Sources */,
 				38B93B351ACC5F30003A0586 /* HDKeyNode.m in Sources */,
@@ -536,9 +542,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FlatJump/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -547,9 +555,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FlatJump/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

@@ -59,6 +59,10 @@
     self.content.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.content.bounds));
 }
 
+- (UILabel *)titleLabel {
+    return self.content.titleLabel;
+}
+
 #pragma mark - Override Setters
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
@@ -79,6 +83,10 @@
 
 - (void)setImage:(UIImage *)image forState:(UIControlState)state {
     [self.content setImage:image forState:state];
+}
+
+- (void)setTitleColor:(UIColor *)color forState:(UIControlState)state {
+    [self.content setTitleColor:color forState:state];
 }
 
 - (void)setTitle:(NSString *)title forState:(UIControlState)state {

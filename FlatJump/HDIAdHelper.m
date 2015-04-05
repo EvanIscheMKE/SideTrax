@@ -54,7 +54,8 @@ NSString * const IAPHelperProductPurchasedNotification = @"purchaseNotification"
     
     NSLog(@"Loaded list of products...");
     _productsRequest = nil;
-//#if 0
+    
+#if DEBUG
     NSArray * skProducts = response.products;
     for (SKProduct * skProduct in skProducts) {
         NSLog(@"Found product: %@ %@ %0.2f",
@@ -62,7 +63,8 @@ NSString * const IAPHelperProductPurchasedNotification = @"purchaseNotification"
               skProduct.localizedTitle,
               skProduct.price.floatValue);
     }
-//#endif
+#endif
+    
     _completionHandler(YES, response.products);
     _completionHandler = nil;
 }
