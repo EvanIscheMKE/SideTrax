@@ -1,0 +1,623 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		381D2A9D1ACDB8D6009F9F4F /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2A961ACDB8D6009F9F4F /* NSData+Base64.m */; };
+		381D2A9E1ACDB8D6009F9F4F /* HDIAdHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2A981ACDB8D6009F9F4F /* HDIAdHelper.m */; };
+		381D2A9F1ACDB8D6009F9F4F /* HDJumperIAdHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2A9A1ACDB8D6009F9F4F /* HDJumperIAdHelper.m */; };
+		381D2AA01ACDB8D6009F9F4F /* VerificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2A9C1ACDB8D6009F9F4F /* VerificationController.m */; };
+		381D2AA41ACDBAFE009F9F4F /* HDShadowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2AA31ACDBAFE009F9F4F /* HDShadowButton.m */; };
+		381D2ABF1ACDD94E009F9F4F /* HDCompletionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2ABE1ACDD94E009F9F4F /* HDCompletionViewController.m */; };
+		38217C471ACDE9110038156A /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38217C461ACDE9110038156A /* GameKit.framework */; };
+		38217C491ACDE9190038156A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38217C481ACDE9190038156A /* QuartzCore.framework */; };
+		38217C4B1ACDE9240038156A /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38217C4A1ACDE9240038156A /* iAd.framework */; };
+		389C7D1D1AC5D554005EF91B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D1C1AC5D554005EF91B /* main.m */; };
+		389C7D201AC5D554005EF91B /* HDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D1F1AC5D554005EF91B /* HDAppDelegate.m */; };
+		389C7D231AC5D554005EF91B /* HDGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D221AC5D554005EF91B /* HDGameViewController.m */; };
+		389C7D281AC5D554005EF91B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 389C7D271AC5D554005EF91B /* Images.xcassets */; };
+		389C7D371AC5D554005EF91B /* FlatJumpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D361AC5D554005EF91B /* FlatJumpTests.m */; };
+		389C7D441AC5D67C005EF91B /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389C7D431AC5D67C005EF91B /* SpriteKit.framework */; };
+		389C7D471AC5D6CA005EF91B /* HDGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D461AC5D6CA005EF91B /* HDGameScene.m */; };
+		389C7D4B1AC5D869005EF91B /* HDPointsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D4A1AC5D869005EF91B /* HDPointsManager.m */; };
+		389C7D4F1AC5D8A8005EF91B /* SKColor+HDColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D4E1AC5D8A8005EF91B /* SKColor+HDColor.m */; };
+		389C7D531AC5DAF8005EF91B /* HDPlatformNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D521AC5DAF8005EF91B /* HDPlatformNode.m */; };
+		389C7D591AC5DB8F005EF91B /* HDObjectNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D581AC5DB8F005EF91B /* HDObjectNode.m */; };
+		389C7D5E1AC5E026005EF91B /* UIColor+FlatColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D5D1AC5E026005EF91B /* UIColor+FlatColors.m */; };
+		389C7D601AC5EF56005EF91B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389C7D5F1AC5EF56005EF91B /* CoreMotion.framework */; };
+		389C7D641AC5F37D005EF91B /* Assets.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 389C7D631AC5F37D005EF91B /* Assets.atlas */; };
+		389C7D6E1AC63AA9005EF91B /* Base-1.json in Resources */ = {isa = PBXBuildFile; fileRef = 389C7D6D1AC63AA9005EF91B /* Base-1.json */; };
+		389C7D711AC642F4005EF91B /* HDGridManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D701AC642F4005EF91B /* HDGridManager.m */; };
+		389C7D741AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D731AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m */; };
+		389C7D771AC71113005EF91B /* Boost.sks in Resources */ = {isa = PBXBuildFile; fileRef = 389C7D751AC71113005EF91B /* Boost.sks */; };
+		389C7D781AC71113005EF91B /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 389C7D761AC71113005EF91B /* spark.png */; };
+		38B93B261AC8E7BD003A0586 /* HDBombNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B93B251AC8E7BD003A0586 /* HDBombNode.m */; };
+		38B93B321AC9C75A003A0586 /* HDSaveNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B93B311AC9C75A003A0586 /* HDSaveNode.m */; };
+		38B93B351ACC5F30003A0586 /* HDKeyNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B93B341ACC5F30003A0586 /* HDKeyNode.m */; };
+		38B93B3B1ACC869B003A0586 /* HDUpgradeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B93B3A1ACC869B003A0586 /* HDUpgradeManager.m */; };
+		38B93B421ACCBDC7003A0586 /* HDIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B93B411ACCBDC7003A0586 /* HDIntroViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		389C7D311AC5D554005EF91B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 389C7D0F1AC5D554005EF91B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 389C7D161AC5D554005EF91B;
+			remoteInfo = FlatJump;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		381D2A951ACDB8C9009F9F4F /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		381D2A961ACDB8D6009F9F4F /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		381D2A971ACDB8D6009F9F4F /* HDIAdHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDIAdHelper.h; sourceTree = "<group>"; };
+		381D2A981ACDB8D6009F9F4F /* HDIAdHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDIAdHelper.m; sourceTree = "<group>"; };
+		381D2A991ACDB8D6009F9F4F /* HDJumperIAdHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDJumperIAdHelper.h; sourceTree = "<group>"; };
+		381D2A9A1ACDB8D6009F9F4F /* HDJumperIAdHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDJumperIAdHelper.m; sourceTree = "<group>"; };
+		381D2A9B1ACDB8D6009F9F4F /* VerificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerificationController.h; sourceTree = "<group>"; };
+		381D2A9C1ACDB8D6009F9F4F /* VerificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerificationController.m; sourceTree = "<group>"; };
+		381D2AA21ACDBAFE009F9F4F /* HDShadowButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDShadowButton.h; sourceTree = "<group>"; };
+		381D2AA31ACDBAFE009F9F4F /* HDShadowButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDShadowButton.m; sourceTree = "<group>"; };
+		381D2ABD1ACDD94E009F9F4F /* HDCompletionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDCompletionViewController.h; sourceTree = "<group>"; };
+		381D2ABE1ACDD94E009F9F4F /* HDCompletionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDCompletionViewController.m; sourceTree = "<group>"; };
+		38217C461ACDE9110038156A /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		38217C481ACDE9190038156A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		38217C4A1ACDE9240038156A /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		389C7D171AC5D554005EF91B /* FlatJump.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlatJump.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		389C7D1B1AC5D554005EF91B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		389C7D1C1AC5D554005EF91B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		389C7D1E1AC5D554005EF91B /* HDAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HDAppDelegate.h; path = FlatJump/HDAppDelegate.h; sourceTree = "<group>"; };
+		389C7D1F1AC5D554005EF91B /* HDAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HDAppDelegate.m; path = FlatJump/HDAppDelegate.m; sourceTree = "<group>"; };
+		389C7D211AC5D554005EF91B /* HDGameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HDGameViewController.h; sourceTree = "<group>"; };
+		389C7D221AC5D554005EF91B /* HDGameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HDGameViewController.m; sourceTree = "<group>"; };
+		389C7D271AC5D554005EF91B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		389C7D301AC5D554005EF91B /* FlatJumpTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlatJumpTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		389C7D351AC5D554005EF91B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		389C7D361AC5D554005EF91B /* FlatJumpTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlatJumpTests.m; sourceTree = "<group>"; };
+		389C7D431AC5D67C005EF91B /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		389C7D451AC5D6CA005EF91B /* HDGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDGameScene.h; sourceTree = "<group>"; };
+		389C7D461AC5D6CA005EF91B /* HDGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDGameScene.m; sourceTree = "<group>"; };
+		389C7D491AC5D869005EF91B /* HDPointsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDPointsManager.h; sourceTree = "<group>"; };
+		389C7D4A1AC5D869005EF91B /* HDPointsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDPointsManager.m; sourceTree = "<group>"; };
+		389C7D4D1AC5D8A8005EF91B /* SKColor+HDColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKColor+HDColor.h"; sourceTree = "<group>"; };
+		389C7D4E1AC5D8A8005EF91B /* SKColor+HDColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKColor+HDColor.m"; sourceTree = "<group>"; };
+		389C7D511AC5DAF8005EF91B /* HDPlatformNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDPlatformNode.h; sourceTree = "<group>"; };
+		389C7D521AC5DAF8005EF91B /* HDPlatformNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDPlatformNode.m; sourceTree = "<group>"; };
+		389C7D571AC5DB8F005EF91B /* HDObjectNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDObjectNode.h; sourceTree = "<group>"; };
+		389C7D581AC5DB8F005EF91B /* HDObjectNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDObjectNode.m; sourceTree = "<group>"; };
+		389C7D5C1AC5E026005EF91B /* UIColor+FlatColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+FlatColors.h"; sourceTree = "<group>"; };
+		389C7D5D1AC5E026005EF91B /* UIColor+FlatColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+FlatColors.m"; sourceTree = "<group>"; };
+		389C7D5F1AC5EF56005EF91B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		389C7D631AC5F37D005EF91B /* Assets.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Assets.atlas; sourceTree = "<group>"; };
+		389C7D6D1AC63AA9005EF91B /* Base-1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Base-1.json"; sourceTree = "<group>"; };
+		389C7D6F1AC642F4005EF91B /* HDGridManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDGridManager.h; sourceTree = "<group>"; };
+		389C7D701AC642F4005EF91B /* HDGridManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDGridManager.m; sourceTree = "<group>"; };
+		389C7D721AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKEmitterNode+HDEmitterAdditions.h"; sourceTree = "<group>"; };
+		389C7D731AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKEmitterNode+HDEmitterAdditions.m"; sourceTree = "<group>"; };
+		389C7D751AC71113005EF91B /* Boost.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Boost.sks; sourceTree = "<group>"; };
+		389C7D761AC71113005EF91B /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		38B93B241AC8E7BD003A0586 /* HDBombNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDBombNode.h; sourceTree = "<group>"; };
+		38B93B251AC8E7BD003A0586 /* HDBombNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDBombNode.m; sourceTree = "<group>"; };
+		38B93B301AC9C75A003A0586 /* HDSaveNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDSaveNode.h; sourceTree = "<group>"; };
+		38B93B311AC9C75A003A0586 /* HDSaveNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDSaveNode.m; sourceTree = "<group>"; };
+		38B93B331ACC5F30003A0586 /* HDKeyNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDKeyNode.h; sourceTree = "<group>"; };
+		38B93B341ACC5F30003A0586 /* HDKeyNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDKeyNode.m; sourceTree = "<group>"; };
+		38B93B391ACC869B003A0586 /* HDUpgradeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDUpgradeManager.h; sourceTree = "<group>"; };
+		38B93B3A1ACC869B003A0586 /* HDUpgradeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDUpgradeManager.m; sourceTree = "<group>"; };
+		38B93B401ACCBDC7003A0586 /* HDIntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDIntroViewController.h; sourceTree = "<group>"; };
+		38B93B411ACCBDC7003A0586 /* HDIntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDIntroViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		389C7D141AC5D554005EF91B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				38217C4B1ACDE9240038156A /* iAd.framework in Frameworks */,
+				38217C491ACDE9190038156A /* QuartzCore.framework in Frameworks */,
+				38217C471ACDE9110038156A /* GameKit.framework in Frameworks */,
+				389C7D601AC5EF56005EF91B /* CoreMotion.framework in Frameworks */,
+				389C7D441AC5D67C005EF91B /* SpriteKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		389C7D2D1AC5D554005EF91B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		381D2AA11ACDB8DC009F9F4F /* IAP */ = {
+			isa = PBXGroup;
+			children = (
+				381D2A951ACDB8C9009F9F4F /* NSData+Base64.h */,
+				381D2A961ACDB8D6009F9F4F /* NSData+Base64.m */,
+				381D2A971ACDB8D6009F9F4F /* HDIAdHelper.h */,
+				381D2A981ACDB8D6009F9F4F /* HDIAdHelper.m */,
+				381D2A991ACDB8D6009F9F4F /* HDJumperIAdHelper.h */,
+				381D2A9A1ACDB8D6009F9F4F /* HDJumperIAdHelper.m */,
+				381D2A9B1ACDB8D6009F9F4F /* VerificationController.h */,
+				381D2A9C1ACDB8D6009F9F4F /* VerificationController.m */,
+			);
+			name = IAP;
+			sourceTree = "<group>";
+		};
+		381D2ABC1ACDD2FA009F9F4F /* .JSON */ = {
+			isa = PBXGroup;
+			children = (
+				389C7D6D1AC63AA9005EF91B /* Base-1.json */,
+			);
+			name = .JSON;
+			sourceTree = "<group>";
+		};
+		389C7D0E1AC5D554005EF91B = {
+			isa = PBXGroup;
+			children = (
+				389C7D1E1AC5D554005EF91B /* HDAppDelegate.h */,
+				389C7D1F1AC5D554005EF91B /* HDAppDelegate.m */,
+				389C7D191AC5D554005EF91B /* FlatJump */,
+				389C7D411AC5D5FE005EF91B /* View Controllers */,
+				389C7D4C1AC5D870005EF91B /* Model */,
+				389C7D481AC5D846005EF91B /* Scenes/Nodes */,
+				389C7D421AC5D611005EF91B /* Frameworks */,
+				389C7D331AC5D554005EF91B /* FlatJumpTests */,
+				389C7D181AC5D554005EF91B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		389C7D181AC5D554005EF91B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				389C7D171AC5D554005EF91B /* FlatJump.app */,
+				389C7D301AC5D554005EF91B /* FlatJumpTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		389C7D191AC5D554005EF91B /* FlatJump */ = {
+			isa = PBXGroup;
+			children = (
+				389C7D271AC5D554005EF91B /* Images.xcassets */,
+				381D2ABC1ACDD2FA009F9F4F /* .JSON */,
+				389C7D1A1AC5D554005EF91B /* Supporting Files */,
+			);
+			path = FlatJump;
+			sourceTree = "<group>";
+		};
+		389C7D1A1AC5D554005EF91B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				389C7D501AC5D8AC005EF91B /* Categories */,
+				389C7D631AC5F37D005EF91B /* Assets.atlas */,
+				389C7D1B1AC5D554005EF91B /* Info.plist */,
+				389C7D751AC71113005EF91B /* Boost.sks */,
+				389C7D761AC71113005EF91B /* spark.png */,
+				389C7D1C1AC5D554005EF91B /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		389C7D331AC5D554005EF91B /* FlatJumpTests */ = {
+			isa = PBXGroup;
+			children = (
+				389C7D361AC5D554005EF91B /* FlatJumpTests.m */,
+				389C7D341AC5D554005EF91B /* Supporting Files */,
+			);
+			path = FlatJumpTests;
+			sourceTree = "<group>";
+		};
+		389C7D341AC5D554005EF91B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				389C7D351AC5D554005EF91B /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		389C7D411AC5D5FE005EF91B /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				389C7D211AC5D554005EF91B /* HDGameViewController.h */,
+				389C7D221AC5D554005EF91B /* HDGameViewController.m */,
+				38B93B401ACCBDC7003A0586 /* HDIntroViewController.h */,
+				38B93B411ACCBDC7003A0586 /* HDIntroViewController.m */,
+				381D2ABD1ACDD94E009F9F4F /* HDCompletionViewController.h */,
+				381D2ABE1ACDD94E009F9F4F /* HDCompletionViewController.m */,
+			);
+			name = "View Controllers";
+			path = FlatJump;
+			sourceTree = "<group>";
+		};
+		389C7D421AC5D611005EF91B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				38217C4A1ACDE9240038156A /* iAd.framework */,
+				38217C481ACDE9190038156A /* QuartzCore.framework */,
+				38217C461ACDE9110038156A /* GameKit.framework */,
+				389C7D5F1AC5EF56005EF91B /* CoreMotion.framework */,
+				389C7D431AC5D67C005EF91B /* SpriteKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		389C7D481AC5D846005EF91B /* Scenes/Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				389C7D451AC5D6CA005EF91B /* HDGameScene.h */,
+				389C7D461AC5D6CA005EF91B /* HDGameScene.m */,
+				38B93B3F1ACC9547003A0586 /* Object Nodes */,
+				381D2AA21ACDBAFE009F9F4F /* HDShadowButton.h */,
+				381D2AA31ACDBAFE009F9F4F /* HDShadowButton.m */,
+			);
+			name = Scenes/Nodes;
+			path = FlatJump;
+			sourceTree = "<group>";
+		};
+		389C7D4C1AC5D870005EF91B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				381D2AA11ACDB8DC009F9F4F /* IAP */,
+				389C7D6F1AC642F4005EF91B /* HDGridManager.h */,
+				389C7D701AC642F4005EF91B /* HDGridManager.m */,
+				389C7D491AC5D869005EF91B /* HDPointsManager.h */,
+				389C7D4A1AC5D869005EF91B /* HDPointsManager.m */,
+				38B93B391ACC869B003A0586 /* HDUpgradeManager.h */,
+				38B93B3A1ACC869B003A0586 /* HDUpgradeManager.m */,
+			);
+			name = Model;
+			path = FlatJump;
+			sourceTree = "<group>";
+		};
+		389C7D501AC5D8AC005EF91B /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				389C7D4D1AC5D8A8005EF91B /* SKColor+HDColor.h */,
+				389C7D4E1AC5D8A8005EF91B /* SKColor+HDColor.m */,
+				389C7D5C1AC5E026005EF91B /* UIColor+FlatColors.h */,
+				389C7D5D1AC5E026005EF91B /* UIColor+FlatColors.m */,
+				389C7D721AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.h */,
+				389C7D731AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		38B93B3F1ACC9547003A0586 /* Object Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				38B93B331ACC5F30003A0586 /* HDKeyNode.h */,
+				38B93B341ACC5F30003A0586 /* HDKeyNode.m */,
+				38B93B301AC9C75A003A0586 /* HDSaveNode.h */,
+				38B93B311AC9C75A003A0586 /* HDSaveNode.m */,
+				389C7D511AC5DAF8005EF91B /* HDPlatformNode.h */,
+				389C7D521AC5DAF8005EF91B /* HDPlatformNode.m */,
+				38B93B241AC8E7BD003A0586 /* HDBombNode.h */,
+				38B93B251AC8E7BD003A0586 /* HDBombNode.m */,
+				389C7D571AC5DB8F005EF91B /* HDObjectNode.h */,
+				389C7D581AC5DB8F005EF91B /* HDObjectNode.m */,
+			);
+			name = "Object Nodes";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		389C7D161AC5D554005EF91B /* FlatJump */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 389C7D3A1AC5D554005EF91B /* Build configuration list for PBXNativeTarget "FlatJump" */;
+			buildPhases = (
+				389C7D131AC5D554005EF91B /* Sources */,
+				389C7D141AC5D554005EF91B /* Frameworks */,
+				389C7D151AC5D554005EF91B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FlatJump;
+			productName = FlatJump;
+			productReference = 389C7D171AC5D554005EF91B /* FlatJump.app */;
+			productType = "com.apple.product-type.application";
+		};
+		389C7D2F1AC5D554005EF91B /* FlatJumpTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 389C7D3D1AC5D554005EF91B /* Build configuration list for PBXNativeTarget "FlatJumpTests" */;
+			buildPhases = (
+				389C7D2C1AC5D554005EF91B /* Sources */,
+				389C7D2D1AC5D554005EF91B /* Frameworks */,
+				389C7D2E1AC5D554005EF91B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				389C7D321AC5D554005EF91B /* PBXTargetDependency */,
+			);
+			name = FlatJumpTests;
+			productName = FlatJumpTests;
+			productReference = 389C7D301AC5D554005EF91B /* FlatJumpTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		389C7D0F1AC5D554005EF91B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = HD;
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = "Evan William Ische";
+				TargetAttributes = {
+					389C7D161AC5D554005EF91B = {
+						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 4AUVF6937L;
+					};
+					389C7D2F1AC5D554005EF91B = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = 389C7D161AC5D554005EF91B;
+					};
+				};
+			};
+			buildConfigurationList = 389C7D121AC5D554005EF91B /* Build configuration list for PBXProject "FlatJump" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 389C7D0E1AC5D554005EF91B;
+			productRefGroup = 389C7D181AC5D554005EF91B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				389C7D161AC5D554005EF91B /* FlatJump */,
+				389C7D2F1AC5D554005EF91B /* FlatJumpTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		389C7D151AC5D554005EF91B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				389C7D6E1AC63AA9005EF91B /* Base-1.json in Resources */,
+				389C7D781AC71113005EF91B /* spark.png in Resources */,
+				389C7D771AC71113005EF91B /* Boost.sks in Resources */,
+				389C7D641AC5F37D005EF91B /* Assets.atlas in Resources */,
+				389C7D281AC5D554005EF91B /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		389C7D2E1AC5D554005EF91B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		389C7D131AC5D554005EF91B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				381D2ABF1ACDD94E009F9F4F /* HDCompletionViewController.m in Sources */,
+				389C7D5E1AC5E026005EF91B /* UIColor+FlatColors.m in Sources */,
+				389C7D471AC5D6CA005EF91B /* HDGameScene.m in Sources */,
+				389C7D531AC5DAF8005EF91B /* HDPlatformNode.m in Sources */,
+				389C7D4F1AC5D8A8005EF91B /* SKColor+HDColor.m in Sources */,
+				38B93B3B1ACC869B003A0586 /* HDUpgradeManager.m in Sources */,
+				381D2AA01ACDB8D6009F9F4F /* VerificationController.m in Sources */,
+				381D2A9E1ACDB8D6009F9F4F /* HDIAdHelper.m in Sources */,
+				389C7D231AC5D554005EF91B /* HDGameViewController.m in Sources */,
+				381D2A9F1ACDB8D6009F9F4F /* HDJumperIAdHelper.m in Sources */,
+				389C7D711AC642F4005EF91B /* HDGridManager.m in Sources */,
+				389C7D201AC5D554005EF91B /* HDAppDelegate.m in Sources */,
+				38B93B261AC8E7BD003A0586 /* HDBombNode.m in Sources */,
+				389C7D1D1AC5D554005EF91B /* main.m in Sources */,
+				389C7D4B1AC5D869005EF91B /* HDPointsManager.m in Sources */,
+				381D2AA41ACDBAFE009F9F4F /* HDShadowButton.m in Sources */,
+				38B93B421ACCBDC7003A0586 /* HDIntroViewController.m in Sources */,
+				389C7D591AC5DB8F005EF91B /* HDObjectNode.m in Sources */,
+				38B93B351ACC5F30003A0586 /* HDKeyNode.m in Sources */,
+				38B93B321AC9C75A003A0586 /* HDSaveNode.m in Sources */,
+				389C7D741AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m in Sources */,
+				381D2A9D1ACDB8D6009F9F4F /* NSData+Base64.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		389C7D2C1AC5D554005EF91B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				389C7D371AC5D554005EF91B /* FlatJumpTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		389C7D321AC5D554005EF91B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 389C7D161AC5D554005EF91B /* FlatJump */;
+			targetProxy = 389C7D311AC5D554005EF91B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		389C7D381AC5D554005EF91B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		389C7D391AC5D554005EF91B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		389C7D3B1AC5D554005EF91B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = FlatJump/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		389C7D3C1AC5D554005EF91B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = FlatJump/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		389C7D3E1AC5D554005EF91B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = FlatJumpTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlatJump.app/FlatJump";
+			};
+			name = Debug;
+		};
+		389C7D3F1AC5D554005EF91B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = FlatJumpTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlatJump.app/FlatJump";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		389C7D121AC5D554005EF91B /* Build configuration list for PBXProject "FlatJump" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				389C7D381AC5D554005EF91B /* Debug */,
+				389C7D391AC5D554005EF91B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		389C7D3A1AC5D554005EF91B /* Build configuration list for PBXNativeTarget "FlatJump" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				389C7D3B1AC5D554005EF91B /* Debug */,
+				389C7D3C1AC5D554005EF91B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		389C7D3D1AC5D554005EF91B /* Build configuration list for PBXNativeTarget "FlatJumpTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				389C7D3E1AC5D554005EF91B /* Debug */,
+				389C7D3F1AC5D554005EF91B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 389C7D0F1AC5D554005EF91B /* Project object */;
+}
