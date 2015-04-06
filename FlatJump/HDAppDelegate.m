@@ -7,8 +7,10 @@
 //
 
 @import GameKit;
+@import StoreKit;
 
 #import "HDAppDelegate.h"
+#import "HDJumperIAdHelper.h"
 #import "HDIntroViewController.h"
 #import "HDGameViewController.h"
 #import "HDCompletionViewController.h"
@@ -96,6 +98,37 @@
 
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
     [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - IAP
+
+- (IBAction)restoreIAP:(id)sender {
+    [[HDJumperIAdHelper sharedHelper] restoreCompletedTransactions];
+}
+
+- (IBAction)removeAds:(id)sender {
+    
+    [[HDJumperIAdHelper sharedHelper] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+        
+        if (success && products.count) {
+            SKProduct *removeAdsProduct = nil;
+            for (SKProduct *product in products) {
+                if ([product.productIdentifier isEqualToString:IAPremoveAdsProductIdentifier]) {
+                    removeAdsProduct = product;
+                    break;
+                }
+            }
+            
+            if (!removeAdsProduct) {
+                return;
+            }
+            
+            BOOL purchased = [[HDJumperIAdHelper sharedHelper] productPurchased:removeAdsProduct.productIdentifier];
+            if (!purchased) {
+                [[HDJumperIAdHelper sharedHelper] buyProduct:removeAdsProduct];
+            }
+        }
+    }];
 }
 
 #pragma mark - <UIApplicationDelegate>

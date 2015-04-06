@@ -11,6 +11,7 @@
 
 #import "HDShadowButton.h"
 #import "UIColor+FlatColors.h"
+#import "HDJumperIAdHelper.h"
 #import "HDCompletionViewController.h"
 #import "HDAppDelegate.h"
 
@@ -23,15 +24,25 @@
 
 @implementation HDCompletionViewController
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:IAPHelperProductPurchasedNotification object:nil];
+}
+
 - (void)viewDidLoad {
     [self _setup];
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_removeAdsWasPurchased:)
+                                                 name:IAPremoveAdsProductIdentifier
+                                               object:nil];
 }
 
 - (void)_setup {
     
-    self.canDisplayBannerAds  = YES;
     self.view.backgroundColor = [UIColor flatMidnightBlueColor];
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:IAPremoveAdsProductIdentifier]) {
+        self.canDisplayBannerAds  = YES;
+    }
     
     self.container = [self _containerWithLabels];
     self.container.transform = CGAffineTransformMakeScale(TRANSFORM_SCALE_X, TRANSFORM_SCALE_Y);
@@ -72,6 +83,15 @@
         }
         
     }
+}
+
+- (void)_removeAdsWasPurchased:(NSNotification *)notification {
+    
+    NSString *productIdentifier = notification.object;
+    if (![productIdentifier isEqualToString:IAPremoveAdsProductIdentifier]) {
+        return;
+    }
+    self.canDisplayBannerAds = NO;
 }
 
 - (UIView *)_containerWithLabels {
@@ -150,19 +170,27 @@
     // Check for new high score
     if (YES) {
         
-        CGRect topViewBounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.container.frame)/1.85f, CGRectGetHeight(self.container.frame)/5.0f);
+        CGRect topViewBounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.container.frame)/2.0f, CGRectGetHeight(self.container.frame)/8.5f);
         CGPoint position = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMinY(self.container.frame) + CGRectGetMidY(topViewBounds));
         UIView *topView = [[UIView alloc] initWithFrame:topViewBounds];
         topView.backgroundColor = [UIColor flatSTRedColor];
         topView.center = position;
         [self.view insertSubview:topView belowSubview:self.container];
         
+        CAShapeLayer *maskLayer = [CAShapeLayer layer];
+        maskLayer.frame = topView.bounds;
+        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect:topView.bounds
+                                               byRoundingCorners:UIRectCornerTopLeft|UIRectCornerTopRight
+                                                     cornerRadii:CGSizeMake(15.0f, 15.0f)].CGPath;
+        topView.layer.mask = maskLayer;
+        
+        NSTimeInterval delay = 3.0f;
         [UIView animateWithDuration:.3f animations:^{
             CGPoint position = topView.center;
             position.y = CGRectGetMinY(self.container.frame) - CGRectGetMidY(topView.bounds);
             topView.center = position;
         } completion:^(BOOL finished) {
-             [UIView animateWithDuration:.3f delay:3.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
+             [UIView animateWithDuration:.3f delay:delay options:UIViewAnimationOptionCurveEaseOut animations:^{
                  topView.center = position;
              } completion:^(BOOL finished) {
                 [topView removeFromSuperview];

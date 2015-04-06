@@ -11,15 +11,22 @@
 #import "HDGameScene.h"
 #import "HDGridManager.h"
 #import "UIColor+FlatColors.h"
+#import "HDJumperIAdHelper.h"
 #import "HDGameViewController.h"
 
 @interface HDGameViewController ()
+@property (nonatomic, assign) BOOL paused;
 @property (nonatomic, strong) HDGameScene *scene;
 @property (nonatomic, strong) HDGridManager *gridManager;
 @end
 
 @implementation HDGameViewController {
     __weak SKView *_skView;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification  object:nil];
 }
 
 - (void)loadView {
@@ -30,10 +37,20 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-     self.gridManager = [[HDGridManager alloc] initWithFileName:@"FilENAME"];
+    
+    self.gridManager = [[HDGridManager alloc] initWithFileName:@"FilENAME"];
     [self.gridManager loadGridWithCallback:^{
         [self _setup];
     }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_applicationWillResignActive:)
+                                                 name:UIApplicationWillResignActiveNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_applicationDidBecomeActive:)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
 }
 
 - (void)_setup {
@@ -51,5 +68,18 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - NSNotificationCenter
+
+- (void)_applicationDidBecomeActive:(NSNotification *)notification {
+    self.paused = NO;
+    self.scene.view.paused = self.paused;
+}
+
+- (void)_applicationWillResignActive:(NSNotification *)notification {
+    self.paused = YES;
+    self.scene.view.paused = self.paused;
+}
+
 
 @end

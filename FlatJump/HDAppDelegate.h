@@ -11,8 +11,12 @@
 @interface HDAppDelegate : UIResponder <UIApplicationDelegate>
 @property (nonatomic, strong) UIWindow *window;
 + (HDAppDelegate *)sharedDelegate;
+
+- (IBAction)restoreIAP:(id)sender;
+- (IBAction)removeAds:(id)sender;
 - (IBAction)presentActivityViewController:(id)sender;
 - (IBAction)presentLeaderboardViewController:(id)sender;
+
 - (void)presentCompletionViewControllerWithMovesCompleted:(NSUInteger)moves;
 - (void)presentGameViewController;
 @end

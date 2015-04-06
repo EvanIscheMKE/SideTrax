@@ -8,16 +8,14 @@
 
 #import "HDJumperIAdHelper.h"
 
-NSString *const IAPremoveAdsProductIdentifier = @"com.EvanIsche.Hexus.RemoveAds";
-NSString *const IAPUnlockAllLevelsProductIdentifier = @"com.EvanIsche.Hexus.UnlockLevels";
+NSString *const IAPremoveAdsProductIdentifier = @"com.EvanIsche.FlatJump.RemoveAds";
 @implementation HDJumperIAdHelper
 
 + (HDJumperIAdHelper *)sharedHelper {
     static HDJumperIAdHelper *helper = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSSet * productIdentifiers = [NSSet setWithObjects:IAPremoveAdsProductIdentifier,
-                                                           IAPUnlockAllLevelsProductIdentifier, nil];
+        NSSet * productIdentifiers = [NSSet setWithObjects:IAPremoveAdsProductIdentifier, nil];
         helper = [[self alloc] initWithProductIdentifiers:productIdentifiers];
     });
     return helper;

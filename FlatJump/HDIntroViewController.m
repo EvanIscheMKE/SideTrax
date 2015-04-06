@@ -6,6 +6,9 @@
 //  Copyright (c) 2015 Evan William Ische. All rights reserved.
 //
 
+@import QuartzCore;
+
+#import "HDLayoverView.h"
 #import "HDShadowButton.h"
 #import "HDAppDelegate.h"
 #import "UIColor+FlatColors.h"
@@ -42,7 +45,7 @@
     [leaderboard setTitle:@"LEADERBOARD" forState:UIControlStateNormal];
     leaderboard.titleLabel.font = [UIFont fontWithName:@"GillSans" size:CGRectGetHeight(leaderboard.bounds) * .45f];
     leaderboard.center = CGPointMake(CGRectGetMidX(self.view.bounds),
-                                     CGRectGetMaxY(begin.frame) + CGRectGetMidY(leaderboardBounds) + 15.0f);
+                                     CGRectGetMaxY(begin.frame) + CGRectGetMidY(leaderboardBounds) + 10.0f);
     leaderboard.backgroundColor = [UIColor flatPeterRiverColor];
     [leaderboard addTarget:[HDAppDelegate sharedDelegate]
                     action:@selector(presentLeaderboardViewController:)
@@ -61,23 +64,37 @@
     for (NSUInteger i = 0; i < 3; i++) {
         CGRect buttonBounds = CGRectMake(0.0f, 0.0f, buttonSize.width, buttonSize.height);
         HDShadowButton *button = [[HDShadowButton alloc] initWithFrame:buttonBounds];
-        button.center = CGPointMake(kOriginX + (kSeperatorWidth * i), CGRectGetMaxY(leaderboard.frame) + CGRectGetMidX(buttonBounds) + 25.0f);
+        button.center = CGPointMake(kOriginX + (kSeperatorWidth * i), CGRectGetMaxY(leaderboard.frame) + CGRectGetMidX(buttonBounds) + 15.0f);
         [self.view addSubview:button];
         
         switch (i) {
             case 0:
-                button.backgroundColor = [UIColor flatSTWhiteColor];
+                [button addTarget:self
+                           action:@selector(_openSettingsMenu:)
+                 forControlEvents:UIControlEventTouchUpInside];
+                 button.backgroundColor = [UIColor flatSTWhiteColor];
                 break;
             case 1:
-                button.backgroundColor = [UIColor flatSTRedColor];
+                [button addTarget:self
+                           action:@selector(removeAds:)
+                 forControlEvents:UIControlEventTouchUpInside];
+                 button.backgroundColor = [UIColor flatSTRedColor];
                 break;
             case 2:
-                button.backgroundColor = [UIColor flatSTLightBlueColor];
+                [button addTarget:[HDAppDelegate sharedDelegate]
+                           action:@selector(removeAds:)
+                 forControlEvents:UIControlEventTouchUpInside];
+                 button.backgroundColor = [UIColor flatSTLightBlueColor];
                 break;
             default:
                 break;
         }
     }
+}
+
+- (IBAction)_openSettingsMenu:(id)sender {
+    HDLayoverView *layover = [[HDLayoverView alloc] init];
+    [layover show];
 }
 
 - (void)didReceiveMemoryWarning {

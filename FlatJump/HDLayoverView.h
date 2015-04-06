@@ -1,12 +1,13 @@
 //
-//  HDIntroViewController.h
+//  HDLayoverView.h
 //  FlatJump
 //
-//  Created by Evan Ische on 4/1/15.
+//  Created by Evan Ische on 4/5/15.
 //  Copyright (c) 2015 Evan William Ische. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface HDIntroViewController : UIViewController
+@interface HDLayoverView : UIView
+- (void)show;
 @end
