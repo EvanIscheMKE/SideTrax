@@ -12,10 +12,28 @@
 #define TRANSFORM_SCALE_X [UIScreen mainScreen].bounds.size.width  / 375.0f
 #define TRANSFORM_SCALE_Y [UIScreen mainScreen].bounds.size.height / 667.0f
 
+NSString * const MENU_TITLE = @"SETTINGS";
 @interface HDColoredView : UIView
 @end
 
 @implementation HDColoredView
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        
+        UILabel *titleLbl = [[UILabel alloc] init];
+        titleLbl.textColor = [UIColor whiteColor];
+        titleLbl.font = [UIFont fontWithName:@"GillSans" size:32.0f];
+        titleLbl.textAlignment = NSTextAlignmentCenter;
+        titleLbl.text = MENU_TITLE;
+        [titleLbl sizeToFit];
+        titleLbl.center = CGPointMake(CGRectGetMidX(self.bounds), (CGRectGetHeight(self.bounds)/5.25f)/2);
+        titleLbl.frame = CGRectIntegral(titleLbl.frame);
+        [self addSubview:titleLbl];
+        
+    }
+    return self;
+}
 
 - (void)drawRect:(CGRect)rect {
     
@@ -53,7 +71,7 @@
     
     // Set up our subviews
     self.backgroundView                 = [[UIView alloc] initWithFrame:keyWindow.bounds];
-    self.backgroundView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.4f]; 
+    self.backgroundView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.3f];
     self.backgroundView.alpha           = 0.0f;
     [self addSubview:self.backgroundView];
     
@@ -76,11 +94,19 @@
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
     [keyWindow addSubview:self];
     
-    [UIView animateWithDuration:.2f animations:^{
+    // Spring effect in
+    CAKeyframeAnimation *keyFrameAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position.y"];
+    keyFrameAnimation.duration = .25f;
+    keyFrameAnimation.values = @[@(CGRectGetHeight(self.bounds) + CGRectGetMidY(self.container.bounds)),
+                                 @(CGRectGetHeight(self.bounds) - CGRectGetMidY(self.container.bounds)),
+                                 @(CGRectGetHeight(self.bounds) - CGRectGetMidY(self.container.bounds) + 15.0f)];
+    keyFrameAnimation.keyTimes = @[@0.0f, @0.7f, @1.0f];
+    
+    self.container.layer.position = CGPointMake(CGRectGetMidX(self.bounds), [[keyFrameAnimation.values lastObject] floatValue]);
+    [self.container.layer addAnimation:keyFrameAnimation forKey:keyFrameAnimation.keyPath];
+    
+    [UIView animateWithDuration:keyFrameAnimation.duration animations:^{
         self.backgroundView.alpha = 1.0f;
-        CGPoint position = self.container.center;
-        position.y = CGRectGetHeight(self.bounds) - CGRectGetMidY(self.container.bounds);
-        self.container.center = position;
     }];
 }
 
@@ -88,14 +114,24 @@
     
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
     
-    [UIView animateWithDuration:.15f animations:^{
+    // Spring effect out
+    CAKeyframeAnimation *keyFrameAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position.y"];
+    keyFrameAnimation.duration = .2f;
+    keyFrameAnimation.values = @[@(CGRectGetHeight(self.bounds) - CGRectGetMidY(self.container.bounds) + 15.0f),
+                                 @(CGRectGetHeight(self.bounds) - CGRectGetMidY(self.container.bounds)),
+                                 @(CGRectGetHeight(self.bounds) + CGRectGetMidY(self.container.bounds))];
+    keyFrameAnimation.keyTimes = @[@0.0f, @0.3f, @1.0f];
+    
+    self.container.layer.position = CGPointMake(CGRectGetMidX(self.bounds), [[keyFrameAnimation.values lastObject] floatValue]);
+    [self.container.layer addAnimation:keyFrameAnimation forKey:keyFrameAnimation.keyPath];
+    
+    [UIView animateWithDuration:keyFrameAnimation.duration animations:^{
         self.backgroundView.alpha = 0.0f;
-        self.container.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetHeight(self.bounds) + CGRectGetMidY(self.container.bounds));
         keyWindow.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
         [keyWindow tintColorDidChange];
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
-        self.retainSelf = nil;
+         self.retainSelf = nil;
     }];
 }
 
