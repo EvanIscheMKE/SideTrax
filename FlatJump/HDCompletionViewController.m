@@ -170,12 +170,22 @@
     // Check for new high score
     if (YES) {
         
-        CGRect topViewBounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.container.frame)/2.0f, CGRectGetHeight(self.container.frame)/8.5f);
+        CGRect topViewBounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.container.frame)/2.0f, CGRectGetHeight(self.container.frame)/9.f);
         CGPoint position = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMinY(self.container.frame) + CGRectGetMidY(topViewBounds));
         UIView *topView = [[UIView alloc] initWithFrame:topViewBounds];
         topView.backgroundColor = [UIColor flatSTRedColor];
         topView.center = position;
         [self.view insertSubview:topView belowSubview:self.container];
+        
+        UILabel *recordLbl = [[UILabel alloc] init];
+        recordLbl.textAlignment = NSTextAlignmentCenter;
+        recordLbl.font = [UIFont fontWithName:@"GillSans" size:CGRectGetHeight(topViewBounds) * .5f];
+        recordLbl.textColor = [UIColor whiteColor];
+        recordLbl.text = @"NEW RECORD";
+        [recordLbl sizeToFit];
+        recordLbl.center = CGPointMake(CGRectGetMidX(topView.bounds), CGRectGetMidY(topView.bounds));
+        recordLbl.frame = CGRectIntegral(recordLbl.frame);
+        [topView addSubview:recordLbl];
         
         CAShapeLayer *maskLayer = [CAShapeLayer layer];
         maskLayer.frame = topView.bounds;

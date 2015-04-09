@@ -19,6 +19,7 @@
 		3862E8E11AD0EFEF00D76B1E /* HDGameCenterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3862E8E01AD0EFEF00D76B1E /* HDGameCenterManager.m */; };
 		3881D7281AD204380068338D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3881D7271AD204380068338D /* StoreKit.framework */; };
 		3881D72B1AD2198F0068338D /* HDLayoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3881D72A1AD2198F0068338D /* HDLayoverView.m */; };
+		3881D72E1AD322BF0068338D /* HDSettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3881D72D1AD322BF0068338D /* HDSettingsManager.m */; };
 		389C7D1D1AC5D554005EF91B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D1C1AC5D554005EF91B /* main.m */; };
 		389C7D201AC5D554005EF91B /* HDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D1F1AC5D554005EF91B /* HDAppDelegate.m */; };
 		389C7D231AC5D554005EF91B /* HDGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D221AC5D554005EF91B /* HDGameViewController.m */; };
@@ -28,19 +29,16 @@
 		389C7D471AC5D6CA005EF91B /* HDGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D461AC5D6CA005EF91B /* HDGameScene.m */; };
 		389C7D4B1AC5D869005EF91B /* HDPointsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D4A1AC5D869005EF91B /* HDPointsManager.m */; };
 		389C7D4F1AC5D8A8005EF91B /* SKColor+HDColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D4E1AC5D8A8005EF91B /* SKColor+HDColor.m */; };
-		389C7D531AC5DAF8005EF91B /* HDPlatformNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D521AC5DAF8005EF91B /* HDPlatformNode.m */; };
+		389C7D531AC5DAF8005EF91B /* HDDividerNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D521AC5DAF8005EF91B /* HDDividerNode.m */; };
 		389C7D591AC5DB8F005EF91B /* HDObjectNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D581AC5DB8F005EF91B /* HDObjectNode.m */; };
 		389C7D5E1AC5E026005EF91B /* UIColor+FlatColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D5D1AC5E026005EF91B /* UIColor+FlatColors.m */; };
 		389C7D601AC5EF56005EF91B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389C7D5F1AC5EF56005EF91B /* CoreMotion.framework */; };
 		389C7D641AC5F37D005EF91B /* Assets.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 389C7D631AC5F37D005EF91B /* Assets.atlas */; };
-		389C7D6E1AC63AA9005EF91B /* Base-1.json in Resources */ = {isa = PBXBuildFile; fileRef = 389C7D6D1AC63AA9005EF91B /* Base-1.json */; };
 		389C7D711AC642F4005EF91B /* HDGridManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D701AC642F4005EF91B /* HDGridManager.m */; };
 		389C7D741AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D731AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m */; };
 		389C7D771AC71113005EF91B /* Boost.sks in Resources */ = {isa = PBXBuildFile; fileRef = 389C7D751AC71113005EF91B /* Boost.sks */; };
 		389C7D781AC71113005EF91B /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 389C7D761AC71113005EF91B /* spark.png */; };
-		38B93B261AC8E7BD003A0586 /* HDBombNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B93B251AC8E7BD003A0586 /* HDBombNode.m */; };
 		38B93B321AC9C75A003A0586 /* HDSaveNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B93B311AC9C75A003A0586 /* HDSaveNode.m */; };
-		38B93B351ACC5F30003A0586 /* HDKeyNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B93B341ACC5F30003A0586 /* HDKeyNode.m */; };
 		38B93B421ACCBDC7003A0586 /* HDIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B93B411ACCBDC7003A0586 /* HDIntroViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +73,8 @@
 		3881D7271AD204380068338D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3881D7291AD2198F0068338D /* HDLayoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDLayoverView.h; sourceTree = "<group>"; };
 		3881D72A1AD2198F0068338D /* HDLayoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDLayoverView.m; sourceTree = "<group>"; };
+		3881D72C1AD322BF0068338D /* HDSettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDSettingsManager.h; sourceTree = "<group>"; };
+		3881D72D1AD322BF0068338D /* HDSettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDSettingsManager.m; sourceTree = "<group>"; };
 		389C7D171AC5D554005EF91B /* FlatJump.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlatJump.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		389C7D1B1AC5D554005EF91B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		389C7D1C1AC5D554005EF91B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -93,27 +93,22 @@
 		389C7D4A1AC5D869005EF91B /* HDPointsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDPointsManager.m; sourceTree = "<group>"; };
 		389C7D4D1AC5D8A8005EF91B /* SKColor+HDColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKColor+HDColor.h"; sourceTree = "<group>"; };
 		389C7D4E1AC5D8A8005EF91B /* SKColor+HDColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKColor+HDColor.m"; sourceTree = "<group>"; };
-		389C7D511AC5DAF8005EF91B /* HDPlatformNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDPlatformNode.h; sourceTree = "<group>"; };
-		389C7D521AC5DAF8005EF91B /* HDPlatformNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDPlatformNode.m; sourceTree = "<group>"; };
+		389C7D511AC5DAF8005EF91B /* HDDividerNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDDividerNode.h; sourceTree = "<group>"; };
+		389C7D521AC5DAF8005EF91B /* HDDividerNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDDividerNode.m; sourceTree = "<group>"; };
 		389C7D571AC5DB8F005EF91B /* HDObjectNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDObjectNode.h; sourceTree = "<group>"; };
 		389C7D581AC5DB8F005EF91B /* HDObjectNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDObjectNode.m; sourceTree = "<group>"; };
 		389C7D5C1AC5E026005EF91B /* UIColor+FlatColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+FlatColors.h"; sourceTree = "<group>"; };
 		389C7D5D1AC5E026005EF91B /* UIColor+FlatColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+FlatColors.m"; sourceTree = "<group>"; };
 		389C7D5F1AC5EF56005EF91B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		389C7D631AC5F37D005EF91B /* Assets.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Assets.atlas; sourceTree = "<group>"; };
-		389C7D6D1AC63AA9005EF91B /* Base-1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Base-1.json"; sourceTree = "<group>"; };
 		389C7D6F1AC642F4005EF91B /* HDGridManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDGridManager.h; sourceTree = "<group>"; };
 		389C7D701AC642F4005EF91B /* HDGridManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDGridManager.m; sourceTree = "<group>"; };
 		389C7D721AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKEmitterNode+HDEmitterAdditions.h"; sourceTree = "<group>"; };
 		389C7D731AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKEmitterNode+HDEmitterAdditions.m"; sourceTree = "<group>"; };
 		389C7D751AC71113005EF91B /* Boost.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Boost.sks; sourceTree = "<group>"; };
 		389C7D761AC71113005EF91B /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
-		38B93B241AC8E7BD003A0586 /* HDBombNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDBombNode.h; sourceTree = "<group>"; };
-		38B93B251AC8E7BD003A0586 /* HDBombNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDBombNode.m; sourceTree = "<group>"; };
 		38B93B301AC9C75A003A0586 /* HDSaveNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDSaveNode.h; sourceTree = "<group>"; };
 		38B93B311AC9C75A003A0586 /* HDSaveNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDSaveNode.m; sourceTree = "<group>"; };
-		38B93B331ACC5F30003A0586 /* HDKeyNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDKeyNode.h; sourceTree = "<group>"; };
-		38B93B341ACC5F30003A0586 /* HDKeyNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDKeyNode.m; sourceTree = "<group>"; };
 		38B93B401ACCBDC7003A0586 /* HDIntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDIntroViewController.h; sourceTree = "<group>"; };
 		38B93B411ACCBDC7003A0586 /* HDIntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDIntroViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,14 +152,6 @@
 			name = IAP;
 			sourceTree = "<group>";
 		};
-		381D2ABC1ACDD2FA009F9F4F /* .JSON */ = {
-			isa = PBXGroup;
-			children = (
-				389C7D6D1AC63AA9005EF91B /* Base-1.json */,
-			);
-			name = .JSON;
-			sourceTree = "<group>";
-		};
 		389C7D0E1AC5D554005EF91B = {
 			isa = PBXGroup;
 			children = (
@@ -193,7 +180,6 @@
 			isa = PBXGroup;
 			children = (
 				389C7D271AC5D554005EF91B /* Images.xcassets */,
-				381D2ABC1ACDD2FA009F9F4F /* .JSON */,
 				389C7D1A1AC5D554005EF91B /* Supporting Files */,
 			);
 			path = FlatJump;
@@ -274,6 +260,8 @@
 		389C7D4C1AC5D870005EF91B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3881D72C1AD322BF0068338D /* HDSettingsManager.h */,
+				3881D72D1AD322BF0068338D /* HDSettingsManager.m */,
 				381D2AA11ACDB8DC009F9F4F /* IAP */,
 				389C7D6F1AC642F4005EF91B /* HDGridManager.h */,
 				389C7D701AC642F4005EF91B /* HDGridManager.m */,
@@ -302,14 +290,10 @@
 		38B93B3F1ACC9547003A0586 /* Object Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				38B93B331ACC5F30003A0586 /* HDKeyNode.h */,
-				38B93B341ACC5F30003A0586 /* HDKeyNode.m */,
 				38B93B301AC9C75A003A0586 /* HDSaveNode.h */,
 				38B93B311AC9C75A003A0586 /* HDSaveNode.m */,
-				389C7D511AC5DAF8005EF91B /* HDPlatformNode.h */,
-				389C7D521AC5DAF8005EF91B /* HDPlatformNode.m */,
-				38B93B241AC8E7BD003A0586 /* HDBombNode.h */,
-				38B93B251AC8E7BD003A0586 /* HDBombNode.m */,
+				389C7D511AC5DAF8005EF91B /* HDDividerNode.h */,
+				389C7D521AC5DAF8005EF91B /* HDDividerNode.m */,
 				389C7D571AC5DB8F005EF91B /* HDObjectNode.h */,
 				389C7D581AC5DB8F005EF91B /* HDObjectNode.m */,
 			);
@@ -398,7 +382,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				389C7D6E1AC63AA9005EF91B /* Base-1.json in Resources */,
 				389C7D781AC71113005EF91B /* spark.png in Resources */,
 				389C7D771AC71113005EF91B /* Boost.sks in Resources */,
 				389C7D641AC5F37D005EF91B /* Assets.atlas in Resources */,
@@ -423,7 +406,7 @@
 				381D2ABF1ACDD94E009F9F4F /* HDCompletionViewController.m in Sources */,
 				389C7D5E1AC5E026005EF91B /* UIColor+FlatColors.m in Sources */,
 				389C7D471AC5D6CA005EF91B /* HDGameScene.m in Sources */,
-				389C7D531AC5DAF8005EF91B /* HDPlatformNode.m in Sources */,
+				389C7D531AC5DAF8005EF91B /* HDDividerNode.m in Sources */,
 				389C7D4F1AC5D8A8005EF91B /* SKColor+HDColor.m in Sources */,
 				381D2AA01ACDB8D6009F9F4F /* VerificationController.m in Sources */,
 				381D2A9E1ACDB8D6009F9F4F /* HDIAdHelper.m in Sources */,
@@ -432,14 +415,13 @@
 				381D2A9F1ACDB8D6009F9F4F /* HDJumperIAdHelper.m in Sources */,
 				389C7D711AC642F4005EF91B /* HDGridManager.m in Sources */,
 				389C7D201AC5D554005EF91B /* HDAppDelegate.m in Sources */,
-				38B93B261AC8E7BD003A0586 /* HDBombNode.m in Sources */,
 				389C7D1D1AC5D554005EF91B /* main.m in Sources */,
+				3881D72E1AD322BF0068338D /* HDSettingsManager.m in Sources */,
 				389C7D4B1AC5D869005EF91B /* HDPointsManager.m in Sources */,
 				381D2AA41ACDBAFE009F9F4F /* HDShadowButton.m in Sources */,
 				3862E8E11AD0EFEF00D76B1E /* HDGameCenterManager.m in Sources */,
 				38B93B421ACCBDC7003A0586 /* HDIntroViewController.m in Sources */,
 				389C7D591AC5DB8F005EF91B /* HDObjectNode.m in Sources */,
-				38B93B351ACC5F30003A0586 /* HDKeyNode.m in Sources */,
 				38B93B321AC9C75A003A0586 /* HDSaveNode.m in Sources */,
 				389C7D741AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m in Sources */,
 				381D2A9D1ACDB8D6009F9F4F /* NSData+Base64.m in Sources */,
@@ -548,6 +530,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FlatJump/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -561,6 +544,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FlatJump/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

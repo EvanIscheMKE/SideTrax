@@ -9,7 +9,6 @@
 #import "HDPointsManager.h"
 
 NSString * const HDHighScoreKey = @"highScoreKey";
-NSString * const HDKeysKey = @"keysKey";
 @implementation HDPointsManager
 
 + (instancetype)sharedManager {
@@ -25,7 +24,6 @@ NSString * const HDKeysKey = @"keysKey";
     
     if (self = [super init]) {
         self.score = 0;
-        self.keys      = [[NSUserDefaults standardUserDefaults] integerForKey:HDKeysKey];
         self.highScore = [[NSUserDefaults standardUserDefaults] integerForKey:HDHighScoreKey];
     }
     return self;

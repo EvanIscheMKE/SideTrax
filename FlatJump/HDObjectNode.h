@@ -9,14 +9,7 @@
 @import SpriteKit;
 
 typedef NS_ENUM(NSUInteger, HDObjectType) {
-    HDObjectTypeCoin     = 1,
-    HDObjectTypeBomb     = 2,
     HDObjectTypePlatform = 3,
-    HDObjectTypeBoost    = 4,
-    HDObjectTypeMagnet   = 5,
-    HDObjectTypeKey      = 6,
-    HDObjectTypeDoubleXP = 7,
-    HDObjectTypeJetPack  = 8,
     HDObjectTypeNone     = 0
 };
 

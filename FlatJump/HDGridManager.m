@@ -9,19 +9,7 @@
 #import "HDGridManager.h"
 
 @implementation HDGridManager {
-    NSString *_fileName;
-    NSMutableDictionary *_levelCache;
     NSNumber *_grid[NumberOfRows][NumberOfColumns];
-}
-
-#pragma mark - Convenice Initalizer
-
-- (instancetype)initWithFileName:(NSString *)fileName {
-    if (self = [super init]) {
-        _fileName = @"Base-1";
-        _levelCache = [NSMutableDictionary dictionary];
-    }
-    return self;
 }
 
 #pragma mark - Public
@@ -30,53 +18,64 @@
     return _grid[row][column];
 }
 
-#pragma mark - Private
-
-- (void)_layoutInitialGrid:(NSDictionary *)grid {
-    for (NSUInteger row = 0; row < NumberOfRows; row++) {
-        NSArray *rows = [grid[@"grid"] objectAtIndex:row];
-        for (NSUInteger column = 0; column < NumberOfColumns; column++) {
-            NSNumber *index = [rows objectAtIndex:column];
-            NSInteger tileRow = NumberOfRows - row - 1;
-            _grid[tileRow][column] = index;
-            NSLog(@"//GRID:%@//",index);
-        }
-    }
+- (BOOL)rollTheDice {
+    return (arc4random() % 2 == 1);
 }
+
+#pragma mark - Private
 
 - (void)loadGridWithCallback:(dispatch_block_t)completion {
     
-    if (_levelCache[_fileName]) {
-        [self _layoutInitialGrid:_levelCache[_fileName]];
-        if (completion) {
-            completion();
-            return;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSInteger previousIdx = 0;
+        for (NSUInteger row = 3; row < NumberOfRows; row++) {
+            
+            NSInteger currentIdx = 0;
+            if (row > 4) {
+                currentIdx = (arc4random() % 5)  + 1;
+                while ((abs((int)currentIdx - (int)previousIdx) > 2)
+                                                || currentIdx == previousIdx) {
+                     currentIdx = (arc4random() % 5)  + 1;
+                }
+            } else {
+                currentIdx = 3;
+            }
+            
+            NSNumber *objectType = nil;
+            for (NSUInteger column = 0; column < NumberOfColumns; column++) {
+                
+                if (row < 4) {
+                    if (column == 0 || column == NumberOfColumns - 1) {
+                        objectType = @2;
+                    } else {
+                        objectType = @0;
+                    }
+                    _grid[row][column] = objectType;
+                    continue;
+                }
+                
+                if (column == 0 || column == NumberOfColumns - 1) {
+                    objectType = @2;
+                } else if (column == currentIdx) {
+                    objectType = @0;
+                } else {
+                    objectType = @1;
+                }
+                
+                previousIdx = currentIdx;
+                
+                _grid[row][column] = objectType;
+                if (row == NumberOfRows -1 && column == NumberOfColumns -2) {
+                    if (completion){
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            completion();
+                        });
+                    }
+                }
+            }
         }
-    }
-    
-    NSError *error = nil;
-    NSString *path = [[NSBundle mainBundle] pathForResource:_fileName ofType:@"json"];
-    NSData *data = [NSData dataWithContentsOfFile:path options:0 error:&error];
-    if (data == nil) {
-        if (completion) {
-            completion();
-            return;
-        }
-    }
-    
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    if (dictionary != nil) {
-        _levelCache[_fileName] = dictionary;
-        [self _layoutInitialGrid:dictionary];
-    }
-    
-    if (completion){
-        completion();
-    }
-}
-
-- (void)clearCache {
-    [_levelCache removeAllObjects];
+    });
 }
 
 

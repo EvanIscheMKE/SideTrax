@@ -10,11 +10,9 @@
 
 
 extern NSString * const HDHighScoreKey;
-extern NSString * const HDKeysKey;
 @interface HDPointsManager : NSObject
 @property (nonatomic, assign) NSUInteger highScore;
 @property (nonatomic, assign) NSUInteger score;
-@property (nonatomic, assign) NSUInteger keys;
 + (instancetype)sharedManager;
 - (void)saveState;
 @end

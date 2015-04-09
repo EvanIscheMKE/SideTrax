@@ -10,9 +10,10 @@
 
 @implementation HDObjectNode
 
-- (void)collisionWithPlayer:(SKNode *)player completion:(CompletionBlock)completion{
+- (void)collisionWithPlayer:(SKNode *)player completion:(dispatch_block_t)completion{
+    
     if (completion) {
-        completion(NO,HDObjectTypeNone);
+        completion();
     }
 }
 

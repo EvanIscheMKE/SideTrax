@@ -6,18 +6,26 @@
 //  Copyright (c) 2015 Evan William Ische. All rights reserved.
 //
 
-@import CoreMotion;
-
 #import "HDSaveNode.h"
 #import "HDGameScene.h"
 #import "SKColor+HDColor.h"
 #import "UIColor+FlatColors.h"
 #import "HDPointsManager.h"
 #import "HDObjectNode.h"
-#import "HDPlatformNode.h"
+#import "HDDividerNode.h"
 #import "HDGridManager.h"
 #import "HDAppDelegate.h"
 #import "SKEmitterNode+HDEmitterAdditions.h"
+
+
+#define TRANSFORM_SCALE_X [UIScreen mainScreen].bounds.size.width  / 375.0f
+
+#define COLUMN_WIDTH ([UIScreen mainScreen].bounds.size.width - BARRIER_WIDTH * 2)/5
+
+#define ROW_HEIGHT floor((COLUMN_WIDTH * 2.325f))
+
+#define BARRIER_WIDTH ceilf(14 * TRANSFORM_SCALE_X)
+
 
 typedef NS_OPTIONS(uint32_t, HDCollisionCategory) {
     HDCollisionCategoryNone     = 0x0,
@@ -25,36 +33,32 @@ typedef NS_OPTIONS(uint32_t, HDCollisionCategory) {
     HDCollisionCategoryPlatform = 0x1 << 1,
 };
 
-static const CGFloat kMaxPlayerDrop = 400.0f;
-static const CGFloat xAccelerationMultiplier = 700.0f;
-
-NSString * const HDSAVEME_KEY    = @"SAVE_ME";
-NSString * const HDPLAYER_KEY    = @"PLAYER_NODE";
-NSString * const HDBOOST_KEY     = @"BOOST_EMITTER";
-
+NSString * const HDSAVEME_KEY = @"SAVE_ME";
+NSString * const HDPLAYER_KEY = @"PLAYER_NODE";
+NSString * const HDBOOST_KEY  = @"BOOST_EMITTER";
 NSString * const HDNODE_KEY      = @"HDKeyNode";
 NSString * const HDNODE_PLATFORM = @"HDPlatformNode";
+
 @interface HDGameScene ()<SKPhysicsContactDelegate>
 @property (nonatomic, strong) SKNode *player;
-@property (nonatomic, strong) SKNode *backgroundNode;
+@property (nonatomic, strong) SKNode *parallexBottomNode;
+@property (nonatomic, strong) SKNode *parallexMiddleNode;
+@property (nonatomic, strong) SKNode *parallexTopNode;
 @property (nonatomic, strong) SKNode *objectLayerNode;
 @property (nonatomic, strong) SKNode *hudLayerNode;
 @end
 
 @implementation HDGameScene {
-    CMMotionManager *_motionManager;
-    CGFloat _xAcceleration;
+    CGPoint _velocity;
     CGFloat _endLevelY;
     CGFloat _maxPlayerY;
     BOOL _gameOver;
-    BOOL _magnet;
 }
 
 - (instancetype)initWithSize:(CGSize)size {
     
     if (self = [super initWithSize:size]) {
         [self _setup];
-        [self _initalizeMotionManager];
     }
     return self;
 }
@@ -62,11 +66,14 @@ NSString * const HDNODE_PLATFORM = @"HDPlatformNode";
 - (void)_setup {
     
     self.backgroundColor = [SKColor flatMidnightBlueColor];
-    self.physicsWorld.gravity = CGVectorMake(0.0f, -2.5f);
+    self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
     self.physicsWorld.contactDelegate = self;
     
-    self.backgroundNode = [self _createBackground];
-    [self addChild:self.backgroundNode];
+    self.parallexBottomNode = [self _createParallexBottomNode];
+    [self addChild:self.parallexBottomNode];
+    
+    self.parallexTopNode = [self _layoutStars];
+    [self addChild:self.parallexTopNode];
     
     self.objectLayerNode = [SKNode node];
     [self addChild:self.objectLayerNode];
@@ -74,32 +81,35 @@ NSString * const HDNODE_PLATFORM = @"HDPlatformNode";
     self.hudLayerNode = [SKNode node];
     [self addChild:self.hudLayerNode];
     
+    _velocity.y = 0;
+    _velocity.x = 0;
     _maxPlayerY = self.player.position.y;
     _gameOver = NO;
 }
 
-- (void)_initalizeMotionManager {
-    
-    _motionManager = [[CMMotionManager alloc] init];
-    _motionManager.accelerometerUpdateInterval = 0.2f;
-    [_motionManager startAccelerometerUpdatesToQueue:[NSOperationQueue currentQueue]
-                                         withHandler:^(CMAccelerometerData  *accelerometerData, NSError *error) {
-                                             CMAcceleration acceleration = accelerometerData.acceleration;
-                                             _xAcceleration = (acceleration.x * 0.75f) + (_xAcceleration * 0.25f);
-                                         }];
-}
-
-- (SKNode *)_createBackground {
+- (SKNode *)_createParallexBottomNode {
     
     SKNode *node = [SKNode node];
-    for (NSUInteger row = 0; row < 5; row++) {
-        SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithColor:(row % 2 == 0) ?[SKColor flatMidnightBlueColor]:[SKColor flatWetAsphaltColor]
-                                                             size:CGSizeMake(self.size.width/5, 2500.f)];
-        sprite.anchorPoint = CGPointMake(0.0, 0.0f);
-        sprite.position = CGPointMake(self.size.width/5 * row, 0.0f);
-        [node addChild:sprite];
-    }
+    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Parallex-Bottom"];
+    sprite.anchorPoint = CGPointMake(0.0, 0.0f);
+    sprite.position = CGPointMake(0.0, 0.0f);
+    [node addChild:sprite];
+    
     return node;
+}
+
+- (SKNode *)_layoutStars {
+    
+    SKNode *backgroundNode = [SKNode node];
+    for (NSUInteger nodeCount = 1; nodeCount < 9; nodeCount++) {
+        NSString *backgroundImageName = [NSString stringWithFormat:@"Background%tu", nodeCount];
+        SKSpriteNode *node = [SKSpriteNode spriteNodeWithImageNamed:backgroundImageName];
+
+        node.anchorPoint = CGPointMake(0.5f, 0.0f);
+        node.position = CGPointMake(self.size.width/2, (nodeCount - 1)*node.size.height);
+        [backgroundNode addChild:node];
+    }
+    return backgroundNode;
 }
 
 - (void)layoutChildrenNode {
@@ -113,9 +123,9 @@ NSString * const HDNODE_PLATFORM = @"HDPlatformNode";
             switch (intValue) {
                 case 1:
                 case 2:
-                case 3: {
-                    HDPlatformNode *platform = [self _createPlatformAtPosition:[self _coinPositionForRow:row column:column]
-                                                                        ofType:intValue];
+                case 3:{
+                    HDDividerNode *platform = [self _createBarrierAtPosition:[self _positionForRow:row column:column]
+                                                                    ofType:intValue];
                     [self.objectLayerNode addChild:platform];
                 } break;
                 default:
@@ -130,29 +140,29 @@ NSString * const HDNODE_PLATFORM = @"HDPlatformNode";
 - (void)_saveMe {
     
     _gameOver = YES;
-    
-    CGSize size = CGSizeMake(self.size.width/3, 80.0f);
-    CGPoint position = CGPointMake(self.size.width/2, _maxPlayerY - kMaxPlayerDrop*2 - size.height/2);
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithWhite:0.0f alpha:.5f] size:size];
-    sprite.name = HDSAVEME_KEY;
-    
-    HDSaveNode *saveMe = [HDSaveNode node];
-    saveMe.name = HDSAVEME_KEY;
-    saveMe.position = position;
-    [saveMe addChild:sprite];
-    [self.objectLayerNode addChild:saveMe];
-    
-    CGFloat kPositionY = MAX(_maxPlayerY - kMaxPlayerDrop*1.25, size.height/2 + 10.0f);
-    
-    NSTimeInterval timeDelay = 5.0f;
-    [saveMe runAction:[SKAction moveToY:kPositionY duration:.3f] completion:^{
-        SKAction *waitAction = [SKAction waitForDuration:timeDelay];
-        SKAction *positionAction = [SKAction moveTo:position duration:.3f];
-        [saveMe runAction:[SKAction sequence:@[waitAction, positionAction]] completion:^{
-            [saveMe removeFromParent];
-            [self _endGame];
-        }];
-    }];
+    [self _endGame];
+//    CGSize size = CGSizeMake(self.size.width/3, 80.0f);
+//    CGPoint position = CGPointMake(self.size.width/2, _maxPlayerY - kMaxPlayerDrop*2 - size.height/2);
+//    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithWhite:0.0f alpha:.5f] size:size];
+//    sprite.name = HDSAVEME_KEY;
+//    
+//    HDSaveNode *saveMe = [HDSaveNode node];
+//    saveMe.name = HDSAVEME_KEY;
+//    saveMe.position = position;
+//    [saveMe addChild:sprite];
+//    [self.objectLayerNode addChild:saveMe];
+//    
+//    CGFloat kPositionY = MAX(_maxPlayerY - kMaxPlayerDrop*1.25, size.height/2 + 10.0f);
+//    
+//    NSTimeInterval timeDelay = 3.0f;
+//    [saveMe runAction:[SKAction moveToY:kPositionY duration:.3f] completion:^{
+//        SKAction *waitAction = [SKAction waitForDuration:timeDelay];
+//        SKAction *positionAction = [SKAction moveTo:position duration:.3f];
+//        [saveMe runAction:[SKAction sequence:@[waitAction, positionAction]] completion:^{
+//            [saveMe removeFromParent];
+//            [self _endGame];
+//        }];
+//    }];
 }
 
 - (void)update:(CFTimeInterval)currentTime {
@@ -160,6 +170,11 @@ NSString * const HDNODE_PLATFORM = @"HDPlatformNode";
     if (_gameOver) {
         return;
     }
+    
+    CGPoint position = self.player.position;
+    position.y += _velocity.y;
+    position.x += _velocity.x;
+    self.player.position = position;
     
     if ((int)self.player.position.y > _maxPlayerY) {
         [HDPointsManager sharedManager].score += (int)_player.position.y - _maxPlayerY;
@@ -173,16 +188,13 @@ NSString * const HDNODE_PLATFORM = @"HDPlatformNode";
     
     [self.objectLayerNode enumerateChildNodesWithName:HDNODE_PLATFORM
                                            usingBlock:^(SKNode *node, BOOL *stop) {
-                                               [(HDPlatformNode *)node checkNodePositionForRemoval:self.player.position.y];
+                                               [(HDDividerNode *)node checkNodePositionForRemoval:self.player.position.y];
                                            }];
     
     if (self.player.position.y > 200.0f) {
-        self.objectLayerNode.position = CGPointMake(self.objectLayerNode.position.x, -(self.player.position.y - 200.0f));
-        self.backgroundNode.position = CGPointMake(0.0f, -(_player.position.y - 200.0f));
-    }
-    
-    if (self.player.position.y < (_maxPlayerY - kMaxPlayerDrop)) {
-        [self _saveMe];
+        self.objectLayerNode.position    = CGPointMake(self.objectLayerNode.position.x, -(self.player.position.y - 200.0f));
+        self.parallexBottomNode.position = CGPointMake(0.0f, -((_player.position.y - 200.0f)/10));
+        self.parallexTopNode.position    = CGPointMake(0.0f, -((_player.position.y - 200.0f)/4));
     }
 }
 
@@ -193,13 +205,11 @@ NSString * const HDNODE_PLATFORM = @"HDPlatformNode";
 
 - (void)_addBoostToNode:(SKSpriteNode *)node {
     
-    SKEmitterNode *boost = [SKEmitterNode playerBoostWithColor:[UIColor flatEmeraldColor]];
+    SKEmitterNode *boost = [SKEmitterNode playerBoostWithColor:[UIColor flatSTWhiteColor]];
     boost.name = HDBOOST_KEY;
+    boost.targetNode = self.scene;
     boost.position = CGPointMake(0.0f, -node.size.height/2);
     [self.player addChild:boost];
-    
-    NSTimeInterval delayInSeconds = boost.numParticlesToEmit / boost.particleBirthRate + boost.particleLifetime;
-    [boost performSelector:@selector(removeFromParent) withObject:nil afterDelay:delayInSeconds];
 }
 
 #pragma mark - UIResponder
@@ -210,36 +220,56 @@ NSString * const HDNODE_PLATFORM = @"HDPlatformNode";
     CGPoint position = [touch locationInNode:self.objectLayerNode];
     SKNode *node = [self.objectLayerNode nodeAtPoint:position];
     
+    [self touchesMoved:touches withEvent:event];
+    
     if ([node.name isEqualToString:HDSAVEME_KEY]) {
         // Check for Coins to make sure they have enough to purchase it, otherwise present buy coins menu
         self.player.physicsBody.dynamic = NO;
-        self.player.position = CGPointMake(self.player.position.x, (_maxPlayerY - kMaxPlayerDrop) + 1.0f);
+    //    self.player.position = CGPointMake(self.player.position.x, (_maxPlayerY - kMaxPlayerDrop) + 1.0f);
         self.player.physicsBody.dynamic = YES;
-        [self.player.physicsBody applyImpulse:CGVectorMake(0.0f, 32.0f)];
         [self _addBoostToNode:(SKSpriteNode *)[self.player childNodeWithName:HDPLAYER_KEY]];
         _gameOver = NO;
     }
     
     if (!self.player.physicsBody.dynamic && !_gameOver){
+         _velocity.y = 4;
          self.player.physicsBody.dynamic = YES;
-        [self.player.physicsBody applyImpulse:CGVectorMake(0.0f, 25.0f)];
         [self _addBoostToNode:(SKSpriteNode *)[self.player childNodeWithName:HDPLAYER_KEY]];
+        return;
     };
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    UITouch *touch = [touches anyObject];
+    CGPoint position = [touch locationInNode:self.objectLayerNode];
+    
+    if (position.x > self.size.width/2) {
+        _velocity.x = 5.0f;
+    } else {
+        _velocity.x = -5.0f;
+    }
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    _velocity.x = 0;
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    _velocity.x = 0;
 }
 
 #pragma mark - <SKPhysicsContactDelegate>
 
 - (void)didSimulatePhysics {
     
-    self.player.physicsBody.velocity = CGVectorMake(_xAcceleration * xAccelerationMultiplier, _player.physicsBody.velocity.dy);
-    
-    const CGFloat kOffset = 20.0f;
+    SKSpriteNode *player = (SKSpriteNode *)[self.player childNodeWithName:HDPLAYER_KEY];
+    const CGFloat kOffset = player.size.width/2;
     if (self.player.position.x < -kOffset) {
         self.player.position = CGPointMake(self.size.width + kOffset, _player.position.y);
     } else if (_player.position.x > self.size.width + kOffset) {
         self.player.position = CGPointMake(-kOffset, _player.position.y);
     }
-    return;
 }
 
 - (void)didBeginContact:(SKPhysicsContact *)contact {
@@ -252,11 +282,6 @@ NSString * const HDNODE_PLATFORM = @"HDPlatformNode";
             case HDObjectTypePlatform:
                 [self _platformUpdate:update];
                 break;
-            case HDObjectTypeBomb:
-                [self _bombUpdate:update];
-                break;
-            case HDObjectTypeKey:
-                break;
             case HDObjectTypeNone:
                 break;
             default:
@@ -265,34 +290,34 @@ NSString * const HDNODE_PLATFORM = @"HDPlatformNode";
     }];
 }
 
-- (void)_bombUpdate:(BOOL)update {
-    NSLog(@"%@",NSStringFromSelector(_cmd));
-}
-
 - (void)_boostUpdate:(BOOL)update {
     NSLog(@"%@",NSStringFromSelector(_cmd));
 }
 
 - (void)_platformUpdate:(BOOL)update {
     
-    if (!update) {
-        return;
-    }
+    _velocity.y = 0;
+//    [self _saveMe];
     
-    if ([self.player childNodeWithName:HDBOOST_KEY]) {
-        [[self.player childNodeWithName:HDBOOST_KEY] removeFromParent];
-    }
-    
-    [self _addBoostToNode:(SKSpriteNode *)[self.player childNodeWithName:HDPLAYER_KEY]];
+    NSLog(@"%@",NSStringFromSelector(_cmd));
 }
 
-- (CGPoint)_coinPositionForRow:(NSUInteger)row column:(NSUInteger)column {
+- (CGPoint)_positionForRow:(NSUInteger)row column:(NSUInteger)column {
+
+    CGFloat kPositionY = (ROW_HEIGHT * row);
+
+    if (column == 0) {
+        return CGPointMake(BARRIER_WIDTH/2, kPositionY);
+    }
     
-    CGFloat kDistance = ceilf(self.size.width / (NumberOfColumns - 1));
-    return CGPointMake((kDistance * column), ((kDistance * 2.0f) * row));
+    if (column == NumberOfColumns -1) {
+        return CGPointMake(self.size.width - BARRIER_WIDTH/2, kPositionY);
+    }
+    
+    return CGPointMake(((self.size.width/2) - (2 * COLUMN_WIDTH)) + (COLUMN_WIDTH * (column-1)), kPositionY);
 }
 
-#pragma mark - Nodes
+#pragma mark - Convience Nodes
 
 - (SKNode *)_createPlayer {
     
@@ -300,7 +325,7 @@ NSString * const HDNODE_PLATFORM = @"HDPlatformNode";
     sprite.name = HDPLAYER_KEY;
     
     SKNode *playerNode = [SKNode node];
-    playerNode.position = CGPointMake(self.size.width/2, 60.0f);
+    playerNode.position = CGPointMake(self.size.width/2, 0.0f);
     playerNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:sprite.size.width/2];
     playerNode.physicsBody.dynamic = NO;
     playerNode.physicsBody.allowsRotation = NO;
@@ -308,6 +333,7 @@ NSString * const HDNODE_PLATFORM = @"HDPlatformNode";
     playerNode.physicsBody.friction = 0.0f;
     playerNode.physicsBody.angularDamping = 0.0f;
     playerNode.physicsBody.linearDamping = 0.0f;
+    playerNode.physicsBody.affectedByGravity = NO;
     playerNode.physicsBody.usesPreciseCollisionDetection = YES;
     playerNode.physicsBody.categoryBitMask = HDCollisionCategoryPlayer;
     playerNode.physicsBody.collisionBitMask = 0;
@@ -317,18 +343,23 @@ NSString * const HDNODE_PLATFORM = @"HDPlatformNode";
     return playerNode;
 }
 
-- (HDPlatformNode *)_createPlatformAtPosition:(CGPoint)position ofType:(HDPlatformType)type {
+- (HDDividerNode *)_createBarrierAtPosition:(CGPoint)position ofType:(HDDividerType)type {
     
     SKSpriteNode *sprite;
-    if (type == HDPlatformTypeLarge) {
-        sprite = [SKSpriteNode spriteNodeWithImageNamed:@"PlatformLarge"];
-    } else if (type == HDPlatformTypeMedium) {
-        sprite = [SKSpriteNode spriteNodeWithColor:[SKColor flatPeterRiverColor] size:CGSizeMake(50.0f, 15.0f)];
-    } else if (type == HDPlatformTypeSmall) {
-        sprite = [SKSpriteNode spriteNodeWithColor:[SKColor flatPeterRiverColor] size:CGSizeMake(25.0f, 15.0f)];
+    switch (type) {
+        case 1:
+            sprite = [SKSpriteNode spriteNodeWithColor:[UIColor flatSTRedColor] size:CGSizeMake(COLUMN_WIDTH, BARRIER_WIDTH)];
+            sprite.anchorPoint = CGPointMake(.5f, 1.f);
+            break;
+        case 2:
+            sprite = [SKSpriteNode spriteNodeWithColor:[UIColor flatSTRedColor] size:CGSizeMake(BARRIER_WIDTH, ROW_HEIGHT)];
+            sprite.anchorPoint = CGPointMake(.5f, 1.f);
+            break;
+        default:
+            break;
     }
-    
-    HDPlatformNode *node = [HDPlatformNode node];
+ 
+    HDDividerNode *node = [HDDividerNode node];
     node.position = position;
     node.name = HDNODE_PLATFORM;
     node.platformType = type;
@@ -336,6 +367,7 @@ NSString * const HDNODE_PLATFORM = @"HDPlatformNode";
     node.physicsBody.dynamic = NO;
     node.physicsBody.categoryBitMask = HDCollisionCategoryPlatform;
     node.physicsBody.collisionBitMask = 0;
+    
     [node addChild:sprite];
     
     return node;

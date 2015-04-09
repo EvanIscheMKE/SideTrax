@@ -17,10 +17,10 @@
     boost.particleTexture = [SKTexture textureWithImageNamed:@"spark"];
     boost.emissionAngle      = M_PI + M_PI_2;
     boost.particlePositionRange = CGVectorMake(12.0f, 0.0);
-    boost.numParticlesToEmit = 100;
+    boost.numParticlesToEmit = 0;
     boost.particleBirthRate  = 200;
     boost.particleLifetime   = 1.0f;
-    boost.particleColor      = [SKColor flatSTYellowColor];
+    boost.particleColor      = color;
     boost.particleSpeed      = 200.0f;
     boost.particleSpeedRange = 200.0f;
     boost.particleScale      = .1f;

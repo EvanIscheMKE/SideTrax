@@ -15,7 +15,9 @@
 #import "HDGameViewController.h"
 #import "HDCompletionViewController.h"
 #import "HDGameCenterManager.h"
+#import "HDSettingsManager.h"
 
+NSString * const HDFirstRunKey = @"first";
 @interface HDAppDelegate ()<GKGameCenterControllerDelegate>
 @property (nonatomic, strong) UINavigationController *navigationController;
 @end
@@ -39,10 +41,15 @@
     
     [[HDGameCenterManager sharedManager] authenticateGameCenter];
     
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:HDFirstRunKey]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:HDFirstRunKey];
+        [[HDSettingsManager sharedManager] configureSettingsForFirstRun];
+    }
+    
     return YES;
 }
 
-#pragma mark - View Hieacry
+#pragma mark - View Hierarchy
 
 - (void)presentCompletionViewControllerWithMovesCompleted:(NSUInteger)moves {
     HDCompletionViewController *viewController = [[HDCompletionViewController alloc] init];
@@ -50,10 +57,8 @@
 }
 
 - (void)presentGameViewController {
-    
-    [self presentCompletionViewControllerWithMovesCompleted:50];
-   //HDGameViewController *viewController = [[HDGameViewController alloc] init];
-   //[self.navigationController pushViewController:viewController animated:YES];
+   HDGameViewController *viewController = [[HDGameViewController alloc] init];
+   [self.navigationController pushViewController:viewController animated:YES];
 }
 
 #pragma mark - UIActivityController 

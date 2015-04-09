@@ -38,7 +38,7 @@
     
     [super viewDidLoad];
     
-    self.gridManager = [[HDGridManager alloc] initWithFileName:@"FilENAME"];
+    self.gridManager = [[HDGridManager alloc] init];
     [self.gridManager loadGridWithCallback:^{
         [self _setup];
     }];
@@ -47,6 +47,7 @@
                                              selector:@selector(_applicationWillResignActive:)
                                                  name:UIApplicationWillResignActiveNotification
                                                object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(_applicationDidBecomeActive:)
                                                  name:UIApplicationDidBecomeActiveNotification

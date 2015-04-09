@@ -566,8 +566,7 @@ void * base64_decode(const char* s, size_t * data_len) {
 #pragma mark
 #pragma mark NSURLConnection - Trust validation
 
-- (BOOL)validateTrust:(SecTrustRef)trust error:(NSError **)error
-{
+- (BOOL)validateTrust:(SecTrustRef)trust error:(NSError **)error {
     
     // Include some Security framework SPIs
     extern CFStringRef kSecTrustInfoExtendedValidationKey;
@@ -575,17 +574,14 @@ void * base64_decode(const char* s, size_t * data_len) {
     
     BOOL trusted = NO;
     SecTrustResultType trust_result;
-    if ((noErr == SecTrustEvaluate(trust, &trust_result)) && (trust_result == kSecTrustResultUnspecified))
-    {
+    if ((noErr == SecTrustEvaluate(trust, &trust_result)) && (trust_result == kSecTrustResultUnspecified)) {
         NSDictionary *trust_info = (__bridge_transfer NSDictionary *)SecTrustCopyInfo(trust);
         id hasEV = [trust_info objectForKey:(__bridge NSString *)kSecTrustInfoExtendedValidationKey];
         trusted =  [hasEV isKindOfClass:[NSValue class]] && [hasEV boolValue];
     }
     
-    if (trust)
-    {
-        if (!trusted && error)
-        {
+    if (trust) {
+        if (!trusted && error) {
             *error = [NSError errorWithDomain:@"kSecTrustError" code:(NSInteger)trust_result userInfo:nil];
         }
         return trusted;
