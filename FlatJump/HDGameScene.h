@@ -9,8 +9,16 @@
 @import SpriteKit;
 @import UIKit;
 
+typedef NS_OPTIONS(int8_t, HDDirectionState) {
+    HDDirectionStateRegular = 1,
+    HDDirectionStateReversed = 2,
+    HDDirectionStateNone
+};
+
+extern NSString * const HDLevelLayoutNotificationKey;
 @class HDGridManager;
 @interface HDGameScene : SKScene
 @property (nonatomic, strong) HDGridManager *gridManager;
+@property (nonatomic, assign) HDDirectionState direction;
 - (void)layoutChildrenNode;
 @end

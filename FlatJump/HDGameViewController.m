@@ -27,6 +27,7 @@
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillResignActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:HDLevelLayoutNotificationKey              object:nil];
 }
 
 - (void)loadView {
@@ -39,9 +40,17 @@
     [super viewDidLoad];
     
     self.gridManager = [[HDGridManager alloc] init];
-    [self.gridManager loadGridWithCallback:^{
-        [self _setup];
+    self.gridManager.range = NSMakeRange(0, NumberOfRows);
+    [self.gridManager loadGridFromRangeWithCallback:^{
+        if (self.scene) {
+             [self.scene layoutChildrenNode];
+        }
     }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_layoutAdditionalLevels:)
+                                                 name:HDLevelLayoutNotificationKey
+                                               object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(_applicationWillResignActive:)
@@ -54,14 +63,15 @@
                                                object:nil];
 }
 
-- (void)_setup {
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
     
     if (!_skView.scene) {
         self.scene = [HDGameScene sceneWithSize:_skView.bounds.size];
+        self.scene.direction = HDDirectionStateRegular;
         self.scene.gridManager = self.gridManager;
         self.scene.scaleMode = SKSceneScaleModeAspectFill;
         [_skView presentScene:self.scene];
-        [self.scene layoutChildrenNode];
     }
 }
 
@@ -71,6 +81,12 @@
 }
 
 #pragma mark - NSNotificationCenter
+
+- (void)_layoutAdditionalLevels:(NSNotification *)notification {
+    [self.gridManager loadGridFromRangeWithCallback:^{
+        [self.scene layoutChildrenNode];
+    }];
+}
 
 - (void)_applicationDidBecomeActive:(NSNotification *)notification {
     self.paused = NO;

@@ -11,8 +11,8 @@
 @interface UIColor (FlatColors)
 /*! www.flatuicolors.com !*/
 
-
 /*STD*/
++ (UIColor *)flatSTDarkBlueColor;
 + (UIColor *)flatSTRedColor;
 + (UIColor *)flatSTWhiteColor;
 + (UIColor *)flatSTTanColor;

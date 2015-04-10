@@ -34,6 +34,10 @@
      return [UIColor colorWithRed:(46/255.0f) green:(201/255.0f) blue:(216/255.0f) alpha:1];
 }
 
++ (UIColor *)flatSTDarkBlueColor {
+     return [UIColor colorWithRed:(3/255.0f) green:(32/255.0f) blue:(45/255.0f) alpha:1];
+}
+
 /* Blues */
 + (UIColor *)flatPeterRiverColor {
     return [UIColor colorWithRed:(52/255.0f) green:(152/255.0f) blue:(219/255.0f) alpha:1];

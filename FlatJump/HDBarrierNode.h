@@ -9,13 +9,11 @@
 @import SpriteKit;
 #import "HDObjectNode.h"
 
-typedef NS_ENUM(NSUInteger, HDDividerType) {
+typedef NS_ENUM(NSUInteger, HDBarrierType) {
     HDDividerTypeMedium = 1,
     HDDividerTypeLarge  = 2,
-    HDDividerTypeSmall  = 3,
-    HDDividerTypeBreak  = 4
 };
 
-@interface HDDividerNode : HDObjectNode
-@property (nonatomic, assign) HDDividerType platformType;
+@interface HDBarrierNode : HDObjectNode
+@property (nonatomic, assign) HDBarrierType barrierType;
 @end

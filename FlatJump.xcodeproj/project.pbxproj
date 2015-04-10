@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		380120861AD72DAF001B2706 /* SpaceshipLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 380120851AD72DAF001B2706 /* SpaceshipLarge@2x.png */; };
 		381D2A9D1ACDB8D6009F9F4F /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2A961ACDB8D6009F9F4F /* NSData+Base64.m */; };
 		381D2A9E1ACDB8D6009F9F4F /* HDIAdHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2A981ACDB8D6009F9F4F /* HDIAdHelper.m */; };
 		381D2A9F1ACDB8D6009F9F4F /* HDJumperIAdHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2A9A1ACDB8D6009F9F4F /* HDJumperIAdHelper.m */; };
@@ -29,7 +30,7 @@
 		389C7D471AC5D6CA005EF91B /* HDGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D461AC5D6CA005EF91B /* HDGameScene.m */; };
 		389C7D4B1AC5D869005EF91B /* HDPointsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D4A1AC5D869005EF91B /* HDPointsManager.m */; };
 		389C7D4F1AC5D8A8005EF91B /* SKColor+HDColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D4E1AC5D8A8005EF91B /* SKColor+HDColor.m */; };
-		389C7D531AC5DAF8005EF91B /* HDDividerNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D521AC5DAF8005EF91B /* HDDividerNode.m */; };
+		389C7D531AC5DAF8005EF91B /* HDBarrierNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D521AC5DAF8005EF91B /* HDBarrierNode.m */; };
 		389C7D591AC5DB8F005EF91B /* HDObjectNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D581AC5DB8F005EF91B /* HDObjectNode.m */; };
 		389C7D5E1AC5E026005EF91B /* UIColor+FlatColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D5D1AC5E026005EF91B /* UIColor+FlatColors.m */; };
 		389C7D601AC5EF56005EF91B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389C7D5F1AC5EF56005EF91B /* CoreMotion.framework */; };
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		380120851AD72DAF001B2706 /* SpaceshipLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SpaceshipLarge@2x.png"; path = "Assets.atlas/SpaceshipLarge@2x.png"; sourceTree = "<group>"; };
 		381D2A951ACDB8C9009F9F4F /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		381D2A961ACDB8D6009F9F4F /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		381D2A971ACDB8D6009F9F4F /* HDIAdHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDIAdHelper.h; sourceTree = "<group>"; };
@@ -93,8 +95,8 @@
 		389C7D4A1AC5D869005EF91B /* HDPointsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDPointsManager.m; sourceTree = "<group>"; };
 		389C7D4D1AC5D8A8005EF91B /* SKColor+HDColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKColor+HDColor.h"; sourceTree = "<group>"; };
 		389C7D4E1AC5D8A8005EF91B /* SKColor+HDColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKColor+HDColor.m"; sourceTree = "<group>"; };
-		389C7D511AC5DAF8005EF91B /* HDDividerNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDDividerNode.h; sourceTree = "<group>"; };
-		389C7D521AC5DAF8005EF91B /* HDDividerNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDDividerNode.m; sourceTree = "<group>"; };
+		389C7D511AC5DAF8005EF91B /* HDBarrierNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDBarrierNode.h; sourceTree = "<group>"; };
+		389C7D521AC5DAF8005EF91B /* HDBarrierNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDBarrierNode.m; sourceTree = "<group>"; };
 		389C7D571AC5DB8F005EF91B /* HDObjectNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDObjectNode.h; sourceTree = "<group>"; };
 		389C7D581AC5DB8F005EF91B /* HDObjectNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDObjectNode.m; sourceTree = "<group>"; };
 		389C7D5C1AC5E026005EF91B /* UIColor+FlatColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+FlatColors.h"; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				389C7D1B1AC5D554005EF91B /* Info.plist */,
 				389C7D751AC71113005EF91B /* Boost.sks */,
 				389C7D761AC71113005EF91B /* spark.png */,
+				380120851AD72DAF001B2706 /* SpaceshipLarge@2x.png */,
 				389C7D1C1AC5D554005EF91B /* main.m */,
 			);
 			name = "Supporting Files";
@@ -292,8 +295,8 @@
 			children = (
 				38B93B301AC9C75A003A0586 /* HDSaveNode.h */,
 				38B93B311AC9C75A003A0586 /* HDSaveNode.m */,
-				389C7D511AC5DAF8005EF91B /* HDDividerNode.h */,
-				389C7D521AC5DAF8005EF91B /* HDDividerNode.m */,
+				389C7D511AC5DAF8005EF91B /* HDBarrierNode.h */,
+				389C7D521AC5DAF8005EF91B /* HDBarrierNode.m */,
 				389C7D571AC5DB8F005EF91B /* HDObjectNode.h */,
 				389C7D581AC5DB8F005EF91B /* HDObjectNode.m */,
 			);
@@ -384,6 +387,7 @@
 			files = (
 				389C7D781AC71113005EF91B /* spark.png in Resources */,
 				389C7D771AC71113005EF91B /* Boost.sks in Resources */,
+				380120861AD72DAF001B2706 /* SpaceshipLarge@2x.png in Resources */,
 				389C7D641AC5F37D005EF91B /* Assets.atlas in Resources */,
 				389C7D281AC5D554005EF91B /* Images.xcassets in Resources */,
 			);
@@ -406,7 +410,7 @@
 				381D2ABF1ACDD94E009F9F4F /* HDCompletionViewController.m in Sources */,
 				389C7D5E1AC5E026005EF91B /* UIColor+FlatColors.m in Sources */,
 				389C7D471AC5D6CA005EF91B /* HDGameScene.m in Sources */,
-				389C7D531AC5DAF8005EF91B /* HDDividerNode.m in Sources */,
+				389C7D531AC5DAF8005EF91B /* HDBarrierNode.m in Sources */,
 				389C7D4F1AC5D8A8005EF91B /* SKColor+HDColor.m in Sources */,
 				381D2AA01ACDB8D6009F9F4F /* VerificationController.m in Sources */,
 				381D2A9E1ACDB8D6009F9F4F /* HDIAdHelper.m in Sources */,

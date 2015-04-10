@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-static const NSInteger NumberOfRows    = 60;
+static const NSInteger NumberOfRows    = 12;
 static const NSInteger NumberOfColumns = 7;
 
 @interface HDGridManager : NSObject
+@property (nonatomic, assign) NSRange range;
 - (NSNumber *)coinTypeAtRow:(NSInteger)row column:(NSInteger)column;
-- (void)loadGridWithCallback:(dispatch_block_t)completion;
+- (void)loadGridFromRangeWithCallback:(dispatch_block_t)completion;
+- (void)clearCache;
 @end
 

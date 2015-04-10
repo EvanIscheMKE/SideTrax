@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Evan William Ische. All rights reserved.
 //
 
-#import "HDDividerNode.h"
+#import "HDBarrierNode.h"
 
-@implementation HDDividerNode
+@implementation HDBarrierNode
 
 - (void)collisionWithPlayer:(SKNode *)player completion:(CompletionBlock)completion {
     

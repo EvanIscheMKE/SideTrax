@@ -39,7 +39,7 @@
 
 - (void)_setup {
     
-    self.view.backgroundColor = [UIColor flatMidnightBlueColor];
+    self.view.backgroundColor = [UIColor flatSTDarkBlueColor];
     if (![[NSUserDefaults standardUserDefaults] boolForKey:IAPremoveAdsProductIdentifier]) {
         self.canDisplayBannerAds  = YES;
     }

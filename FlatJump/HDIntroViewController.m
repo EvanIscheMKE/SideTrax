@@ -15,10 +15,12 @@
 #import "HDIntroViewController.h"
 
 @interface HDIntroViewController ()
-
+@property (nonatomic, strong) UIImageView *spaceShip;
 @end
 
-@implementation HDIntroViewController
+@implementation HDIntroViewController{
+    BOOL _rocketHasLaunched;
+}
 
 - (void)viewDidLoad {
     [self _setup];
@@ -27,17 +29,21 @@
 
 - (void)_setup {
     
-    self.view.backgroundColor = [UIColor flatMidnightBlueColor];
+    self.view.backgroundColor = [UIColor flatSTDarkBlueColor];
+    
+    self.spaceShip = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SpaceshipLarge"]];
+    self.spaceShip.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetHeight(self.view.bounds)/3.65f);
+    [self.view addSubview:self.spaceShip];
     
     CGRect beginBounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds)/1.65f, CGRectGetMidX(self.view.bounds)/2.25f);
     HDShadowButton *begin = [[HDShadowButton alloc] initWithFrame:beginBounds];
     begin.center = CGPointMake(CGRectGetMidX(self.view.bounds),
                                CGRectGetMidY(self.view.bounds) + CGRectGetHeight(self.view.bounds)/10);
     begin.backgroundColor = [UIColor flatSTRedColor];
-    begin.titleLabel.font = [UIFont fontWithName:@"GillSans" size:CGRectGetHeight(begin.bounds) * .65f];
-    [begin setTitle:@"BEGIN" forState:UIControlStateNormal];
-    [begin addTarget:[HDAppDelegate sharedDelegate]
-              action:@selector(presentGameViewController)
+    begin.titleLabel.font = [UIFont fontWithName:@"GillSans" size:CGRectGetHeight(begin.bounds) * .55f];
+    [begin setTitle:@"LAUNCH" forState:UIControlStateNormal];
+    [begin addTarget:self
+              action:@selector(_liftOff:)
     forControlEvents:UIControlEventTouchUpInside];
     
     CGRect leaderboardBounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(beginBounds), CGRectGetMidX(self.view.bounds)/3.25f);
@@ -92,9 +98,33 @@
     }
 }
 
+- (IBAction)_liftOff:(id)sender {
+    
+    // Turn on spaceship Emitters
+    [UIView animateWithDuration:.3f animations:^{
+        CGPoint position = self.spaceShip.center;
+        position.y = -CGRectGetHeight(self.spaceShip.bounds);
+        self.spaceShip.center = position;
+    } completion:^(BOOL finished) {
+        if (finished) {
+            _rocketHasLaunched = YES;
+            [[HDAppDelegate sharedDelegate] presentGameViewController];
+        }
+    }];
+}
+
 - (IBAction)_openSettingsMenu:(id)sender {
     HDLayoverView *layover = [[HDLayoverView alloc] init];
     [layover show];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (_rocketHasLaunched) {
+         self.spaceShip.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetHeight(self.view.bounds)/3.65f);
+        _rocketHasLaunched = NO;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
