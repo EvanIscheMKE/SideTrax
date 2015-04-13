@@ -8,8 +8,10 @@
 
 #import "HDGameCenterManager.h"
 
-NSString * const HDLeaderboardKey = @"LevelLeaderboard";
-
+NSString * const HDNormalLeaderboardKey         = @"LevelCountNormal";
+NSString * const HDFastLeaderboardKey           = @"LevelCountFast";
+NSString * const HDNormalReversedLeaderboardKey = @"LevelCountReversedNormal";
+NSString * const HDFastReversedLeaderboardKey   = @"LevelCountReversedFast";
 @implementation HDGameCenterManager
 
 + (HDGameCenterManager *)sharedManager {
@@ -39,13 +41,13 @@ NSString * const HDLeaderboardKey = @"LevelLeaderboard";
     };
 }
 
-- (void)reportLevelCompletion:(int64_t)level {
+- (void)reportLevelsCompleted:(int64_t)level forKey:(NSString *)key {
     
     if (![GKLocalPlayer localPlayer].isAuthenticated) {
         return;
     }
     
-    GKScore *completedLevel = [[GKScore alloc] initWithLeaderboardIdentifier:HDLeaderboardKey];
+    GKScore *completedLevel = [[GKScore alloc] initWithLeaderboardIdentifier:key];
     completedLevel.value = level;
     [GKScore reportScores:@[completedLevel] withCompletionHandler:^(NSError *error) {
         if (error) {

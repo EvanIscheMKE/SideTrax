@@ -66,9 +66,14 @@
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
+    _skView.showsDrawCount = YES;
+    _skView.showsFPS = YES;
+    _skView.showsNodeCount = YES;
+    
     if (!_skView.scene) {
         self.scene = [HDGameScene sceneWithSize:_skView.bounds.size];
         self.scene.direction = HDDirectionStateRegular;
+        self.scene.gameSpeed = HDGameSpeedNormal;
         self.scene.gridManager = self.gridManager;
         self.scene.scaleMode = SKSceneScaleModeAspectFill;
         [_skView presentScene:self.scene];

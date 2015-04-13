@@ -10,4 +10,5 @@
 
 @interface SKEmitterNode (HDEmitterAdditions)
 + (SKEmitterNode *)playerBoostWithColor:(SKColor *)color;
++ (SKEmitterNode *)spaceshipThrustWithColor:(SKColor *)color;
 @end

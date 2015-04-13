@@ -6,8 +6,10 @@
 //  Copyright (c) 2015 Evan William Ische. All rights reserved.
 //
 
+@import SpriteKit;
 @import QuartzCore;
 
+#import "HDIntroScene.h"
 #import "HDLayoverView.h"
 #import "HDShadowButton.h"
 #import "HDAppDelegate.h"
@@ -15,11 +17,15 @@
 #import "HDIntroViewController.h"
 
 @interface HDIntroViewController ()
-@property (nonatomic, strong) UIImageView *spaceShip;
+@property (nonatomic, strong) HDIntroScene *scene;
 @end
 
 @implementation HDIntroViewController{
     BOOL _rocketHasLaunched;
+}
+
+- (void)loadView {
+    self.view = [[SKView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 }
 
 - (void)viewDidLoad {
@@ -28,13 +34,7 @@
 }
 
 - (void)_setup {
-    
-    self.view.backgroundColor = [UIColor flatSTDarkBlueColor];
-    
-    self.spaceShip = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SpaceshipLarge"]];
-    self.spaceShip.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetHeight(self.view.bounds)/3.65f);
-    [self.view addSubview:self.spaceShip];
-    
+
     CGRect beginBounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds)/1.65f, CGRectGetMidX(self.view.bounds)/2.25f);
     HDShadowButton *begin = [[HDShadowButton alloc] initWithFrame:beginBounds];
     begin.center = CGPointMake(CGRectGetMidX(self.view.bounds),
@@ -100,16 +100,10 @@
 
 - (IBAction)_liftOff:(id)sender {
     
-    // Turn on spaceship Emitters
-    [UIView animateWithDuration:.3f animations:^{
-        CGPoint position = self.spaceShip.center;
-        position.y = -CGRectGetHeight(self.spaceShip.bounds);
-        self.spaceShip.center = position;
-    } completion:^(BOOL finished) {
-        if (finished) {
-            _rocketHasLaunched = YES;
-            [[HDAppDelegate sharedDelegate] presentGameViewController];
-        }
+    self.view.userInteractionEnabled = NO;
+    [self.scene takeOffWithCompletion:^{
+        _rocketHasLaunched = YES;
+        [[HDAppDelegate sharedDelegate] presentGameViewController];
     }];
 }
 
@@ -118,11 +112,24 @@
     [layover show];
 }
 
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    SKView *skView = (SKView *)self.view;
+    if (!skView.scene) {
+        self.scene = [HDIntroScene sceneWithSize:self.view.bounds.size];
+        self.scene.scaleMode = SKSceneScaleModeAspectFill;
+        [skView presentScene:self.scene];
+    }
+    
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    self.view.userInteractionEnabled = YES;
     if (_rocketHasLaunched) {
-         self.spaceShip.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetHeight(self.view.bounds)/3.65f);
+        [self.scene landTheShip];
         _rocketHasLaunched = NO;
     }
 }

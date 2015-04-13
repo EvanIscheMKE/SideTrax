@@ -8,7 +8,7 @@
 
 @import SpriteKit;
 
-typedef NS_ENUM(NSUInteger, HDObjectType) {
+typedef NS_OPTIONS(u_int8_t, HDObjectType) {
     HDObjectTypePlatform = 3,
     HDObjectTypeNone     = 0
 };

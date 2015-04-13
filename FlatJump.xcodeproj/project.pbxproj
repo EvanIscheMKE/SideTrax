@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		380120861AD72DAF001B2706 /* SpaceshipLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 380120851AD72DAF001B2706 /* SpaceshipLarge@2x.png */; };
 		381D2A9D1ACDB8D6009F9F4F /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2A961ACDB8D6009F9F4F /* NSData+Base64.m */; };
 		381D2A9E1ACDB8D6009F9F4F /* HDIAdHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2A981ACDB8D6009F9F4F /* HDIAdHelper.m */; };
 		381D2A9F1ACDB8D6009F9F4F /* HDJumperIAdHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2A9A1ACDB8D6009F9F4F /* HDJumperIAdHelper.m */; };
 		381D2AA01ACDB8D6009F9F4F /* VerificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2A9C1ACDB8D6009F9F4F /* VerificationController.m */; };
 		381D2AA41ACDBAFE009F9F4F /* HDShadowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2AA31ACDBAFE009F9F4F /* HDShadowButton.m */; };
 		381D2ABF1ACDD94E009F9F4F /* HDCompletionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2ABE1ACDD94E009F9F4F /* HDCompletionViewController.m */; };
+		381DD4301AD76A64006E4163 /* HDRocketView.m in Sources */ = {isa = PBXBuildFile; fileRef = 381DD42F1AD76A64006E4163 /* HDRocketView.m */; };
+		381DD4361AD76E75006E4163 /* HDIntroScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 381DD4351AD76E75006E4163 /* HDIntroScene.m */; };
 		38217C471ACDE9110038156A /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38217C461ACDE9110038156A /* GameKit.framework */; };
 		38217C491ACDE9190038156A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38217C481ACDE9190038156A /* QuartzCore.framework */; };
 		38217C4B1ACDE9240038156A /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38217C4A1ACDE9240038156A /* iAd.framework */; };
@@ -39,6 +40,7 @@
 		389C7D741AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D731AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m */; };
 		389C7D771AC71113005EF91B /* Boost.sks in Resources */ = {isa = PBXBuildFile; fileRef = 389C7D751AC71113005EF91B /* Boost.sks */; };
 		389C7D781AC71113005EF91B /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 389C7D761AC71113005EF91B /* spark.png */; };
+		38B6318F1AD798F1009F7CAE /* SKSpriteNode+HDSpriteNodeAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B6318E1AD798F1009F7CAE /* SKSpriteNode+HDSpriteNodeAdditions.m */; };
 		38B93B321AC9C75A003A0586 /* HDSaveNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B93B311AC9C75A003A0586 /* HDSaveNode.m */; };
 		38B93B421ACCBDC7003A0586 /* HDIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B93B411ACCBDC7003A0586 /* HDIntroViewController.m */; };
 /* End PBXBuildFile section */
@@ -54,7 +56,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		380120851AD72DAF001B2706 /* SpaceshipLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SpaceshipLarge@2x.png"; path = "Assets.atlas/SpaceshipLarge@2x.png"; sourceTree = "<group>"; };
 		381D2A951ACDB8C9009F9F4F /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		381D2A961ACDB8D6009F9F4F /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		381D2A971ACDB8D6009F9F4F /* HDIAdHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDIAdHelper.h; sourceTree = "<group>"; };
@@ -67,6 +68,10 @@
 		381D2AA31ACDBAFE009F9F4F /* HDShadowButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDShadowButton.m; sourceTree = "<group>"; };
 		381D2ABD1ACDD94E009F9F4F /* HDCompletionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDCompletionViewController.h; sourceTree = "<group>"; };
 		381D2ABE1ACDD94E009F9F4F /* HDCompletionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDCompletionViewController.m; sourceTree = "<group>"; };
+		381DD42E1AD76A64006E4163 /* HDRocketView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDRocketView.h; sourceTree = "<group>"; };
+		381DD42F1AD76A64006E4163 /* HDRocketView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDRocketView.m; sourceTree = "<group>"; };
+		381DD4341AD76E75006E4163 /* HDIntroScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDIntroScene.h; sourceTree = "<group>"; };
+		381DD4351AD76E75006E4163 /* HDIntroScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDIntroScene.m; sourceTree = "<group>"; };
 		38217C461ACDE9110038156A /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		38217C481ACDE9190038156A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		38217C4A1ACDE9240038156A /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
@@ -109,6 +114,8 @@
 		389C7D731AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKEmitterNode+HDEmitterAdditions.m"; sourceTree = "<group>"; };
 		389C7D751AC71113005EF91B /* Boost.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Boost.sks; sourceTree = "<group>"; };
 		389C7D761AC71113005EF91B /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		38B6318D1AD798F1009F7CAE /* SKSpriteNode+HDSpriteNodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKSpriteNode+HDSpriteNodeAdditions.h"; sourceTree = "<group>"; };
+		38B6318E1AD798F1009F7CAE /* SKSpriteNode+HDSpriteNodeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKSpriteNode+HDSpriteNodeAdditions.m"; sourceTree = "<group>"; };
 		38B93B301AC9C75A003A0586 /* HDSaveNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDSaveNode.h; sourceTree = "<group>"; };
 		38B93B311AC9C75A003A0586 /* HDSaveNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDSaveNode.m; sourceTree = "<group>"; };
 		38B93B401ACCBDC7003A0586 /* HDIntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDIntroViewController.h; sourceTree = "<group>"; };
@@ -154,6 +161,17 @@
 			name = IAP;
 			sourceTree = "<group>";
 		};
+		381DD4371AD76E97006E4163 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				389C7D451AC5D6CA005EF91B /* HDGameScene.h */,
+				389C7D461AC5D6CA005EF91B /* HDGameScene.m */,
+				381DD4341AD76E75006E4163 /* HDIntroScene.h */,
+				381DD4351AD76E75006E4163 /* HDIntroScene.m */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
 		389C7D0E1AC5D554005EF91B = {
 			isa = PBXGroup;
 			children = (
@@ -195,7 +213,6 @@
 				389C7D1B1AC5D554005EF91B /* Info.plist */,
 				389C7D751AC71113005EF91B /* Boost.sks */,
 				389C7D761AC71113005EF91B /* spark.png */,
-				380120851AD72DAF001B2706 /* SpaceshipLarge@2x.png */,
 				389C7D1C1AC5D554005EF91B /* main.m */,
 			);
 			name = "Supporting Files";
@@ -248,12 +265,13 @@
 		389C7D481AC5D846005EF91B /* Scenes/Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				389C7D451AC5D6CA005EF91B /* HDGameScene.h */,
-				389C7D461AC5D6CA005EF91B /* HDGameScene.m */,
 				3881D7291AD2198F0068338D /* HDLayoverView.h */,
 				3881D72A1AD2198F0068338D /* HDLayoverView.m */,
 				381D2AA21ACDBAFE009F9F4F /* HDShadowButton.h */,
 				381D2AA31ACDBAFE009F9F4F /* HDShadowButton.m */,
+				381DD42E1AD76A64006E4163 /* HDRocketView.h */,
+				381DD42F1AD76A64006E4163 /* HDRocketView.m */,
+				381DD4371AD76E97006E4163 /* Scenes */,
 				38B93B3F1ACC9547003A0586 /* Object Nodes */,
 			);
 			name = Scenes/Nodes;
@@ -286,6 +304,8 @@
 				389C7D5D1AC5E026005EF91B /* UIColor+FlatColors.m */,
 				389C7D721AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.h */,
 				389C7D731AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m */,
+				38B6318D1AD798F1009F7CAE /* SKSpriteNode+HDSpriteNodeAdditions.h */,
+				38B6318E1AD798F1009F7CAE /* SKSpriteNode+HDSpriteNodeAdditions.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -387,7 +407,6 @@
 			files = (
 				389C7D781AC71113005EF91B /* spark.png in Resources */,
 				389C7D771AC71113005EF91B /* Boost.sks in Resources */,
-				380120861AD72DAF001B2706 /* SpaceshipLarge@2x.png in Resources */,
 				389C7D641AC5F37D005EF91B /* Assets.atlas in Resources */,
 				389C7D281AC5D554005EF91B /* Images.xcassets in Resources */,
 			);
@@ -411,8 +430,10 @@
 				389C7D5E1AC5E026005EF91B /* UIColor+FlatColors.m in Sources */,
 				389C7D471AC5D6CA005EF91B /* HDGameScene.m in Sources */,
 				389C7D531AC5DAF8005EF91B /* HDBarrierNode.m in Sources */,
+				381DD4301AD76A64006E4163 /* HDRocketView.m in Sources */,
 				389C7D4F1AC5D8A8005EF91B /* SKColor+HDColor.m in Sources */,
 				381D2AA01ACDB8D6009F9F4F /* VerificationController.m in Sources */,
+				38B6318F1AD798F1009F7CAE /* SKSpriteNode+HDSpriteNodeAdditions.m in Sources */,
 				381D2A9E1ACDB8D6009F9F4F /* HDIAdHelper.m in Sources */,
 				389C7D231AC5D554005EF91B /* HDGameViewController.m in Sources */,
 				3881D72B1AD2198F0068338D /* HDLayoverView.m in Sources */,
@@ -429,6 +450,7 @@
 				38B93B321AC9C75A003A0586 /* HDSaveNode.m in Sources */,
 				389C7D741AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m in Sources */,
 				381D2A9D1ACDB8D6009F9F4F /* NSData+Base64.m in Sources */,
+				381DD4361AD76E75006E4163 /* HDIntroScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,7 +558,8 @@
 				INFOPLIST_FILE = FlatJump/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = FlatJump;
+				PRODUCT_NAME = FlatJump;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -550,7 +573,8 @@
 				INFOPLIST_FILE = FlatJump/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = FlatJump;
+				PRODUCT_NAME = FlatJump;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;

@@ -14,6 +14,7 @@
 #import "HDJumperIAdHelper.h"
 #import "HDCompletionViewController.h"
 #import "HDAppDelegate.h"
+#import "HDPointsManager.h"
 
 #define TRANSFORM_SCALE_X [UIScreen mainScreen].bounds.size.width  / 375.0f
 #define TRANSFORM_SCALE_Y [UIScreen mainScreen].bounds.size.height / 667.0f
@@ -39,8 +40,9 @@
 
 - (void)_setup {
     
-    self.view.backgroundColor = [UIColor flatSTDarkBlueColor];
+    self.view.backgroundColor = [UIColor flatMidnightBlueColor];
     if (![[NSUserDefaults standardUserDefaults] boolForKey:IAPremoveAdsProductIdentifier]) {
+        [UIViewController prepareInterstitialAds];
         self.canDisplayBannerAds  = YES;
     }
     
@@ -81,7 +83,6 @@
             default:
                 break;
         }
-        
     }
 }
 
@@ -126,6 +127,13 @@
         [container.layer addSublayer:subLayer];
     }
     
+    UILabel *currentScoreLbl = [[UILabel alloc] init];
+    currentScoreLbl.text = [NSString stringWithFormat:@"%zd",[HDPointsManager sharedManager].score];
+    currentScoreLbl.textColor = [UIColor flatMidnightBlueColor];
+    currentScoreLbl.font = [UIFont fontWithName:@"GillSans" size:42.0f];
+    [currentScoreLbl sizeToFit];
+    currentScoreLbl.center = CGPointMake(CGRectGetMidX(container.bounds), labelContainer.position.y - 15.0f);
+    
     UILabel *descriptionLbl = [[UILabel alloc] init];
     descriptionLbl.text = @"You just beat the best move challenge";
     descriptionLbl.textColor = [UIColor flatMidnightBlueColor];
@@ -142,7 +150,7 @@
     titleLbl.center = CGPointMake(CGRectGetMidX(container.bounds),
                                   CGRectGetMinY(descriptionLbl.frame) - CGRectGetMidY(titleLbl.bounds) - 3.0f);
     
-    for (UILabel *lbls in @[descriptionLbl, titleLbl]) {
+    for (UILabel *lbls in @[descriptionLbl, titleLbl,currentScoreLbl]) {
         lbls.frame = CGRectIntegral(lbls.frame);
         [container addSubview:lbls];
     }
@@ -164,11 +172,27 @@
     return container;
 }
 
+- (BOOL)rollTheDice {
+    return (arc4random() % 2 == 1);
+}
+
+- (void)_displayInterstitialAd {
+    
+    if ([self rollTheDice] && ![[NSUserDefaults standardUserDefaults] boolForKey:IAPremoveAdsProductIdentifier]) {
+        [self requestInterstitialAdPresentation];
+    }
+}
+
 - (void)viewDidAppear:(BOOL)animated {
+    
     [super viewDidAppear:animated];
+    [self _displayInterstitialAd];
     
     // Check for new high score
-    if (YES) {
+    NSUInteger gameScore = [HDPointsManager sharedManager].score;
+    NSUInteger highScore = [HDPointsManager sharedManager].highScore;
+    
+    if (gameScore > highScore) {
         
         CGRect topViewBounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.container.frame)/2.0f, CGRectGetHeight(self.container.frame)/9.f);
         CGPoint position = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMinY(self.container.frame) + CGRectGetMidY(topViewBounds));
@@ -207,6 +231,7 @@
              }];
         }];
     }
+    [[HDPointsManager sharedManager] saveState];
 }
 
 - (void)didReceiveMemoryWarning {

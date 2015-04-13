@@ -9,9 +9,10 @@
 @import SpriteKit;
 #import "HDObjectNode.h"
 
-typedef NS_ENUM(NSUInteger, HDBarrierType) {
-    HDDividerTypeMedium = 1,
-    HDDividerTypeLarge  = 2,
+typedef NS_ENUM(int8_t, HDBarrierType) {
+    HDBarrierTypeHorizontalSquare = 1,
+    HDBarrierTypeVerticalSquare  = 2,
+    HDBarrierTypeNone = 0
 };
 
 @interface HDBarrierNode : HDObjectNode
