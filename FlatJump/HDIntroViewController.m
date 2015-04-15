@@ -17,6 +17,7 @@
 #import "UIColor+FlatColors.h"
 #import "HDPointsManager.h"
 #import "HDIntroViewController.h"
+#import "HDSoundManager.h"
 
 #define TRANSFORM_SCALE_X [UIScreen mainScreen].bounds.size.width  / 375.0f
 #define TRANSFORM_SCALE_Y [UIScreen mainScreen].bounds.size.height / 667.0f
@@ -216,8 +217,8 @@
     // Title Label
     UILabel *title = [[UILabel alloc] init];
     title.textColor = [UIColor flatSTEmeraldColor];
-    title.font = GAME_FONT_WITH_SIZE(58.0f);
-    title.text = @"TRACKS";
+    title.font = GAME_FONT_WITH_SIZE(52.0f);
+    title.text = @"SIDE TRAX";
     [title sizeToFit];
     title.center = CGPointMake(CGRectGetMidX(container.bounds), CGRectGetMidY(title.bounds));
     
@@ -249,7 +250,10 @@
 
 - (IBAction)_liftOff:(id)sender {
     
-    //Begin the Game
+    // Turn on background music
+    [[HDSoundManager sharedManager] setPlayLoop:YES];
+    
+    // Launch Game View Controller
     [[HDAppDelegate sharedDelegate] presentGameViewController];
 }
 

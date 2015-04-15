@@ -25,7 +25,7 @@ NSString * const MENU_TITLE = @"SETTINGS";
         
         UILabel *titleLbl = [[UILabel alloc] init];
         titleLbl.textColor = [UIColor whiteColor];
-        titleLbl.font = [UIFont fontWithName:@"GillSans" size:32.0f];
+        titleLbl.font = GAME_FONT_WITH_SIZE(32.0f);
         titleLbl.textAlignment = NSTextAlignmentCenter;
         titleLbl.text = MENU_TITLE;
         [titleLbl sizeToFit];
@@ -114,9 +114,9 @@ NSString * const MENU_TITLE = @"SETTINGS";
         [toggle setTitle:@"OFF" forState:UIControlStateNormal];
         [toggle setTitle:@"ON" forState:UIControlStateSelected];
         toggle.tag = i;
-        toggle.backgroundColor = [UIColor flatSTButtonColor];
+        toggle.backgroundColor = [UIColor flatSTRedColor];
         toggle.titleLabel.textAlignment = NSTextAlignmentCenter;
-        toggle.titleLabel.font = [UIFont fontWithName:@"GillSans" size:CGRectGetHeight(toggle.bounds) * .4f];
+        toggle.titleLabel.font = GAME_FONT_WITH_SIZE(CGRectGetHeight(toggle.bounds) * .4f);
         toggle.center = CGPointMake(CGRectGetMaxX(layer.frame) - CGRectGetMidX(toggle.bounds), CGRectGetMidY(layer.frame));
         [self.container addSubview:toggle];
         
@@ -135,7 +135,7 @@ NSString * const MENU_TITLE = @"SETTINGS";
         UILabel *descriptionLbl = [[UILabel alloc] init];
         descriptionLbl.textAlignment = NSTextAlignmentCenter;
         descriptionLbl.textColor = [UIColor flatMidnightBlueColor];
-        descriptionLbl.font = [UIFont fontWithName:@"GillSans" size:CGRectGetHeight(bounds) * .6f];
+        descriptionLbl.font = GAME_FONT_WITH_SIZE(CGRectGetHeight(bounds) * .6f);
         descriptionLbl.text = labelText;
         [descriptionLbl sizeToFit];
         descriptionLbl.center = CGPointMake(CGRectGetMinX(layer.frame) + CGRectGetMidX(descriptionLbl.bounds) + containerSpacing,
@@ -153,10 +153,10 @@ NSString * const MENU_TITLE = @"SETTINGS";
         restore.layer.cornerRadius = CGRectGetMidY(restoreBounds);
         [restore addTarget:[HDAppDelegate sharedDelegate] action:@selector(restoreIAP:) forControlEvents:UIControlEventTouchUpInside];
         [restore setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [restore setTitle:@"RESTORE" forState:UIControlStateNormal];
+        [restore setTitle:@"RESTORE PURCHASE" forState:UIControlStateNormal];
         restore.backgroundColor = [UIColor flatSTEmeraldColor];
         restore.titleLabel.textAlignment = NSTextAlignmentCenter;
-        restore.titleLabel.font = [UIFont fontWithName:@"GillSans" size:CGRectGetHeight(restore.bounds) * .6f];
+        restore.titleLabel.font = GAME_FONT_WITH_SIZE(CGRectGetHeight(restore.bounds) * .3f);
         restore.center = CGPointMake(CGRectGetMidX(self.container.bounds),
                                      CGRectGetMaxY(layer.frame) + CGRectGetMidY(restore.bounds) + containerSpacing);
         [self.container addSubview:restore];

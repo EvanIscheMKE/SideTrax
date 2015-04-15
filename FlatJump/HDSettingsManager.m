@@ -17,6 +17,8 @@ NSString * const HDMusicKey = @"music";
 - (void)configureSettingsForFirstRun {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:HDSoundKey];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:HDMusicKey];
+    self.sound = [[NSUserDefaults standardUserDefaults] boolForKey:HDSoundKey];
+    self.music = [[NSUserDefaults standardUserDefaults] boolForKey:HDMusicKey];
 }
 
 #pragma mark - Initalize
@@ -24,7 +26,7 @@ NSString * const HDMusicKey = @"music";
 - (instancetype)init {
     if (self = [super init]) {
         self.sound = [[NSUserDefaults standardUserDefaults] boolForKey:HDSoundKey];
-        self.music = [[NSUserDefaults standardUserDefaults] boolForKey:HDMusicKey];;
+        self.music = [[NSUserDefaults standardUserDefaults] boolForKey:HDMusicKey];
     }
     return self;
 }

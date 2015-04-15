@@ -14,6 +14,7 @@
 #import "UIColor+FlatColors.h"
 #import "HDJumperIAdHelper.h"
 #import "HDGameViewController.h"
+#import "HDSoundManager.h"
 
 @interface HDGameViewController ()
 @property (nonatomic, assign) BOOL paused;
@@ -104,6 +105,7 @@
     // Unpause the Scene
     self.paused = NO;
     self.scene.view.paused = self.paused;
+    [[HDSoundManager sharedManager] setPlayLoop:YES];
 }
 
 - (void)_applicationWillResignActive:(NSNotification *)notification {

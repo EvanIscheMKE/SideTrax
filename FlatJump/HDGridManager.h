@@ -24,6 +24,5 @@ typedef void(^GridBlock)(BOOL displayBorders, HDArrowDirection direction);
 - (NSNumber *)coinTypeAtRow:(NSInteger)row column:(NSInteger)column;
 - (void)displayRowBordersForRowAtIndex:(NSUInteger)index completion:(GridBlock)completion;
 - (void)loadGridFromRangeWithCallback:(dispatch_block_t)completion;
-- (void)clearCache;
 @end
 

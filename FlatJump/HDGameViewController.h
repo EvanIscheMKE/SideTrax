@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface HDGameViewController : UIViewController
-
-
+@property (nonatomic, assign) BOOL displayInteristalAds;
 @end
 

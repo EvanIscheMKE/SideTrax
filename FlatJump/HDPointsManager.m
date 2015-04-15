@@ -30,7 +30,6 @@ NSString * const HDHighScoreKey = @"highScoreKey";
 }
 
 - (void)saveState {
-    
     self.highScore = MAX(self.score, self.highScore);
     [[NSUserDefaults standardUserDefaults] setInteger:self.highScore forKey:HDHighScoreKey];
     [[NSUserDefaults standardUserDefaults] synchronize];

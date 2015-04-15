@@ -9,7 +9,7 @@
 @import GameKit;
 @import StoreKit;
 
-#define TRACKS_APPLICATION_ID 945933714
+#define TRACKS_APPLICATION_ID 982812027
 
 #import "HDAppDelegate.h"
 #import "HDJumperIAdHelper.h"
@@ -17,6 +17,7 @@
 #import "HDGameViewController.h"
 #import "HDGameCenterManager.h"
 #import "HDSettingsManager.h"
+#import "HDSoundManager.h"
 
 NSString * const HDFirstRunKey = @"first";
 NSString * const iOS8AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%d";
@@ -47,6 +48,9 @@ NSString * const iOS8AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%d
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:HDFirstRunKey];
         [[HDSettingsManager sharedManager] configureSettingsForFirstRun];
     }
+    
+    [[HDSoundManager sharedManager] preloadLoopWithName:HDMusicLoopKey];
+  
     
     return YES;
 }
@@ -148,6 +152,18 @@ NSString * const iOS8AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%d
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    [[HDSoundManager sharedManager] stopAudio];
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    [[HDSoundManager sharedManager] startAudio];
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    [[HDSoundManager sharedManager] stopAudio];
 }
 
 @end

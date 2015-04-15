@@ -10,6 +10,7 @@
 @import AudioToolbox;
 
 #import "HDGameScene.h"
+#import "HDSoundManager.h"
 #import "SKColor+HDColor.h"
 #import "UIColor+FlatColors.h"
 #import "HDPointsManager.h"
@@ -193,7 +194,6 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
             default:
                 break;
         }
-        
         [container addChild:arrow];
     }
     return container;
@@ -287,13 +287,13 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     if (self.player.position.y > ROW_HEIGHT) {
         NSInteger points = self.player.position.y/ROW_HEIGHT;
         
-        points -= 4;
+        points -= NumberOfColumns;
         if (points > 0) {
             NSUInteger score = [HDPointsManager sharedManager].score;
             if (points > score) {
                 [HDPointsManager sharedManager].score = points;
                 self.scoreNode.text = [NSString stringWithFormat:@"%tu",points];
-                _velocity.y += .01f;
+                _velocity.y += .005f;
             }
         }
     }
@@ -317,9 +317,9 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
 - (void)_addThrustToNode:(SKSpriteNode *)node {
     
     SKEmitterNode *boost = [SKEmitterNode playerBoostWithColor:[UIColor whiteColor]];
-    boost.name = HDEmitterKey;
+    boost.name       = HDEmitterKey;
     boost.targetNode = self.scene;
-    boost.position = CGPointMake(0.0f, -node.size.height/2);
+    boost.position   = CGPointMake(0.0f, -node.size.height/2);
     [self.player addChild:boost];
 }
 
@@ -400,6 +400,7 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     SKNode *otherBody = (contact.bodyA.node != self.player) ? contact.bodyA.node : contact.bodyB.node;
     
     [(HDObjectNode *)otherBody collisionWithPlayer:self.player completion:^(BOOL update, HDObjectType type) {
+        [[HDSoundManager sharedManager] setPlayLoop:NO];
         [self runAction:self.explosion withKey:HDSoundKey];
         [self _saveMe];
     }];
@@ -417,17 +418,17 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     sprite.name = HDPlayerKey;
     
     SKNode *playerNode = [SKNode node];
-    playerNode.position = CGPointMake(self.size.width/2, sprite.size.height);
+    playerNode.position    = CGPointMake(self.size.width/2, sprite.size.height);
     playerNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:sprite.size.width/2];
-    playerNode.physicsBody.dynamic = YES;
+    playerNode.physicsBody.dynamic        = YES;
     playerNode.physicsBody.allowsRotation = YES;
-    playerNode.physicsBody.restitution = 1.0f;
-    playerNode.physicsBody.friction = 0.0f;
+    playerNode.physicsBody.restitution    = 1.0f;
+    playerNode.physicsBody.friction       = 0.0f;
     playerNode.physicsBody.angularDamping = 0.0f;
-    playerNode.physicsBody.linearDamping = 0.0f;
+    playerNode.physicsBody.linearDamping  = 0.0f;
     playerNode.physicsBody.affectedByGravity = NO;
     playerNode.physicsBody.usesPreciseCollisionDetection = YES;
-    playerNode.physicsBody.categoryBitMask = HDCollisionCategoryPlayer;
+    playerNode.physicsBody.categoryBitMask  = HDCollisionCategoryPlayer;
     playerNode.physicsBody.collisionBitMask = 0;
     playerNode.physicsBody.contactTestBitMask = HDCollisionCategoryPlatform;
     [playerNode addChild:sprite];
@@ -441,8 +442,8 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
                                                         size:CGSizeMake(COLUMN_WIDTH, BARRIER_WIDTH)];
     
     HDBarrierNode *node = [HDBarrierNode node];
-    node.position = position;
-    node.name = HDPlatformKey;
+    node.position    = position;
+    node.name        = HDPlatformKey;
     node.barrierType = type;
     node.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:sprite.size];
     node.physicsBody.dynamic = NO;
@@ -458,13 +459,14 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
 - (SKLabelNode *)_scoreNode {
     
     SKLabelNode *label = [SKLabelNode node];
-    label.fontSize = 40.0f;
+    label.fontSize  = 40.0f;
     label.zPosition = 100;;
-    label.position = CGPointMake(self.size.width/2, self.size.height - label.fontSize/2 - 10.0f);
+    label.scale     = TRANSFORM_SCALE_X;
+    label.position  = CGPointMake(self.size.width/2, self.size.height - label.fontSize/2 - 10.0f);
     label.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
     label.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
     label.fontColor = [SKColor whiteColor];
-    label.fontName = @"KimberleyBl-Regular";
+    label.fontName  = @"KimberleyBl-Regular";
     
     return label;
 }
@@ -472,14 +474,15 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
 - (SKLabelNode *)_instructionNode {
     
     SKLabelNode *label = [SKLabelNode node];
-    label.fontSize = 22.0f;
+    label.fontSize  = 22.0f;
     label.zPosition = 100;;
-    label.position = CGPointMake(self.size.width/2, self.size.height/8);
+    label.scale     = TRANSFORM_SCALE_X;
+    label.position  = CGPointMake(self.size.width/2, self.size.height/8);
     label.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
     label.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
     label.fontColor = [SKColor flatSTRedColor];
-    label.fontName = @"KimberleyBl-Regular";
-    label.text = @"TAP LEFT OR RIGHT TO MOVE";
+    label.fontName  = @"KimberleyBl-Regular";
+    label.text      = @"TAP LEFT OR RIGHT TO MOVE";
     
     return label;
 }
@@ -487,7 +490,7 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
 #pragma mark - Setters 
 
 - (void)runAction:(SKAction *)action withKey:(NSString *)key {
-    
+    // for [SKAction playsoundwithfile:] check if the sounds turned in settings before calling super.
     if ([key isEqualToString:HDSoundKey] && [HDSettingsManager sharedManager].sound) {
         [super runAction:action withKey:key];
     }

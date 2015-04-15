@@ -9,6 +9,9 @@
 @import UIKit;
 #import "HDGridManager.h"
 
+static const NSUInteger startingRow = 6;
+static const NSUInteger firstRow = 0;
+static const NSUInteger lastRow = 4;
 @implementation HDGridManager {
     NSMutableDictionary *_gridIndex;
     NSMutableArray *_indexes;
@@ -22,7 +25,9 @@
 
 - (void)displayRowBordersForRowAtIndex:(NSUInteger)index completion:(GridBlock)completion {
     
+    // From row 0-3 just present the up arrows
     if (index < 6) {
+        // Rows 3-5 present up arrows and borders, call completion block and return
         if (index > 3) {
             if (completion) {
                 completion(YES,HDArrowDirectionUp);
@@ -35,19 +40,24 @@
         return;
     }
     
+    // Find the index for each open row
     NSNumber *previousRowIndex = [self indexOfOpenCellForRow:index - 1];
-    NSNumber *currentRowIndex = [self indexOfOpenCellForRow:index];
+    NSNumber *currentRowIndex  = [self indexOfOpenCellForRow:index];
     
+    // Check if the open row's index is an end index(0,4)
     BOOL currentIndexWithinScope  = [@[@0,@4] containsObject:currentRowIndex];
     BOOL previousIndexWithinScope = [@[@0,@4] containsObject:previousRowIndex];
     
     BOOL displayBorders = NO;
+    
+    // if current row is not an end index, if not, present the borders, if both of them are an end index display the borders
     if (!currentIndexWithinScope) {
         displayBorders = YES;
     } else if (currentIndexWithinScope && previousIndexWithinScope) {
         displayBorders = YES;
     }
     
+    // Call completion block
     if (completion) {
         completion(displayBorders, [currentRowIndex intValue]);
     }
@@ -63,6 +73,8 @@
     return @0;
 }
 
+#pragma mark - Private
+
 - (BOOL)_goodOdds {
     
     BOOL firstRoll   = (arc4random() % 2 == 1);
@@ -71,17 +83,14 @@
 }
 
 - (BOOL)_badOdds {
-    
-    BOOL firstRoll   = [self _goodOdds];
-    BOOL secondRoll  = [self _goodOdds];
-    return (firstRoll && secondRoll);
+    return ([self _goodOdds] && [self _goodOdds]);
 }
-
-#pragma mark - Private
 
 - (void)loadGridFromRangeWithCallback:(dispatch_block_t)completion; {
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    // Get a background thread
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        
         
         if (!_gridIndex) {
             _gridIndex = [NSMutableDictionary dictionary];
@@ -91,12 +100,11 @@
             _indexes = [NSMutableArray array];
         }
         
-        BOOL cutOutTheEdges = NO;
         
-        NSInteger previousIdx = _indexes ? [[_indexes lastObject] integerValue] : 3;
+        NSInteger previousIdx = _indexes ? [[_indexes lastObject] integerValue] : 2;
         for (NSUInteger row = self.range.location; row < self.range.location + self.range.length; row++) {
             
-            if (row < 6) {
+            if (row < startingRow) {
                 continue;
             }
             
@@ -105,52 +113,49 @@
             BOOL firstCheck;
             BOOL secondCheck;
             if (_indexes.count > 2) {
-                firstCheck  = [@[@0, @4] containsObject:[_indexes lastObject]];
-                secondCheck = [@[@0, @4] containsObject:_indexes[[_indexes count] - 2]];
+                firstCheck  = [@[@(firstRow), @(lastRow)] containsObject:[_indexes lastObject]];
+                secondCheck = [@[@(firstRow), @(lastRow)] containsObject:_indexes[[_indexes count] - 2]];
                 if (firstCheck && secondCheck) {
                     consecutive = YES;
                 }
             }
             
             NSInteger currentIdx = 0;
-            if (previousIdx == 0 && !consecutive) {
+            if (previousIdx == firstRow && !consecutive) {
                 
-                cutOutTheEdges = YES;
                 if ([self _badOdds]) {
                     currentIdx = 3;
                 } else {
-                    currentIdx = 4;
+                    currentIdx = lastRow;
                 }
                 
-            } else if (previousIdx == 4 && !consecutive) {
+            } else if (previousIdx == lastRow && !consecutive) {
 
-                cutOutTheEdges = YES;
                 if ([self _badOdds]) {
                     currentIdx = 1;
                 } else {
-                    currentIdx = 0;
+                    currentIdx = firstRow;
                 }
                 
             } else {
                 
-                cutOutTheEdges = NO;
-                if (previousIdx != 4 && previousIdx != 0) {
-                    currentIdx = (arc4random() % 5);
+                if (previousIdx != lastRow && previousIdx != firstRow) {
+                    currentIdx = (arc4random() % NumberOfColumns);
                     while ((abs((int)currentIdx - (int)previousIdx) > 2) || currentIdx == previousIdx) {
-                        currentIdx = (arc4random() % 5);
+                        currentIdx = (arc4random() % NumberOfColumns);
                     }
                 }
                 
-                if (previousIdx == 4) {
+                if (previousIdx == lastRow) {
                     currentIdx = [self _goodOdds] ? 2 : 3;
                 }
                 
-                if (previousIdx == 0) {
+                if (previousIdx == firstRow) {
                     currentIdx = [self _goodOdds] ? 1 : 2;
                 }
             }
             
-            if (row == 6) {
+            if (row == startingRow) {
                 currentIdx = 2;
             }
             
@@ -170,17 +175,12 @@
             [_indexes addObject:@(currentIdx)];
         }
         if (completion){
+            // Call completion block when back on the main thread
             dispatch_async(dispatch_get_main_queue(), ^{
                 completion();
             });
         }
     });
 }
-
-- (void)clearCache {
-    _indexes = nil;
-    _gridIndex = nil;
-}
-
 
 @end

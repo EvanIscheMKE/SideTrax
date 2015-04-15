@@ -8,7 +8,7 @@
 
 #import "HDJumperIAdHelper.h"
 
-NSString *const IAPremoveAdsProductIdentifier = @"com.EvanIsche.FlatJump.RemoveAds";
+NSString *const IAPremoveAdsProductIdentifier = @"com.EvanIsche.SideTrax.RemoveAds";
 @implementation HDJumperIAdHelper
 
 + (HDJumperIAdHelper *)sharedHelper {
