@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-
 extern NSString * const HDHighScoreKey;
 @interface HDPointsManager : NSObject
 @property (nonatomic, assign) NSUInteger highScore;

@@ -9,15 +9,17 @@
 @import GameKit;
 @import StoreKit;
 
+#define TRACKS_APPLICATION_ID 945933714
+
 #import "HDAppDelegate.h"
 #import "HDJumperIAdHelper.h"
 #import "HDIntroViewController.h"
 #import "HDGameViewController.h"
-#import "HDCompletionViewController.h"
 #import "HDGameCenterManager.h"
 #import "HDSettingsManager.h"
 
 NSString * const HDFirstRunKey = @"first";
+NSString * const iOS8AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%d";
 @interface HDAppDelegate ()<GKGameCenterControllerDelegate>
 @property (nonatomic, strong) UINavigationController *navigationController;
 @end
@@ -51,17 +53,23 @@ NSString * const HDFirstRunKey = @"first";
 
 #pragma mark - View Hierarchy
 
-- (void)presentCompletionViewControllerWithMovesCompleted:(NSUInteger)moves {
-    HDCompletionViewController *viewController = [[HDCompletionViewController alloc] init];
-    [self.navigationController pushViewController:viewController animated:YES];
+- (void)returnHome {
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)presentGameViewController {
    HDGameViewController *viewController = [[HDGameViewController alloc] init];
-   [self.navigationController pushViewController:viewController animated:YES];
+   [self.navigationController pushViewController:viewController animated:NO];
 }
 
 #pragma mark - UIActivityController 
+
+- (IBAction)rateThisApp:(id)sender {
+    NSURL *rateThisApp = [NSURL URLWithString:[NSString stringWithFormat:iOS8AppStoreURLFormat,TRACKS_APPLICATION_ID]];
+    if ([[UIApplication sharedApplication] canOpenURL:rateThisApp]) {
+        [[UIApplication sharedApplication] openURL:rateThisApp];
+    }
+}
 
 - (IBAction)presentActivityViewController:(id)sender {
     

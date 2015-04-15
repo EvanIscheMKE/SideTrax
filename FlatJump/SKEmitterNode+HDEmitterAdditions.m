@@ -25,32 +25,31 @@
     boost.particleSpeedRange = 200.0f;
     boost.particleScale      = .1f;
     boost.particleScaleSpeed = -0.4f;
-    boost.particleBlendMode  = SKBlendModeAlpha;
     boost.particleColorBlendFactor = 1.0f;
     boost.yAcceleration      = 0;
     boost.zPosition          = 0;
     return boost;
 }
 
-+ (SKEmitterNode *)spaceshipThrustWithColor:(SKColor *)color {
-    
-    SKEmitterNode *boost = [SKEmitterNode node];
-    boost.particleTexture = [SKTexture textureWithImageNamed:@"Particle"];
-    boost.emissionAngle      = M_PI + M_PI_2;
-    boost.particlePositionRange = CGVectorMake(40.0f, 0.0);
-    boost.numParticlesToEmit = 0;
-    boost.particleBirthRate  = 175;
-    boost.particleLifetime   = 1.0f;
-    boost.particleColor      = color;
-    boost.particleSpeed      = 200.0f;
-    boost.particleSpeedRange = 200.0f;
-    boost.particleScale      = .3f;
-    boost.particleScaleSpeed = -0.4f;
-    boost.particleBlendMode  = SKBlendModeAlpha;
-    boost.particleColorBlendFactor = 1.0f;
-    boost.yAcceleration      = 0;
-    boost.zPosition          = 0;
-    return boost;
++ (SKEmitterNode *)explosionNode {
+   
+    SKEmitterNode *explosion = [[SKEmitterNode alloc] init];
+    explosion.particleTexture    = [SKTexture textureWithImageNamed:@"Particle"];
+    explosion.particleColor      = [UIColor whiteColor];
+    explosion.numParticlesToEmit = 90;
+    explosion.particleBirthRate  = 90;
+    explosion.particleLifetime   = 1.3f;
+    explosion.emissionAngleRange = 360;
+    explosion.particleSpeed      = 180;
+    explosion.particleSpeedRange = 50;
+    explosion.particleAlpha      = 0.8f;
+    explosion.particleAlphaRange = 0.2f;
+    explosion.particleScale      = 0.5f;
+    explosion.particleScaleSpeed = -0.6f;
+    [explosion advanceSimulationTime:.925f];
+    explosion.particleColorBlendFactor = 1;
+
+    return explosion;
 }
 
 

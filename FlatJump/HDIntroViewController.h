@@ -6,7 +6,11 @@
 //  Copyright (c) 2015 Evan William Ische. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import iAd;
+@import UIKit;
 
-@interface HDIntroViewController : UIViewController
+@interface HDBackgroundView : UIView
+@end
+
+@interface HDIntroViewController : UIViewController<ADBannerViewDelegate>
 @end

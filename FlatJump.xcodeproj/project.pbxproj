@@ -11,13 +11,14 @@
 		381D2A9E1ACDB8D6009F9F4F /* HDIAdHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2A981ACDB8D6009F9F4F /* HDIAdHelper.m */; };
 		381D2A9F1ACDB8D6009F9F4F /* HDJumperIAdHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2A9A1ACDB8D6009F9F4F /* HDJumperIAdHelper.m */; };
 		381D2AA01ACDB8D6009F9F4F /* VerificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2A9C1ACDB8D6009F9F4F /* VerificationController.m */; };
-		381D2AA41ACDBAFE009F9F4F /* HDShadowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2AA31ACDBAFE009F9F4F /* HDShadowButton.m */; };
-		381D2ABF1ACDD94E009F9F4F /* HDCompletionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381D2ABE1ACDD94E009F9F4F /* HDCompletionViewController.m */; };
-		381DD4301AD76A64006E4163 /* HDRocketView.m in Sources */ = {isa = PBXBuildFile; fileRef = 381DD42F1AD76A64006E4163 /* HDRocketView.m */; };
-		381DD4361AD76E75006E4163 /* HDIntroScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 381DD4351AD76E75006E4163 /* HDIntroScene.m */; };
 		38217C471ACDE9110038156A /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38217C461ACDE9110038156A /* GameKit.framework */; };
 		38217C491ACDE9190038156A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38217C481ACDE9190038156A /* QuartzCore.framework */; };
 		38217C4B1ACDE9240038156A /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38217C4A1ACDE9240038156A /* iAd.framework */; };
+		382DB6AE1ADE08D600E6F796 /* Star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382DB6AD1ADE08D600E6F796 /* Star@2x.png */; };
+		382DB6B01ADE0B3200E6F796 /* Setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382DB6AF1ADE0B3200E6F796 /* Setting@2x.png */; };
+		382DB6B21ADE0D6B00E6F796 /* Leaderboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382DB6B11ADE0D6B00E6F796 /* Leaderboard@2x.png */; };
+		382DB6B41ADE207F00E6F796 /* Share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382DB6B31ADE207F00E6F796 /* Share@2x.png */; };
+		383109E21ADC4C5700A5775F /* Whoosh.wav in Resources */ = {isa = PBXBuildFile; fileRef = 383109E11ADC4C5700A5775F /* Whoosh.wav */; };
 		3862E8E11AD0EFEF00D76B1E /* HDGameCenterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3862E8E01AD0EFEF00D76B1E /* HDGameCenterManager.m */; };
 		3881D7281AD204380068338D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3881D7271AD204380068338D /* StoreKit.framework */; };
 		3881D72B1AD2198F0068338D /* HDLayoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3881D72A1AD2198F0068338D /* HDLayoverView.m */; };
@@ -39,10 +40,11 @@
 		389C7D711AC642F4005EF91B /* HDGridManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D701AC642F4005EF91B /* HDGridManager.m */; };
 		389C7D741AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D731AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m */; };
 		389C7D771AC71113005EF91B /* Boost.sks in Resources */ = {isa = PBXBuildFile; fileRef = 389C7D751AC71113005EF91B /* Boost.sks */; };
-		389C7D781AC71113005EF91B /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 389C7D761AC71113005EF91B /* spark.png */; };
 		38B6318F1AD798F1009F7CAE /* SKSpriteNode+HDSpriteNodeAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B6318E1AD798F1009F7CAE /* SKSpriteNode+HDSpriteNodeAdditions.m */; };
-		38B93B321AC9C75A003A0586 /* HDSaveNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B93B311AC9C75A003A0586 /* HDSaveNode.m */; };
 		38B93B421ACCBDC7003A0586 /* HDIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B93B411ACCBDC7003A0586 /* HDIntroViewController.m */; };
+		38E8661B1ADD7FCB0086AFCA /* Explosion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 38E8661A1ADD7FCB0086AFCA /* Explosion.wav */; };
+		38E8661D1ADD84C20086AFCA /* Play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38E8661C1ADD84C20086AFCA /* Play@2x.png */; };
+		38E8661F1ADDBED90086AFCA /* kimberley bl.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 38E8661E1ADDBD880086AFCA /* kimberley bl.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,17 +66,14 @@
 		381D2A9A1ACDB8D6009F9F4F /* HDJumperIAdHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDJumperIAdHelper.m; sourceTree = "<group>"; };
 		381D2A9B1ACDB8D6009F9F4F /* VerificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerificationController.h; sourceTree = "<group>"; };
 		381D2A9C1ACDB8D6009F9F4F /* VerificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerificationController.m; sourceTree = "<group>"; };
-		381D2AA21ACDBAFE009F9F4F /* HDShadowButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDShadowButton.h; sourceTree = "<group>"; };
-		381D2AA31ACDBAFE009F9F4F /* HDShadowButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDShadowButton.m; sourceTree = "<group>"; };
-		381D2ABD1ACDD94E009F9F4F /* HDCompletionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDCompletionViewController.h; sourceTree = "<group>"; };
-		381D2ABE1ACDD94E009F9F4F /* HDCompletionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDCompletionViewController.m; sourceTree = "<group>"; };
-		381DD42E1AD76A64006E4163 /* HDRocketView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDRocketView.h; sourceTree = "<group>"; };
-		381DD42F1AD76A64006E4163 /* HDRocketView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDRocketView.m; sourceTree = "<group>"; };
-		381DD4341AD76E75006E4163 /* HDIntroScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDIntroScene.h; sourceTree = "<group>"; };
-		381DD4351AD76E75006E4163 /* HDIntroScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDIntroScene.m; sourceTree = "<group>"; };
 		38217C461ACDE9110038156A /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		38217C481ACDE9190038156A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		38217C4A1ACDE9240038156A /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		382DB6AD1ADE08D600E6F796 /* Star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Star@2x.png"; path = "Assets.atlas/Star@2x.png"; sourceTree = "<group>"; };
+		382DB6AF1ADE0B3200E6F796 /* Setting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Setting@2x.png"; path = "Assets.atlas/Setting@2x.png"; sourceTree = "<group>"; };
+		382DB6B11ADE0D6B00E6F796 /* Leaderboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Leaderboard@2x.png"; path = "Assets.atlas/Leaderboard@2x.png"; sourceTree = "<group>"; };
+		382DB6B31ADE207F00E6F796 /* Share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Share@2x.png"; path = "Assets.atlas/Share@2x.png"; sourceTree = "<group>"; };
+		383109E11ADC4C5700A5775F /* Whoosh.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Whoosh.wav; sourceTree = "<group>"; };
 		3862E8DF1AD0EFEF00D76B1E /* HDGameCenterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDGameCenterManager.h; sourceTree = "<group>"; };
 		3862E8E01AD0EFEF00D76B1E /* HDGameCenterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDGameCenterManager.m; sourceTree = "<group>"; };
 		3881D7271AD204380068338D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -113,13 +112,13 @@
 		389C7D721AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKEmitterNode+HDEmitterAdditions.h"; sourceTree = "<group>"; };
 		389C7D731AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKEmitterNode+HDEmitterAdditions.m"; sourceTree = "<group>"; };
 		389C7D751AC71113005EF91B /* Boost.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Boost.sks; sourceTree = "<group>"; };
-		389C7D761AC71113005EF91B /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		38B6318D1AD798F1009F7CAE /* SKSpriteNode+HDSpriteNodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKSpriteNode+HDSpriteNodeAdditions.h"; sourceTree = "<group>"; };
 		38B6318E1AD798F1009F7CAE /* SKSpriteNode+HDSpriteNodeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKSpriteNode+HDSpriteNodeAdditions.m"; sourceTree = "<group>"; };
-		38B93B301AC9C75A003A0586 /* HDSaveNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDSaveNode.h; sourceTree = "<group>"; };
-		38B93B311AC9C75A003A0586 /* HDSaveNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDSaveNode.m; sourceTree = "<group>"; };
 		38B93B401ACCBDC7003A0586 /* HDIntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDIntroViewController.h; sourceTree = "<group>"; };
 		38B93B411ACCBDC7003A0586 /* HDIntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDIntroViewController.m; sourceTree = "<group>"; };
+		38E8661A1ADD7FCB0086AFCA /* Explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Explosion.wav; sourceTree = "<group>"; };
+		38E8661C1ADD84C20086AFCA /* Play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Play@2x.png"; path = "Assets.atlas/Play@2x.png"; sourceTree = "<group>"; };
+		38E8661E1ADDBD880086AFCA /* kimberley bl.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "kimberley bl.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,10 +165,33 @@
 			children = (
 				389C7D451AC5D6CA005EF91B /* HDGameScene.h */,
 				389C7D461AC5D6CA005EF91B /* HDGameScene.m */,
-				381DD4341AD76E75006E4163 /* HDIntroScene.h */,
-				381DD4351AD76E75006E4163 /* HDIntroScene.m */,
 			);
 			name = Scenes;
+			sourceTree = "<group>";
+		};
+		382DB6AA1ADE021700E6F796 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				38E8661A1ADD7FCB0086AFCA /* Explosion.wav */,
+				383109E11ADC4C5700A5775F /* Whoosh.wav */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
+		382DB6AB1ADE022C00E6F796 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				38E8661E1ADDBD880086AFCA /* kimberley bl.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		382DB6AC1ADE025100E6F796 /* Emitters */ = {
+			isa = PBXGroup;
+			children = (
+				389C7D751AC71113005EF91B /* Boost.sks */,
+			);
+			name = Emitters;
 			sourceTree = "<group>";
 		};
 		389C7D0E1AC5D554005EF91B = {
@@ -208,11 +230,17 @@
 		389C7D1A1AC5D554005EF91B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				382DB6AB1ADE022C00E6F796 /* Fonts */,
+				382DB6AA1ADE021700E6F796 /* Sounds */,
+				382DB6AC1ADE025100E6F796 /* Emitters */,
 				389C7D501AC5D8AC005EF91B /* Categories */,
 				389C7D631AC5F37D005EF91B /* Assets.atlas */,
+				38E8661C1ADD84C20086AFCA /* Play@2x.png */,
+				382DB6B31ADE207F00E6F796 /* Share@2x.png */,
+				382DB6B11ADE0D6B00E6F796 /* Leaderboard@2x.png */,
+				382DB6AD1ADE08D600E6F796 /* Star@2x.png */,
+				382DB6AF1ADE0B3200E6F796 /* Setting@2x.png */,
 				389C7D1B1AC5D554005EF91B /* Info.plist */,
-				389C7D751AC71113005EF91B /* Boost.sks */,
-				389C7D761AC71113005EF91B /* spark.png */,
 				389C7D1C1AC5D554005EF91B /* main.m */,
 			);
 			name = "Supporting Files";
@@ -242,8 +270,6 @@
 				389C7D221AC5D554005EF91B /* HDGameViewController.m */,
 				38B93B401ACCBDC7003A0586 /* HDIntroViewController.h */,
 				38B93B411ACCBDC7003A0586 /* HDIntroViewController.m */,
-				381D2ABD1ACDD94E009F9F4F /* HDCompletionViewController.h */,
-				381D2ABE1ACDD94E009F9F4F /* HDCompletionViewController.m */,
 			);
 			name = "View Controllers";
 			path = FlatJump;
@@ -265,14 +291,10 @@
 		389C7D481AC5D846005EF91B /* Scenes/Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				3881D7291AD2198F0068338D /* HDLayoverView.h */,
-				3881D72A1AD2198F0068338D /* HDLayoverView.m */,
-				381D2AA21ACDBAFE009F9F4F /* HDShadowButton.h */,
-				381D2AA31ACDBAFE009F9F4F /* HDShadowButton.m */,
-				381DD42E1AD76A64006E4163 /* HDRocketView.h */,
-				381DD42F1AD76A64006E4163 /* HDRocketView.m */,
 				381DD4371AD76E97006E4163 /* Scenes */,
 				38B93B3F1ACC9547003A0586 /* Object Nodes */,
+				3881D7291AD2198F0068338D /* HDLayoverView.h */,
+				3881D72A1AD2198F0068338D /* HDLayoverView.m */,
 			);
 			name = Scenes/Nodes;
 			path = FlatJump;
@@ -281,9 +303,9 @@
 		389C7D4C1AC5D870005EF91B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				381D2AA11ACDB8DC009F9F4F /* IAP */,
 				3881D72C1AD322BF0068338D /* HDSettingsManager.h */,
 				3881D72D1AD322BF0068338D /* HDSettingsManager.m */,
-				381D2AA11ACDB8DC009F9F4F /* IAP */,
 				389C7D6F1AC642F4005EF91B /* HDGridManager.h */,
 				389C7D701AC642F4005EF91B /* HDGridManager.m */,
 				389C7D491AC5D869005EF91B /* HDPointsManager.h */,
@@ -313,8 +335,6 @@
 		38B93B3F1ACC9547003A0586 /* Object Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				38B93B301AC9C75A003A0586 /* HDSaveNode.h */,
-				38B93B311AC9C75A003A0586 /* HDSaveNode.m */,
 				389C7D511AC5DAF8005EF91B /* HDBarrierNode.h */,
 				389C7D521AC5DAF8005EF91B /* HDBarrierNode.m */,
 				389C7D571AC5DB8F005EF91B /* HDObjectNode.h */,
@@ -405,10 +425,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				389C7D781AC71113005EF91B /* spark.png in Resources */,
+				382DB6B41ADE207F00E6F796 /* Share@2x.png in Resources */,
+				382DB6B01ADE0B3200E6F796 /* Setting@2x.png in Resources */,
+				38E8661F1ADDBED90086AFCA /* kimberley bl.ttf in Resources */,
 				389C7D771AC71113005EF91B /* Boost.sks in Resources */,
+				382DB6AE1ADE08D600E6F796 /* Star@2x.png in Resources */,
+				383109E21ADC4C5700A5775F /* Whoosh.wav in Resources */,
 				389C7D641AC5F37D005EF91B /* Assets.atlas in Resources */,
+				382DB6B21ADE0D6B00E6F796 /* Leaderboard@2x.png in Resources */,
 				389C7D281AC5D554005EF91B /* Images.xcassets in Resources */,
+				38E8661D1ADD84C20086AFCA /* Play@2x.png in Resources */,
+				38E8661B1ADD7FCB0086AFCA /* Explosion.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,11 +453,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				381D2ABF1ACDD94E009F9F4F /* HDCompletionViewController.m in Sources */,
 				389C7D5E1AC5E026005EF91B /* UIColor+FlatColors.m in Sources */,
 				389C7D471AC5D6CA005EF91B /* HDGameScene.m in Sources */,
 				389C7D531AC5DAF8005EF91B /* HDBarrierNode.m in Sources */,
-				381DD4301AD76A64006E4163 /* HDRocketView.m in Sources */,
 				389C7D4F1AC5D8A8005EF91B /* SKColor+HDColor.m in Sources */,
 				381D2AA01ACDB8D6009F9F4F /* VerificationController.m in Sources */,
 				38B6318F1AD798F1009F7CAE /* SKSpriteNode+HDSpriteNodeAdditions.m in Sources */,
@@ -443,14 +468,11 @@
 				389C7D1D1AC5D554005EF91B /* main.m in Sources */,
 				3881D72E1AD322BF0068338D /* HDSettingsManager.m in Sources */,
 				389C7D4B1AC5D869005EF91B /* HDPointsManager.m in Sources */,
-				381D2AA41ACDBAFE009F9F4F /* HDShadowButton.m in Sources */,
 				3862E8E11AD0EFEF00D76B1E /* HDGameCenterManager.m in Sources */,
 				38B93B421ACCBDC7003A0586 /* HDIntroViewController.m in Sources */,
 				389C7D591AC5DB8F005EF91B /* HDObjectNode.m in Sources */,
-				38B93B321AC9C75A003A0586 /* HDSaveNode.m in Sources */,
 				389C7D741AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m in Sources */,
 				381D2A9D1ACDB8D6009F9F4F /* NSData+Base64.m in Sources */,
-				381DD4361AD76E75006E4163 /* HDIntroScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

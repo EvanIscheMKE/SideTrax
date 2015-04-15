@@ -8,7 +8,6 @@
 
 #import "HDAppDelegate.h"
 #import "HDLayoverView.h"
-#import "HDShadowButton.h"
 #import "UIColor+FlatColors.h"
 #import "HDSettingsManager.h"
 
@@ -42,7 +41,7 @@ NSString * const MENU_TITLE = @"SETTINGS";
     
     CGRect stripeBox = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)/5.25f);
     UIBezierPath *stripe = [UIBezierPath bezierPathWithRect:stripeBox];
-    [[UIColor flatSTLightBlueColor] setFill];
+    [[UIColor flatSTBackgroundColor] setFill];
     [stripe fill];
 }
 
@@ -86,7 +85,7 @@ NSString * const MENU_TITLE = @"SETTINGS";
                                                  cornerRadii:CGSizeMake(25.0f, 25.0f)].CGPath;
     
     self.container = [[HDColoredView alloc] initWithFrame:containerBounds];
-    self.container.backgroundColor = [UIColor flatSTWhiteColor];
+    self.container.backgroundColor = [UIColor flatSTAccentColor];
     self.container.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetHeight(self.bounds) + CGRectGetMidY(self.container.bounds));
     self.container.layer.mask = maskLayer;
     [self addSubview:self.container];
@@ -107,13 +106,15 @@ NSString * const MENU_TITLE = @"SETTINGS";
         [self.container.layer addSublayer:layer];
         
         CGRect toggleBounds = CGRectMake(0.0f, 0.0f, CGRectGetHeight(layer.bounds) * 1.6f, CGRectGetHeight(layer.bounds) * 1.3f);
-        HDShadowButton *toggle = [[HDShadowButton alloc] initWithFrame:toggleBounds];
+        UIButton *toggle = [UIButton buttonWithType:UIButtonTypeCustom];
+        toggle.frame = toggleBounds;
+        toggle.layer.cornerRadius = CGRectGetMidY(toggleBounds);
         [toggle addTarget:self action:@selector(_toggleSettings:) forControlEvents:UIControlEventTouchUpInside];
         [toggle setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [toggle setTitle:@"OFF" forState:UIControlStateNormal];
         [toggle setTitle:@"ON" forState:UIControlStateSelected];
         toggle.tag = i;
-        toggle.backgroundColor = [UIColor flatSTRedColor];
+        toggle.backgroundColor = [UIColor flatSTButtonColor];
         toggle.titleLabel.textAlignment = NSTextAlignmentCenter;
         toggle.titleLabel.font = [UIFont fontWithName:@"GillSans" size:CGRectGetHeight(toggle.bounds) * .4f];
         toggle.center = CGPointMake(CGRectGetMaxX(layer.frame) - CGRectGetMidX(toggle.bounds), CGRectGetMidY(layer.frame));
@@ -147,11 +148,13 @@ NSString * const MENU_TITLE = @"SETTINGS";
         }
         
         CGRect restoreBounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.container.bounds)/1.4f, CGRectGetHeight(self.container.bounds)/6.0f);
-        HDShadowButton *restore = [[HDShadowButton alloc] initWithFrame:restoreBounds];
+        UIButton *restore = [UIButton buttonWithType:UIButtonTypeCustom];
+        restore.frame = restoreBounds;
+        restore.layer.cornerRadius = CGRectGetMidY(restoreBounds);
         [restore addTarget:[HDAppDelegate sharedDelegate] action:@selector(restoreIAP:) forControlEvents:UIControlEventTouchUpInside];
         [restore setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [restore setTitle:@"RESTORE" forState:UIControlStateNormal];
-        restore.backgroundColor = [UIColor flatPeterRiverColor];
+        restore.backgroundColor = [UIColor flatSTEmeraldColor];
         restore.titleLabel.textAlignment = NSTextAlignmentCenter;
         restore.titleLabel.font = [UIFont fontWithName:@"GillSans" size:CGRectGetHeight(restore.bounds) * .6f];
         restore.center = CGPointMake(CGRectGetMidX(self.container.bounds),
@@ -243,7 +246,7 @@ NSString * const MENU_TITLE = @"SETTINGS";
 
 #pragma mark - IBA
 
-- (IBAction)_toggleSettings:(HDShadowButton *)sender {
+- (IBAction)_toggleSettings:(UIButton *)sender {
     
     sender.selected = !sender.selected;
     switch (sender.tag) {

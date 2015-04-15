@@ -12,6 +12,10 @@
 /*! www.flatuicolors.com !*/
 
 /*STD*/
++ (UIColor *)flatSTButtonColor;
++ (UIColor *)flatSTBackgroundColor;
++ (UIColor *)flatSTAccentColor;
++ (UIColor *)flatSTEmeraldColor;
 + (UIColor *)flatSTDarkBlueColor;
 + (UIColor *)flatSTRedColor;
 + (UIColor *)flatSTWhiteColor;

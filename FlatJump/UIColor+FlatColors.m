@@ -14,6 +14,22 @@
 //    return [UIColor colorWithRed:() green:<#(CGFloat)#> blue:<#(CGFloat)#> alpha:<#(CGFloat)#>]
 //}
 
++ (UIColor *)flatSTButtonColor {
+    return [UIColor colorWithRed:(60/255.0f) green:(68/255.0f) blue:(77/255.0f) alpha:1];
+}
+
++ (UIColor *)flatSTBackgroundColor {
+    return [UIColor colorWithRed:(40/255.0f) green:(45/255.0f) blue:(51/255.0f) alpha:1];
+}
+
++ (UIColor *)flatSTAccentColor {
+    return [UIColor colorWithRed:(44/255.0f) green:(49/255.0f) blue:(55/255.0f) alpha:1];
+}
+
++ (UIColor *)flatSTEmeraldColor {
+    return [UIColor colorWithRed:(95/255.0f) green:(168/255.0f) blue:(82/255.0f) alpha:1];
+}
+
 + (UIColor *)flatSTRedColor {
     return [UIColor colorWithRed:(250/255.0f) green:(107/255.0f) blue:(99/255.0f) alpha:1];
 }

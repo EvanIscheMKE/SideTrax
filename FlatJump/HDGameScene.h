@@ -15,17 +15,10 @@ typedef NS_OPTIONS(int8_t, HDDirectionState) {
     HDDirectionStateNone
 };
 
-typedef NS_OPTIONS(int8_t, HDGameSpeed) {
-    HDGameSpeedFast = 1,
-    HDGameSpeedNormal = 2,
-    HDGameSpeedNone
-};
-
 extern NSString * const HDLevelLayoutNotificationKey;
 @class HDGridManager;
 @interface HDGameScene : SKScene
 @property (nonatomic, strong) HDGridManager *gridManager;
 @property (nonatomic, assign) HDDirectionState direction;
-@property (nonatomic, assign) HDGameSpeed gameSpeed;
 - (void)layoutChildrenNode;
 @end
