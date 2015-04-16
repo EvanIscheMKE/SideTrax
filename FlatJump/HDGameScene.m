@@ -23,9 +23,13 @@
 #import "SKSpriteNode+HDSpriteNodeAdditions.h"
 #import "HDGameCenterManager.h"
 
+#define MAXY_PLAYER_POSITION [UIScreen mainScreen].bounds.size.height/3.0f
+
 #define ROW_HEIGHT floor((COLUMN_WIDTH * 1.9f))
 
-#define GAME_SPEED_NORMAL 4.25
+#define LOAD_NEW_LEVEL 230.0f * TRANSFORM_SCALE_Y
+
+#define GAME_SPEED_NORMAL 4.25f
 
 typedef NS_OPTIONS(uint32_t, HDCollisionCategory) {
     HDCollisionCategoryNone     = 0x0,
@@ -33,15 +37,13 @@ typedef NS_OPTIONS(uint32_t, HDCollisionCategory) {
     HDCollisionCategoryPlatform = 0x1 << 1,
 };
 
-static const CGFloat loadNewLevel = 550.0f;
-static const CGFloat maxyPlayerPosition = 200.0f;
+static NSString * const HDSoundKey = @"soundKey";
 
 NSString * const HDPlayerKey            = @"playerKey";
 NSString * const HDHorizontalBarrierKey = @"HDHorizontalNode";
 NSString * const HDVerticalBarrierKey   = @"HDverticalNode";
 NSString * const HDVerticalArrowKey     = @"HDArrowNode";
 NSString * const HDEmitterKey           = @"emitterKey";
-static NSString * const HDSoundKey = @"soundKey";
 NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
 @interface HDGameScene ()<SKPhysicsContactDelegate>
 
@@ -59,16 +61,28 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
 @end
 
 @implementation HDGameScene {
+    
+    NSMutableArray *_borderBank;
+    NSMutableArray *_barrierBank;
+    
     BOOL _gameOver;
     BOOL _animating;
+    
     NSInteger _currentRow;
+    
     CGPoint _velocity;
 }
 
 - (instancetype)initWithSize:(CGSize)size {
     
     if (self = [super initWithSize:size]) {
+        
+            NSLog(@"%f",floor((COLUMN_WIDTH * 1.9f)));
+        _barrierBank = [NSMutableArray arrayWithCapacity:30];
+        _borderBank  = [NSMutableArray arrayWithCapacity:10];
+        
         [self _setup];
+        
     }
     return self;
 }
@@ -81,7 +95,6 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     self.explosion = [SKAction playSoundFileNamed:@"Explosion.wav" waitForCompletion:NO];
     
     self.backgroundColor = [SKColor flatSTBackgroundColor];
-    
     
     self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
     self.physicsWorld.contactDelegate = self;
@@ -117,21 +130,21 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
         self.instructionNode.alpha = 0;
         [self.hudLayerNode addChild:self.instructionNode];
         
-        [self.instructionNode runAction:[SKAction fadeInWithDuration:.2f]];
+        [self.instructionNode runAction:[SKAction fadeInWithDuration:.200f]];
         
         [self performSelector:@selector(_removeInstructionNode) withObject:nil afterDelay:1.5f];
         
-        [self performSelector:@selector(_changeVelocityTo:) withObject:@(GAME_SPEED_NORMAL) afterDelay:.65f];
+        [self performSelector:@selector(_changeVelocityTo:) withObject:@(GAME_SPEED_NORMAL) afterDelay:.650f];
     };
     
-    SKAction *positionAction = [SKAction moveToY:-0.0f duration:.6f];
+    SKAction *positionAction = [SKAction moveToY:-0.0f duration:.600f];
     positionAction.timingMode = SKActionTimingEaseOut;
-    [self.objectLayerNode runAction:[SKAction moveToY:-0.0f duration:.6f] completion:completion];
+    [self.objectLayerNode runAction:[SKAction moveToY:-0.0f duration:.600f] completion:completion];
 }
 
 - (void)_removeInstructionNode {
     // Fade out the instruction text
-    [self.instructionNode runAction:[SKAction fadeAlphaTo:0.0f duration:.3f] completion:^{
+    [self.instructionNode runAction:[SKAction fadeAlphaTo:0.0f duration:.300f] completion:^{
         [self.instructionNode removeFromParent];
         self.instructionNode = nil;
     }];
@@ -157,12 +170,19 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     return node;
 }
 
-- (SKNode *)_createBorderWithRow:(NSUInteger)row {
+- (HDObjectNode *)_createBorderNodes {
+    
+    if (_borderBank.count) {
+        
+        HDObjectNode *_border = [_borderBank firstObject];
+        [_borderBank removeObject:_border];
+        return _border;
+    }
 
     CGFloat width  = self.size.width / 2 - COLUMN_WIDTH * 2.5;
-    CGFloat height = COLUMN_WIDTH * 2 + BARRIER_WIDTH / 2;
+    CGFloat height = ROW_HEIGHT + BARRIER_WIDTH;
     
-    HDBarrierNode *container = [HDBarrierNode node];
+    HDObjectNode *container = [HDObjectNode node];
     container.name = HDVerticalBarrierKey;
     for (NSUInteger i = 0; i < 2; i++) {
         
@@ -170,7 +190,6 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
                                                             size:CGSizeMake(width, height)];
         
         HDBarrierNode *node = [HDBarrierNode node];
-        node.name = HDVerticalBarrierKey;
         node.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:sprite.size];
         node.physicsBody.dynamic = NO;
         node.physicsBody.categoryBitMask = HDCollisionCategoryPlatform;
@@ -231,12 +250,10 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
 
 - (void)layoutChildrenNode {
     
-    NSLog(self.direction == HDDirectionStateRegular ? @"YES" : @"NO");
-    
     void (^layoutBorders)(NSUInteger row) = ^(NSUInteger row){
         
         CGPoint position = CGPointMake( 0.0f, ROW_HEIGHT * row -BARRIER_WIDTH/2);
-        SKNode *node = [self _createBorderWithRow:row];
+        SKNode *node = [self _createBorderNodes];
         node.position = position;
         [self.objectLayerNode addChild:node];
     };
@@ -268,13 +285,10 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
         for (NSInteger column = 0; column < NumberOfColumns; column++) {
             NSNumber *type = [self.gridManager coinTypeAtRow:row column:column];
             
-            if ([type unsignedIntegerValue] == 0) {
-                continue;
+            if ([type unsignedIntegerValue] == 1) {
+                HDBarrierNode *platform = [self _createBarrierAtPosition:[self _positionForRow:row column:column]];
+                [self.objectLayerNode addChild:platform];
             }
-            
-            HDBarrierNode *platform = [self _createBarrierAtPosition:[self _positionForRow:row column:column]
-                                                              ofType:[type unsignedIntegerValue]];
-            [self.objectLayerNode addChild:platform];
         }
     }
     
@@ -291,7 +305,7 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     position.y += _velocity.y;
     self.player.position = position;
     
-    if (fmod(self.player.position.y + 5.0f, loadNewLevel) < 4) {
+    if (fmod(self.player.position.y + 5.0f, LOAD_NEW_LEVEL) < 4) {
         [[NSNotificationCenter defaultCenter] postNotificationName:HDLevelLayoutNotificationKey object:nil];
     }
     
@@ -304,25 +318,39 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
             if (points > score) {
                 [HDPointsManager sharedManager].score = points;
                 self.scoreNode.text = [NSString stringWithFormat:@"%tu",points];
-                _velocity.y += .005f;
+                _velocity.y += .0015f;
             }
         }
     }
     
     [self.objectLayerNode enumerateChildNodesWithName:HDVerticalArrowKey usingBlock:^(SKNode *node, BOOL *stop) {
-        [(HDBarrierNode *)node checkNodePositionForRemoval:self.player.position.y];
+        [(HDBarrierNode *)node checkNodePositionForRemoval:self.player.position.y completion:^(BOOL remove) {
+            if (remove) {
+                [node removeFromParent];
+            }
+        }];
     }];
     
     [self.objectLayerNode enumerateChildNodesWithName:HDVerticalBarrierKey usingBlock:^(SKNode *node, BOOL *stop) {
-        [(HDBarrierNode *)node checkNodePositionForRemoval:self.player.position.y];
+        [(HDBarrierNode *)node checkNodePositionForRemoval:self.player.position.y completion:^(BOOL remove) {
+            if (remove) {
+                [_borderBank addObject:node];
+                [node removeFromParent];
+            }
+        }];
     }];
     
     [self.objectLayerNode enumerateChildNodesWithName:HDHorizontalBarrierKey usingBlock:^(SKNode *node, BOOL *stop) {
-        [(HDBarrierNode *)node checkNodePositionForRemoval:self.player.position.y];
+        [(HDBarrierNode *)node checkNodePositionForRemoval:self.player.position.y completion:^(BOOL remove) {
+            if (remove) {
+                [_barrierBank addObject:node];
+                [node removeFromParent];
+            }
+        }];
     }];
     
     // Once the player node reaches 200pt, move the ObjectNode down at the same rate the players increasing
-    if (self.player.position.y > maxyPlayerPosition) {
+    if (self.player.position.y > MAXY_PLAYER_POSITION) {
         CGPoint position = self.objectLayerNode.position;
         position.y -= _velocity.y;
         self.objectLayerNode.position = position;
@@ -483,8 +511,13 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
              // Scroll maze to the top, then dismiss View Controller
             [self.objectLayerNode runAction:[SKAction moveToY:self.objectLayerNode.position.y + self.size.height*1.3
                                                      duration:.4] completion:^{
+                
+                [self.player removeFromParent];
+                self.player = nil;
+                
                 [self.objectLayerNode removeAllActions];
                 [self _endGame];
+                
             }];
             
         }];
@@ -500,6 +533,7 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
 - (SKNode *)_createPlayer {
     
     SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
+    sprite.scale = TRANSFORM_SCALE_X;
     sprite.name = HDPlayerKey;
     
     SKNode *playerNode = [SKNode node];
@@ -521,7 +555,16 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     return playerNode;
 }
 
-- (HDBarrierNode *)_createBarrierAtPosition:(CGPoint)position ofType:(HDBarrierType)type {
+- (HDBarrierNode *)_createBarrierAtPosition:(CGPoint)position {
+    
+    if (_barrierBank.count) {
+        HDBarrierNode *barrier = [_barrierBank firstObject];
+        barrier.position = position;
+        [_barrierBank removeObject:barrier];
+        
+        NSLog(@"%@",_barrierBank);
+        return barrier;
+    }
     
     SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithColor:[UIColor flatSTEmeraldColor]
                                                         size:CGSizeMake(COLUMN_WIDTH, BARRIER_WIDTH)];
@@ -529,7 +572,7 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     HDBarrierNode *node = [HDBarrierNode node];
     node.position    = position;
     node.name        = HDHorizontalBarrierKey;
-    node.barrierType = type;
+    node.barrierType = HDBarrierTypeHorizontalSquare;
     node.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:sprite.size];
     node.physicsBody.dynamic = NO;
     node.physicsBody.categoryBitMask = HDCollisionCategoryPlatform;
@@ -546,7 +589,7 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     SKLabelNode *label = [SKLabelNode node];
     label.fontSize  = 40.0f;
     label.zPosition = 100;;
-    label.scale     = TRANSFORM_SCALE_X;
+    label.scale     = TRANSFORM_SCALE_Y;
     label.position  = CGPointMake(self.size.width/2, self.size.height - label.fontSize/2 - 10.0f);
     label.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
     label.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
@@ -567,7 +610,7 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     label.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
     label.fontColor = [SKColor flatSTRedColor];
     label.fontName  = @"KimberleyBl-Regular";
-    label.text      = @"TAP LEFT OR RIGHT TO MOVE";
+    label.text      = NSLocalizedString(@"instruction", nil);
     
     return label;
 }

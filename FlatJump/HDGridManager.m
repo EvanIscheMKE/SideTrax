@@ -75,12 +75,8 @@ static const NSUInteger lastRow = 4;
 
 #pragma mark - Private
 
-- (BOOL)_goodOdds {
+- (BOOL)_rollTheDice {
     return ((arc4random() % 2 == 1) && (arc4random() % 2 == 1));
-}
-
-- (BOOL)_badOdds {
-    return ([self _goodOdds] && [self _goodOdds]);
 }
 
 - (void)loadGridFromRangeWithCallback:(dispatch_block_t)completion; {
@@ -91,6 +87,11 @@ static const NSUInteger lastRow = 4;
         
         if (!_gridIndex) {
             _gridIndex = [NSMutableDictionary dictionary];
+        } else {
+            NSUInteger length = 2;
+            if (self.range.length != length) {
+                self.range = NSMakeRange(self.range.location, length);
+            }
         }
         
         if (!_indexes) {
@@ -120,7 +121,7 @@ static const NSUInteger lastRow = 4;
             NSInteger currentIdx = 0;
             if (previousIdx == firstRow && !consecutive) {
                 
-                if ([self _badOdds]) {
+                if ([self _rollTheDice]) {
                     currentIdx = 3;
                 } else {
                     currentIdx = lastRow;
@@ -128,7 +129,7 @@ static const NSUInteger lastRow = 4;
                 
             } else if (previousIdx == lastRow && !consecutive) {
 
-                if ([self _badOdds]) {
+                if ([self _rollTheDice]) {
                     currentIdx = 1;
                 } else {
                     currentIdx = firstRow;
@@ -144,11 +145,11 @@ static const NSUInteger lastRow = 4;
                 }
                 
                 if (previousIdx == lastRow) {
-                    currentIdx = [self _goodOdds] ? 2 : 3;
+                    currentIdx = [self _rollTheDice] ? 2 : 3;
                 }
                 
                 if (previousIdx == firstRow) {
-                    currentIdx = [self _goodOdds] ? 1 : 2;
+                    currentIdx = [self _rollTheDice] ? 1 : 2;
                 }
             }
             

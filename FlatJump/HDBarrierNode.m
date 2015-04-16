@@ -18,7 +18,10 @@
     
     SKEmitterNode *explosion = [SKEmitterNode explosionNode];
     [player addChild:explosion];
-    
+        
+    NSTimeInterval delayInSeconds = explosion.numParticlesToEmit / explosion.particleBirthRate + explosion.particleLifetime;
+    [explosion performSelector:@selector(removeFromParent) withObject:nil afterDelay:delayInSeconds];
+
     if (completion) {
         completion(YES, HDObjectTypePlatform);
     };

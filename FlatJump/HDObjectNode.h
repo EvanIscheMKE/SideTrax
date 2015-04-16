@@ -14,7 +14,9 @@ typedef NS_OPTIONS(u_int8_t, HDObjectType) {
 };
 
 typedef void (^CompletionBlock)(BOOL update, HDObjectType type);
+typedef void (^RemovalBlock)(BOOL remove);
+
 @interface HDObjectNode : SKNode
 - (void)collisionWithPlayer:(SKNode *)player completion:(CompletionBlock)completion;
-- (void)checkNodePositionForRemoval:(CGFloat)position;
+- (void)checkNodePositionForRemoval:(CGFloat)position completion:(RemovalBlock)completion;
 @end

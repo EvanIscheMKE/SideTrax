@@ -21,9 +21,6 @@
 #import "HDSettingsManager.h"
 #import "HDSoundManager.h"
 
-#define TRANSFORM_SCALE_X [UIScreen mainScreen].bounds.size.width  / 375.0f
-#define TRANSFORM_SCALE_Y [UIScreen mainScreen].bounds.size.height / 667.0f
-
 @implementation HDBackgroundView
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -111,7 +108,7 @@
     // Create label container, scale it to screensize
     _labelsContainer = [self _labelsContainer];
     _labelsContainer.center = self.view.center;
-    _labelsContainer.transform = CGAffineTransformMakeScale(TRANSFORM_SCALE_X, TRANSFORM_SCALE_Y);
+    _labelsContainer.transform = CGAffineTransformMakeScale(TRANSFORM_SCALE_Y, TRANSFORM_SCALE_Y);
     [_containerView addSubview:_labelsContainer];
     
     // Number of buttons needed
@@ -121,7 +118,7 @@
     const CGSize buttonSize = CGSizeMake(roundf(45.0f * TRANSFORM_SCALE_X), roundf(45.0f * TRANSFORM_SCALE_X));
     
     // Spacing between Buttons
-    const CGFloat padding = roundf(8.0f * TRANSFORM_SCALE_X);
+    const CGFloat padding = roundf(buttonSize.width/5);
     
     // Starting Origin X-Axis
     const CGFloat startxOrigin = ceil(CGRectGetMidX(self.view.bounds) - ((buttonSize.width + padding) * ((buttonCount -1)/2)));
@@ -150,7 +147,7 @@
                 break;
             case 1:
                 // Puchase remove ads IAP
-                button.titleLabel.font = GAME_FONT_WITH_SIZE(13.0f);
+                button.titleLabel.font = GAME_FONT_WITH_SIZE(CGRectGetHeight(buttonBounds)/3.25f);
                 button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
                 button.titleLabel.textAlignment = NSTextAlignmentCenter;
                 [button setTitle:@"NO\nADS"

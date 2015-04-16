@@ -10,17 +10,25 @@
 
 @implementation HDObjectNode
 
-- (void)collisionWithPlayer:(SKNode *)player completion:(dispatch_block_t)completion{
+- (void)collisionWithPlayer:(SKNode *)player completion:(CompletionBlock)completion{
     
     if (completion) {
-        completion();
+        completion(NO,HDObjectTypeNone);
     }
 }
 
-- (void)checkNodePositionForRemoval:(CGFloat)position {
-    if (position > self.position.y + 350.0f) {
-        [self removeFromParent];
+- (void)checkNodePositionForRemoval:(CGFloat)position completion:(RemovalBlock)completion; {
+    if (position > self.position.y + CGRectGetHeight([UIScreen mainScreen].bounds)/1.75f) {
+        if (completion) {
+            completion(YES);
+            return;
+        }
+    }
+    if (completion) {
+        completion(NO);
     }
 }
+
+
 
 @end

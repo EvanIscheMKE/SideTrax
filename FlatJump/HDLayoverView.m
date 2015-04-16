@@ -161,7 +161,7 @@
                                      CGRectGetMaxY(layer.frame) + CGRectGetMidY(restore.bounds) + containerSpacing);
         [self.container addSubview:restore];
     }
-    self.container.transform = CGAffineTransformMakeScale(TRANSFORM_SCALE_X, TRANSFORM_SCALE_Y);
+    self.container.transform = CGAffineTransformMakeScale(TRANSFORM_SCALE_X, TRANSFORM_SCALE_X);
 }
 
 - (void)show {
@@ -178,9 +178,9 @@
         // Spring effect in
         CAKeyframeAnimation *keyFrameAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position.y"];
         keyFrameAnimation.duration = .25f;
-        keyFrameAnimation.values = @[@(CGRectGetHeight(self.bounds) + CGRectGetMidY(self.container.bounds)),
-                                     @(CGRectGetHeight(self.bounds) - CGRectGetMidY(self.container.bounds)),
-                                     @(CGRectGetHeight(self.bounds) - CGRectGetMidY(self.container.bounds) + 20.0f)];
+        keyFrameAnimation.values = @[@(CGRectGetHeight(self.bounds) + CGRectGetHeight(self.container.frame)/2),
+                                     @(CGRectGetHeight(self.bounds) - CGRectGetHeight(self.container.frame)/2),
+                                     @(CGRectGetHeight(self.bounds) - CGRectGetHeight(self.container.frame)/2 + 20.0f)];
         keyFrameAnimation.keyTimes = @[@0.0f, @0.7f, @1.0f];
         
         self.container.layer.position = CGPointMake(CGRectGetMidX(self.bounds), [[keyFrameAnimation.values lastObject] floatValue]);
@@ -208,9 +208,9 @@
         // Spring effect out
         CAKeyframeAnimation *keyFrameAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position.y"];
         keyFrameAnimation.duration = .2f;
-        keyFrameAnimation.values = @[@(CGRectGetHeight(self.bounds) - CGRectGetMidY(self.container.bounds) + 20.0f),
-                                     @(CGRectGetHeight(self.bounds) - CGRectGetMidY(self.container.bounds)),
-                                     @(CGRectGetHeight(self.bounds) + CGRectGetMidY(self.container.bounds))];
+        keyFrameAnimation.values = @[@(CGRectGetHeight(self.bounds) - CGRectGetHeight(self.container.frame)/2 + 20.0f),
+                                     @(CGRectGetHeight(self.bounds) - CGRectGetHeight(self.container.frame)/2),
+                                     @(CGRectGetHeight(self.bounds) + CGRectGetHeight(self.container.frame)/2)];
         keyFrameAnimation.keyTimes = @[@0.0f, @0.3f, @1.0f];
         
         self.container.layer.position = CGPointMake(CGRectGetMidX(self.bounds), [[keyFrameAnimation.values lastObject] floatValue]);

@@ -45,7 +45,7 @@
     [super viewDidLoad];
     
     self.gridManager = [[HDGridManager alloc] init];
-    self.gridManager.range = NSMakeRange(0, NumberOfRows); // Inital 12 rows, layout more as needed
+    self.gridManager.range = NSMakeRange(0, 10); // Inital 12 rows, layout more as needed
     [self.gridManager loadGridFromRangeWithCallback:nil];
     
     // Check if the user has purchased remove ads IAP, if not
@@ -98,8 +98,8 @@
     // load an additional "NumberOfRows"
     [self.gridManager loadGridFromRangeWithCallback:^{
         if (self.scene) {
-            // Once the rows are plotted, lay them out in the scene
-        //    [self.scene layoutChildrenNode];
+        // Once the rows are plotted, lay them out in the scene
+            [self.scene layoutChildrenNode];
         }
     }];
 }
