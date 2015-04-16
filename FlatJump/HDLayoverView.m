@@ -10,11 +10,11 @@
 #import "HDLayoverView.h"
 #import "UIColor+FlatColors.h"
 #import "HDSettingsManager.h"
+#import "HDSoundManager.h"
 
 #define TRANSFORM_SCALE_X [UIScreen mainScreen].bounds.size.width  / 375.0f
 #define TRANSFORM_SCALE_Y [UIScreen mainScreen].bounds.size.height / 667.0f
 
-NSString * const MENU_TITLE = @"SETTINGS";
 @interface HDColoredView : UIView
 @end
 
@@ -27,7 +27,7 @@ NSString * const MENU_TITLE = @"SETTINGS";
         titleLbl.textColor = [UIColor whiteColor];
         titleLbl.font = GAME_FONT_WITH_SIZE(32.0f);
         titleLbl.textAlignment = NSTextAlignmentCenter;
-        titleLbl.text = MENU_TITLE;
+        titleLbl.text = NSLocalizedString(@"setting", nil);
         [titleLbl sizeToFit];
         titleLbl.center = CGPointMake(CGRectGetMidX(self.bounds), (CGRectGetHeight(self.bounds)/5.25f)/2);
         titleLbl.frame = CGRectIntegral(titleLbl.frame);
@@ -111,8 +111,8 @@ NSString * const MENU_TITLE = @"SETTINGS";
         toggle.layer.cornerRadius = CGRectGetMidY(toggleBounds);
         [toggle addTarget:self action:@selector(_toggleSettings:) forControlEvents:UIControlEventTouchUpInside];
         [toggle setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [toggle setTitle:@"OFF" forState:UIControlStateNormal];
-        [toggle setTitle:@"ON" forState:UIControlStateSelected];
+        [toggle setTitle:NSLocalizedString(@"off", nil) forState:UIControlStateNormal];
+        [toggle setTitle:NSLocalizedString(@"on",  nil) forState:UIControlStateSelected];
         toggle.tag = i;
         toggle.backgroundColor = [UIColor flatSTRedColor];
         toggle.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -124,11 +124,11 @@ NSString * const MENU_TITLE = @"SETTINGS";
         switch (i) {
             case 0:
                 toggle.selected = [[HDSettingsManager sharedManager] sound];
-                labelText = @"SOUND";
+                labelText = NSLocalizedString(@"sound", nil);
                 break;
             default:
                 toggle.selected = [[HDSettingsManager sharedManager] music];
-                labelText = @"MUSIC";
+                labelText = NSLocalizedString(@"music", nil);
                 break;
         }
         
@@ -153,7 +153,7 @@ NSString * const MENU_TITLE = @"SETTINGS";
         restore.layer.cornerRadius = CGRectGetMidY(restoreBounds);
         [restore addTarget:[HDAppDelegate sharedDelegate] action:@selector(restoreIAP:) forControlEvents:UIControlEventTouchUpInside];
         [restore setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [restore setTitle:@"RESTORE PURCHASE" forState:UIControlStateNormal];
+        [restore setTitle:NSLocalizedString(@"restore", nil) forState:UIControlStateNormal];
         restore.backgroundColor = [UIColor flatSTEmeraldColor];
         restore.titleLabel.textAlignment = NSTextAlignmentCenter;
         restore.titleLabel.font = GAME_FONT_WITH_SIZE(CGRectGetHeight(restore.bounds) * .3f);
@@ -252,9 +252,11 @@ NSString * const MENU_TITLE = @"SETTINGS";
     switch (sender.tag) {
         case 0:
             [[HDSettingsManager sharedManager] setSound:![[HDSettingsManager sharedManager] sound]];
+            [[HDSoundManager sharedManager] playSound:HDMenuClicked];
             break;
         default:
             [[HDSettingsManager sharedManager] setMusic:![[HDSettingsManager sharedManager] music]];
+            [[HDSoundManager sharedManager] playSound:HDMenuClicked];
             break;
     }
 }

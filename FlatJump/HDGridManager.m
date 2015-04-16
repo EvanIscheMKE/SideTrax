@@ -76,10 +76,7 @@ static const NSUInteger lastRow = 4;
 #pragma mark - Private
 
 - (BOOL)_goodOdds {
-    
-    BOOL firstRoll   = (arc4random() % 2 == 1);
-    BOOL secondRoll  = (arc4random() % 2 == 1);
-    return (firstRoll && secondRoll);
+    return ((arc4random() % 2 == 1) && (arc4random() % 2 == 1));
 }
 
 - (BOOL)_badOdds {

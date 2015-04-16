@@ -16,6 +16,13 @@
 
 #define GAME_FONT_WITH_SIZE(x) [UIFont fontWithName:@"KimberleyBl-Regular" size:x]
 
+typedef NS_OPTIONS(int8_t, HDDirectionState) {
+    HDDirectionStateRegular = 0,
+    HDDirectionStateReversed = 1,
+    HDDirectionStateNone = 2
+};
+
+extern NSString * const HDMenuClicked;
 @interface HDAppDelegate : UIResponder <UIApplicationDelegate>
 @property (nonatomic, strong) UIWindow *window;
 + (HDAppDelegate *)sharedDelegate;

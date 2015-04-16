@@ -10,6 +10,7 @@
 
 NSString * const HDSoundKey = @"sound";
 NSString * const HDMusicKey = @"music";
+NSString * const HDReversedKey = @"reversed";
 @implementation HDSettingsManager
 
 #pragma mark - Configure
@@ -17,16 +18,19 @@ NSString * const HDMusicKey = @"music";
 - (void)configureSettingsForFirstRun {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:HDSoundKey];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:HDMusicKey];
+    [[NSUserDefaults standardUserDefaults] setBool:NO  forKey:HDReversedKey];
     self.sound = [[NSUserDefaults standardUserDefaults] boolForKey:HDSoundKey];
     self.music = [[NSUserDefaults standardUserDefaults] boolForKey:HDMusicKey];
+    self.reversed = [[NSUserDefaults standardUserDefaults] boolForKey:HDReversedKey];
 }
 
 #pragma mark - Initalize
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.sound = [[NSUserDefaults standardUserDefaults] boolForKey:HDSoundKey];
-        self.music = [[NSUserDefaults standardUserDefaults] boolForKey:HDMusicKey];
+        self.sound    = [[NSUserDefaults standardUserDefaults] boolForKey:HDSoundKey];
+        self.music    = [[NSUserDefaults standardUserDefaults] boolForKey:HDMusicKey];
+        self.reversed = [[NSUserDefaults standardUserDefaults] boolForKey:HDReversedKey];
     }
     return self;
 }
@@ -41,6 +45,14 @@ NSString * const HDMusicKey = @"music";
 }
 
 #pragma mark - Override Setters
+
+- (void)setReversed:(BOOL)reversed {
+    
+    _reversed = reversed;
+    if (_reversed != [[NSUserDefaults standardUserDefaults] boolForKey:HDReversedKey]) {
+        [[NSUserDefaults standardUserDefaults] setBool:_reversed forKey:HDReversedKey];
+    }
+}
 
 - (void)setSound:(BOOL)sound {
     

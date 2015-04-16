@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  FlatJump
+
+  Created by Evan Ische on 4/15/15.
+  Copyright (c) 2015 Evan William Ische. All rights reserved.
+*/
+
+
+
+"music" = "Müzik";
+"sound" = "Ses";
+"restore" = "Satın Restore";
+"setting" = "Ayarlar";
+"on" = "Üzerinde";
+"off" = "Kapalı";
+"score" = "Gol";
+"tracks" = "Raylar";
+"instruction" = "Dokunun veya sol hareket hakkı";

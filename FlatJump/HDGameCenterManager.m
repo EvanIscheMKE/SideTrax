@@ -9,9 +9,7 @@
 #import "HDGameCenterManager.h"
 
 NSString * const HDNormalLeaderboardKey         = @"LevelCountNormal";
-NSString * const HDFastLeaderboardKey           = @"LevelCountFast";
 NSString * const HDNormalReversedLeaderboardKey = @"LevelCountReversedNormal";
-NSString * const HDFastReversedLeaderboardKey   = @"LevelCountReversedFast";
 @implementation HDGameCenterManager
 
 + (HDGameCenterManager *)sharedManager {
@@ -21,6 +19,18 @@ NSString * const HDFastReversedLeaderboardKey   = @"LevelCountReversedFast";
         _manager = [[HDGameCenterManager alloc] init];
     });
     return _manager;
+}
+
++ (NSString *)leaderboardIdentifierFromState:(HDDirectionState)direction {
+    switch (direction) {
+        case HDDirectionStateRegular:
+            return HDNormalLeaderboardKey;
+        case HDDirectionStateReversed:
+            return HDNormalReversedLeaderboardKey;
+        default:
+            return HDNormalLeaderboardKey;
+    }
+    return HDNormalLeaderboardKey;
 }
 
 - (void)authenticateGameCenter {

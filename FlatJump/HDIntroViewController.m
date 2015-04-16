@@ -17,6 +17,8 @@
 #import "UIColor+FlatColors.h"
 #import "HDPointsManager.h"
 #import "HDIntroViewController.h"
+#import "UIButton+SoundAdditions.h"
+#import "HDSettingsManager.h"
 #import "HDSoundManager.h"
 
 #define TRANSFORM_SCALE_X [UIScreen mainScreen].bounds.size.width  / 375.0f
@@ -51,10 +53,13 @@
 
 @implementation HDIntroViewController {
     ADBannerView *_bannerView;
-    UIView *_container;
+    UIView *_labelsContainer;
+    UIView *_containerView;
     UILabel *_highscoreLbl;
     UILabel *_scoreLbl;
     BOOL _isBannerVisible;
+    BOOL _isContainerVisible;
+    BOOL _animating;
 }
 
 - (void)dealloc {
@@ -64,12 +69,19 @@
 }
 
 - (void)loadView {
+    
     self.view = [[HDBackgroundView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    _containerView = [[UIView alloc] initWithFrame:self.view.bounds];
+    _containerView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:_containerView];
 }
 
 - (void)viewDidLoad {
     [self _setup];
     [super viewDidLoad];
+    
+    // Register to remove ads 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(_removeAdsWasPurchased:)
                                                  name:IAPremoveAdsProductIdentifier
@@ -77,6 +89,8 @@
 }
 
 - (void)_setup {
+    
+    _isContainerVisible = YES;
     
     // Check if the user has purchased remove ads IAP, if not
     if (![[NSUserDefaults standardUserDefaults] boolForKey:IAPremoveAdsProductIdentifier]) {
@@ -95,10 +109,10 @@
     }
 
     // Create label container, scale it to screensize
-    _container = [self _labelsContainer];
-    _container.center = self.view.center;
-    _container.transform = CGAffineTransformMakeScale(TRANSFORM_SCALE_X, TRANSFORM_SCALE_Y);
-    [self.view addSubview:_container];
+    _labelsContainer = [self _labelsContainer];
+    _labelsContainer.center = self.view.center;
+    _labelsContainer.transform = CGAffineTransformMakeScale(TRANSFORM_SCALE_X, TRANSFORM_SCALE_Y);
+    [_containerView addSubview:_labelsContainer];
     
     // Number of buttons needed
     const NSUInteger buttonCount = 5;
@@ -116,22 +130,26 @@
     for (NSUInteger i = 0; i < buttonCount; i++) {
         CGRect buttonBounds = CGRectMake(0.0f, 0.0f, buttonSize.width, buttonSize.height);
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.adjustsImageWhenHighlighted = NO;
+        button.adjustsImageWhenDisabled    = NO;
         button.frame = buttonBounds;
         button.layer.cornerRadius = CGRectGetMidY(buttonBounds);
         button.center = CGPointMake(startxOrigin + ((buttonSize.width + padding) * i),
                                     CGRectGetHeight(self.view.bounds) - buttonSize.width/2 - padding);
         button.backgroundColor = [UIColor flatSTButtonColor];
-        [self.view addSubview:button];
+        [_containerView addSubview:button];
         
         switch (i) {
             case 0:
+                // Display Settings Menu
                 [button setBackgroundImage:[UIImage imageNamed:@"Setting"]
                                   forState:UIControlStateNormal];
-                [button addTarget:self // Display Settings Menu
+                [button addTarget:self
                            action:@selector(_openSettingsMenu:)
                  forControlEvents:UIControlEventTouchUpInside];
                 break;
             case 1:
+                // Puchase remove ads IAP
                 button.titleLabel.font = GAME_FONT_WITH_SIZE(13.0f);
                 button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
                 button.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -139,28 +157,31 @@
                         forState:UIControlStateNormal];
                 [button setTitleColor:[UIColor flatSTRedColor]
                              forState:UIControlStateNormal];
-                [button addTarget:self // Puchase remove ads IAP
+                [button addTarget:self
                            action:@selector(removeAds:)
                  forControlEvents:UIControlEventTouchUpInside];
                 break;
             case 2:
+                // Present Share View Controller
                 [button setBackgroundImage:[UIImage imageNamed:@"Share"]
                                   forState:UIControlStateNormal];
-                [button addTarget:[HDAppDelegate sharedDelegate] // Present Share View Controller
+                [button addTarget:[HDAppDelegate sharedDelegate]
                            action:@selector(presentActivityViewController:)
                  forControlEvents:UIControlEventTouchUpInside];
                 break;
             case 3:
+                // Present Game Center Leaderboards
                 [button setBackgroundImage:[UIImage imageNamed:@"Leaderboard"]
                                   forState:UIControlStateNormal];
-                [button addTarget:[HDAppDelegate sharedDelegate] // Present Game Center Leaderboards
+                [button addTarget:[HDAppDelegate sharedDelegate]
                            action:@selector(presentLeaderboardViewController:)
                  forControlEvents:UIControlEventTouchUpInside];
                 break;
             case 4:
+                // Open AppStore to rate application
                 [button setBackgroundImage:[UIImage imageNamed:@"Star"]
                                   forState:UIControlStateNormal];
-                [button addTarget:[HDAppDelegate sharedDelegate] // Open AppStore for rating
+                [button addTarget:[HDAppDelegate sharedDelegate]
                            action:@selector(rateThisApp:)
                  forControlEvents:UIControlEventTouchUpInside];
                 break;
@@ -179,16 +200,32 @@
     CGRect beginBounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(container.bounds)/1.8f, CGRectGetHeight(container.bounds)/5.0f);
     UIButton *begin = [UIButton buttonWithType:UIButtonTypeCustom];
     [begin setImage:[UIImage imageNamed:@"Play"] forState:UIControlStateNormal];
-    begin.adjustsImageWhenHighlighted = NO;
-    begin.adjustsImageWhenDisabled = NO;
     begin.frame = beginBounds;
     begin.center = CGPointMake(CGRectGetMidX(container.bounds), CGRectGetHeight(container.bounds) - CGRectGetMidY(beginBounds));
     begin.backgroundColor = [UIColor flatSTEmeraldColor];
-    begin.layer.cornerRadius = CGRectGetMidY(beginBounds);
     [begin addTarget:self
               action:@selector(_liftOff:)
     forControlEvents:UIControlEventTouchUpInside];
-    [container addSubview:begin];
+    
+    CGRect reverseBounds = CGRectMake(0.0f, 0.0f, 65.0f, 65.0f);
+    UIButton *reverse = [UIButton buttonWithType:UIButtonTypeCustom];
+    [reverse setImage:[UIImage imageNamed:@"Arrow-Out"] forState:UIControlStateNormal];
+    [reverse setImage:[UIImage imageNamed:@"Arrow-In"] forState:UIControlStateSelected];
+    reverse.selected = [HDSettingsManager sharedManager].reversed;
+    reverse.frame = reverseBounds;
+    reverse.backgroundColor = [UIColor flatSTButtonColor];
+    reverse.center = CGPointMake(CGRectGetMidX(container.bounds)/2.5, CGRectGetMidY(container.bounds));
+    reverse.transform = CGAffineTransformMakeRotation(-(M_PI_4/2));
+    [reverse addTarget:self
+                action:@selector(_reverseControl:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
+    for (UIButton *button in @[begin, reverse]) {
+        button.layer.cornerRadius = CGRectGetMidY(button.bounds);
+        button.adjustsImageWhenHighlighted = NO;
+        button.adjustsImageWhenDisabled = NO;
+        [container addSubview:button];
+    }
     
     // Current score label
     _scoreLbl = [[UILabel alloc] init];
@@ -202,7 +239,7 @@
     UILabel *scoreTitleLbl = [[UILabel alloc] init];
     scoreTitleLbl.textColor = [UIColor flatSTRedColor];
     scoreTitleLbl.font      = GAME_FONT_WITH_SIZE(28.0f);
-    scoreTitleLbl.text      = @"SCORE";
+    scoreTitleLbl.text      = NSLocalizedString(@"score", nil);
     [scoreTitleLbl sizeToFit];
     scoreTitleLbl.center = CGPointMake(CGRectGetMidX(container.bounds),
                                   CGRectGetMinY(_scoreLbl.frame) - 8.0f);
@@ -248,16 +285,69 @@
     return string;
 }
 
+- (IBAction)_reverseControl:(UIButton *)sender {
+    
+    // If animations already started return
+    if (_animating) {
+        return;
+    }
+    
+    // Play menu clicked sound
+    [[HDSoundManager sharedManager] playSound:HDMenuClicked];
+    
+    // Get a refernce to the button that triggered this
+    UIButton *reverse = sender;
+    
+    _animating = YES;
+    [CATransaction begin]; {
+        [CATransaction setCompletionBlock:^{
+            _animating = NO;
+            reverse.selected = !reverse.selected;
+            [HDSettingsManager sharedManager].reversed = ![HDSettingsManager sharedManager].reversed;
+        }];
+        
+        // Rotate 2 Radians  
+        CABasicAnimation *rotation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+        rotation.byValue  = @(reverse.selected ? M_PI*2 : -M_PI*2);
+        rotation.duration = .2f;
+        [reverse.layer addAnimation:rotation forKey:rotation.keyPath];
+        
+    } [CATransaction commit];
+}
+
 - (IBAction)_liftOff:(id)sender {
     
-    // Turn on background music
-    [[HDSoundManager sharedManager] setPlayLoop:YES];
+    _isContainerVisible = NO;
     
-    // Launch Game View Controller
-    [[HDAppDelegate sharedDelegate] presentGameViewController];
+    // Animate the banner off the top of the screen while animating _container to the bottom of the screen
+    [UIView animateWithDuration:.200f animations:^{
+        
+        CGPoint position = _bannerView.center;
+        position.y = -CGRectGetMidY(_bannerView.bounds);
+        _bannerView.center = position;
+        
+        CGRect frame = _containerView.frame;
+        frame.origin.y = CGRectGetHeight(self.view.bounds);
+        _containerView.frame = frame;
+        
+    } completion:^(BOOL finished) {
+        
+        // Allow banner to be repositioned when delegats called
+        _isBannerVisible = NO;
+        
+        // Turn on background music
+        [[HDSoundManager sharedManager] setPlayLoop:YES];
+        
+        // Launch Game View Controller
+        [[HDAppDelegate sharedDelegate] presentGameViewController];
+    }];
+    
 }
 
 - (IBAction)_openSettingsMenu:(id)sender {
+    
+    [[HDSoundManager sharedManager] playSound:HDMenuClicked];
+    
     HDLayoverView *layover = [[HDLayoverView alloc] init];
     [layover show];
 }
@@ -271,8 +361,42 @@
     
     for (UILabel *label in @[_scoreLbl, _highscoreLbl]) {
         [label sizeToFit];
-        label.center = CGPointMake(CGRectGetMidX(_container.bounds), label.center.y);
+        label.center = CGPointMake(CGRectGetMidX(_labelsContainer.bounds), label.center.y);
         label.frame = CGRectIntegral(label.frame);
+    }
+}
+
+- (BOOL)_rollTheDice {
+   return (arc4random() % 2 == 1);
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (!_isContainerVisible) {
+        
+        // Check if the user has purchased remove ads IAP, if not
+        BOOL adsRemoved = [[NSUserDefaults standardUserDefaults] boolForKey:IAPremoveAdsProductIdentifier];
+        if (!adsRemoved && [self _rollTheDice]) {
+            [self requestInterstitialAdPresentation];
+        }
+    
+        [UIView animateWithDuration:.300f animations:^{
+            
+            CGPoint position = _containerView.center;
+            position.y = CGRectGetMidY(self.view.bounds);
+            _containerView.center = position;
+            
+            if (_bannerView) {
+                position = _bannerView.center;
+                position.y = CGRectGetMidY(_bannerView.bounds);
+                _bannerView.center = position;
+            }
+            
+        } completion:^(BOOL finished) {
+            _isContainerVisible = YES;
+        }];
+        
     }
 }
 

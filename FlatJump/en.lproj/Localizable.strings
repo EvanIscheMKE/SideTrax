@@ -6,12 +6,14 @@
   Copyright (c) 2015 Evan William Ische. All rights reserved.
 */
 
+
+
 "music" = "MUSIC";
 "sound" = "SOUND";
-"restore" = "RESTORE PURCHASE";
+"restore" = "RESTORE PURCHASES";
 "setting" = "SETTINGS";
 "on" = "ON";
 "off" = "OFF";
 "score" = "SCORE";
-"tracks" = "TRACKS";
+"tracks" = "Tracks";
 "instruction" = "TAP LEFT OR RIGHT TO MOVE";

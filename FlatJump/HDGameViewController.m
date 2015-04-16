@@ -15,6 +15,7 @@
 #import "HDJumperIAdHelper.h"
 #import "HDGameViewController.h"
 #import "HDSoundManager.h"
+#import "HDSettingsManager.h"
 
 @interface HDGameViewController ()
 @property (nonatomic, assign) BOOL paused;
@@ -27,6 +28,8 @@
 }
 
 - (void)dealloc {
+    
+    // Remove observers 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillResignActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification  object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:HDLevelLayoutNotificationKey              object:nil];
@@ -75,7 +78,7 @@
     // Check if self.view's scene has been presented, if not, present it
     if (!_skView.scene) {
         self.scene = [HDGameScene sceneWithSize:_skView.bounds.size];
-        self.scene.direction = HDDirectionStateRegular;
+        self.scene.direction = [HDSettingsManager sharedManager].reversed;
         self.scene.gridManager = self.gridManager;
         self.scene.scaleMode = SKSceneScaleModeAspectFill;
         [_skView presentScene:self.scene];
@@ -96,7 +99,7 @@
     [self.gridManager loadGridFromRangeWithCallback:^{
         if (self.scene) {
             // Once the rows are plotted, lay them out in the scene
-            [self.scene layoutChildrenNode];
+        //    [self.scene layoutChildrenNode];
         }
     }];
 }

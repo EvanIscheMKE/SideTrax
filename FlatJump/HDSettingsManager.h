@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface HDSettingsManager : NSObject
+@property (nonatomic, assign) BOOL reversed;
 @property (nonatomic, assign) BOOL sound;
 @property (nonatomic, assign) BOOL music;
 + (HDSettingsManager *)sharedManager;

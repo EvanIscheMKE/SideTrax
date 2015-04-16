@@ -1,0 +1,17 @@
+/* 
+  Localizable.strings
+  FlatJump
+
+  Created by Evan Ische on 4/15/15.
+  Copyright (c) 2015 Evan William Ische. All rights reserved.
+*/
+
+"music" = "Muzik";
+"sound" = "Bunyi";
+"restore" = "Simpan semula Pembelian";
+"setting" = "Tetapan";
+"on" = "Pada";
+"off" = "Off";
+"score" = "Score";
+"tracks" = "Trek";
+"instruction" = "Ketuk kiri atau ke kanan untuk bergerak";

@@ -21,8 +21,10 @@
 #import "HDSettingsManager.h"
 #import "SKEmitterNode+HDEmitterAdditions.h"
 #import "SKSpriteNode+HDSpriteNodeAdditions.h"
+#import "HDGameCenterManager.h"
 
 #define ROW_HEIGHT floor((COLUMN_WIDTH * 1.9f))
+
 #define GAME_SPEED_NORMAL 4.25
 
 typedef NS_OPTIONS(uint32_t, HDCollisionCategory) {
@@ -31,9 +33,14 @@ typedef NS_OPTIONS(uint32_t, HDCollisionCategory) {
     HDCollisionCategoryPlatform = 0x1 << 1,
 };
 
-NSString * const HDPlayerKey   = @"playerKey";
-NSString * const HDPlatformKey = @"HDPlatformNode";
-NSString * const HDEmitterKey  = @"emitterKey";
+static const CGFloat loadNewLevel = 550.0f;
+static const CGFloat maxyPlayerPosition = 200.0f;
+
+NSString * const HDPlayerKey            = @"playerKey";
+NSString * const HDHorizontalBarrierKey = @"HDHorizontalNode";
+NSString * const HDVerticalBarrierKey   = @"HDverticalNode";
+NSString * const HDVerticalArrowKey     = @"HDArrowNode";
+NSString * const HDEmitterKey           = @"emitterKey";
 static NSString * const HDSoundKey = @"soundKey";
 NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
 @interface HDGameScene ()<SKPhysicsContactDelegate>
@@ -74,6 +81,8 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     self.explosion = [SKAction playSoundFileNamed:@"Explosion.wav" waitForCompletion:NO];
     
     self.backgroundColor = [SKColor flatSTBackgroundColor];
+    
+    
     self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
     self.physicsWorld.contactDelegate = self;
     
@@ -81,6 +90,7 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     [self addChild:self.backgroundNode];
     
     self.objectLayerNode = [SKNode node];
+    self.objectLayerNode.position = CGPointMake(0.0f, self.size.height);
     [self addChild:self.objectLayerNode];
     
     self.hudLayerNode = [SKNode node];
@@ -89,25 +99,45 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     self.scoreNode = [self _scoreNode];
     [self.hudLayerNode addChild:self.scoreNode];
     
-    self.instructionNode = [self _instructionNode];
-    [self.hudLayerNode addChild:self.instructionNode];
-    
-    _velocity.y = GAME_SPEED_NORMAL;
     _currentRow = 3;
-    _gameOver   = NO;
+    _gameOver   = YES;
     
-    [self performSelector:@selector(_removeInstructionNode) withObject:nil afterDelay:1.5f];
+    dispatch_block_t completion = ^{
+    
+        _velocity.y = GAME_SPEED_NORMAL*1.75f;
+        _gameOver = NO;
+        
+        [self.objectLayerNode removeAllActions];
+        
+         self.player = [self _createPlayer];
+        [self.objectLayerNode addChild:self.player];
+        [self _addThrustToNode:(SKSpriteNode *)[self.player childNodeWithName:HDPlayerKey]];
+        
+        self.instructionNode = [self _instructionNode];
+        self.instructionNode.alpha = 0;
+        [self.hudLayerNode addChild:self.instructionNode];
+        
+        [self.instructionNode runAction:[SKAction fadeInWithDuration:.2f]];
+        
+        [self performSelector:@selector(_removeInstructionNode) withObject:nil afterDelay:1.5f];
+        
+        [self performSelector:@selector(_changeVelocityTo:) withObject:@(GAME_SPEED_NORMAL) afterDelay:.65f];
+    };
+    
+    SKAction *positionAction = [SKAction moveToY:-0.0f duration:.6f];
+    positionAction.timingMode = SKActionTimingEaseOut;
+    [self.objectLayerNode runAction:[SKAction moveToY:-0.0f duration:.6f] completion:completion];
 }
 
 - (void)_removeInstructionNode {
-    
+    // Fade out the instruction text
     [self.instructionNode runAction:[SKAction fadeAlphaTo:0.0f duration:.3f] completion:^{
         [self.instructionNode removeFromParent];
         self.instructionNode = nil;
     }];
 }
 
-- (void)_increaceVelocityTo:(NSNumber *)velocity {
+- (void)_changeVelocityTo:(NSNumber *)velocity {
     _velocity.y = [velocity floatValue];
 }
 
@@ -129,18 +159,18 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
 
 - (SKNode *)_createBorderWithRow:(NSUInteger)row {
 
-    CGFloat width  = self.size.width/2 - COLUMN_WIDTH*2.5;
-    CGFloat height = COLUMN_WIDTH*2 + BARRIER_WIDTH/2;
+    CGFloat width  = self.size.width / 2 - COLUMN_WIDTH * 2.5;
+    CGFloat height = COLUMN_WIDTH * 2 + BARRIER_WIDTH / 2;
     
     HDBarrierNode *container = [HDBarrierNode node];
-    container.name = HDPlatformKey;
+    container.name = HDVerticalBarrierKey;
     for (NSUInteger i = 0; i < 2; i++) {
         
         SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithColor:[UIColor flatSTEmeraldColor]
                                                             size:CGSizeMake(width, height)];
         
         HDBarrierNode *node = [HDBarrierNode node];
-        node.name = HDPlatformKey;
+        node.name = HDVerticalBarrierKey;
         node.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:sprite.size];
         node.physicsBody.dynamic = NO;
         node.physicsBody.categoryBitMask = HDCollisionCategoryPlatform;
@@ -165,7 +195,7 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
 - (SKNode *)layoutArrowsFromDirection:(HDArrowDirection)direction row:(NSUInteger)row {
     
     HDBarrierNode *container = [HDBarrierNode node];
-    container.name = HDPlatformKey;
+    container.name = HDVerticalArrowKey;
     for (NSUInteger i = 0; i < 2; i++) {
         
         SKSpriteNode *arrow = nil;
@@ -201,15 +231,21 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
 
 - (void)layoutChildrenNode {
     
+    NSLog(self.direction == HDDirectionStateRegular ? @"YES" : @"NO");
+    
     void (^layoutBorders)(NSUInteger row) = ^(NSUInteger row){
+        
+        CGPoint position = CGPointMake( 0.0f, ROW_HEIGHT * row -BARRIER_WIDTH/2);
         SKNode *node = [self _createBorderWithRow:row];
-        node.position = CGPointMake( 0.0f, ROW_HEIGHT * row -BARRIER_WIDTH/2);
+        node.position = position;
         [self.objectLayerNode addChild:node];
     };
     
-    void (^layoutArrows)(NSUInteger row, HDArrowDirection direction) = ^(NSUInteger row, HDArrowDirection direction) {
+    void (^layoutArrows)(NSUInteger, HDArrowDirection) = ^(NSUInteger row, HDArrowDirection direction) {
+        
+        CGPoint position = CGPointMake(0.0f, ROW_HEIGHT * row + ROW_HEIGHT / 2);
         SKNode *node = [self layoutArrowsFromDirection:direction row:row];
-        node.position = CGPointMake(0.0f, ROW_HEIGHT * row + ROW_HEIGHT/2);
+        node.position = position;
         [self.objectLayerNode addChild:node];
     };
     
@@ -243,31 +279,6 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     }
     
     self.gridManager.range = NSMakeRange(range.location + range.length, range.length);
-    
-    if (!self.player) {
-        self.player = [self _createPlayer];
-        [self.objectLayerNode addChild:self.player];
-        [self _addThrustToNode:(SKSpriteNode *)[self.player childNodeWithName:HDPlayerKey]];
-    }
-}
-
-- (void)_saveMe {
-    
-    if (_gameOver) {
-        return;
-    }
-    
-    _gameOver = YES;
-    
-    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-    
-    SKAction *right = [SKAction rotateToAngle:.002f duration:.08f];
-    SKAction *left  = [SKAction rotateToAngle:-.002f duration:.08f];
-    SKAction *final = [SKAction repeatAction:[SKAction sequence:@[right, left]] count:3];
-    [self.objectLayerNode runAction:final completion:^{
-        [self.objectLayerNode runAction:[SKAction rotateToAngle:0.0f duration:.15f]];
-        [self _endGame];
-    }];
 }
 
 - (void)update:(CFTimeInterval)currentTime {
@@ -280,7 +291,7 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     position.y += _velocity.y;
     self.player.position = position;
     
-    if (fmod(self.player.position.y + 5.0f, 550.0f) < 4) {
+    if (fmod(self.player.position.y + 5.0f, loadNewLevel) < 4) {
         [[NSNotificationCenter defaultCenter] postNotificationName:HDLevelLayoutNotificationKey object:nil];
     }
     
@@ -298,11 +309,20 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
         }
     }
     
-    [self.objectLayerNode enumerateChildNodesWithName:HDPlatformKey usingBlock:^(SKNode *node, BOOL *stop) {
+    [self.objectLayerNode enumerateChildNodesWithName:HDVerticalArrowKey usingBlock:^(SKNode *node, BOOL *stop) {
         [(HDBarrierNode *)node checkNodePositionForRemoval:self.player.position.y];
     }];
     
-    if (self.player.position.y > 200.0f) {
+    [self.objectLayerNode enumerateChildNodesWithName:HDVerticalBarrierKey usingBlock:^(SKNode *node, BOOL *stop) {
+        [(HDBarrierNode *)node checkNodePositionForRemoval:self.player.position.y];
+    }];
+    
+    [self.objectLayerNode enumerateChildNodesWithName:HDHorizontalBarrierKey usingBlock:^(SKNode *node, BOOL *stop) {
+        [(HDBarrierNode *)node checkNodePositionForRemoval:self.player.position.y];
+    }];
+    
+    // Once the player node reaches 200pt, move the ObjectNode down at the same rate the players increasing
+    if (self.player.position.y > maxyPlayerPosition) {
         CGPoint position = self.objectLayerNode.position;
         position.y -= _velocity.y;
         self.objectLayerNode.position = position;
@@ -312,6 +332,8 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
 - (void)_endGame {
     [[HDAppDelegate sharedDelegate] returnHome];
     [[HDPointsManager sharedManager] saveState];
+    [[HDGameCenterManager sharedManager] reportLevelsCompleted:[HDPointsManager sharedManager].score
+                                                        forKey:[HDGameCenterManager leaderboardIdentifierFromState:self.direction]];
 }
 
 - (void)_addThrustToNode:(SKSpriteNode *)node {
@@ -336,46 +358,36 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     UITouch *touch = [touches anyObject];
     CGPoint position = [touch locationInNode:self.objectLayerNode];
     
+    BOOL reversed = self.direction != HDDirectionStateRegular;
+    
+    NSTimeInterval animationDuration = .07f;
+    
     _animating = YES;
     if (position.x > self.size.width/2) {
         
-        _currentRow++;
-        if (_currentRow > 5) {
-            
-            _currentRow = 1;
-            
-            SKAction *rightEdge = [SKAction moveToX:self.size.width duration:.035f];
-            SKAction *hide = [SKAction hide];
-            
-            [self.player runAction:[SKAction sequence:@[rightEdge,hide]] completion:^{
-                CGPoint position = self.player.position;
-                position.x = 0;
-                self.player.position = position;
-                
-                SKAction *show = [SKAction unhide];
-                SKAction *move = [SKAction moveToX:BARRIER_WIDTH + COLUMN_WIDTH/2 duration:rightEdge.duration];
-                [self.player runAction:[SKAction sequence:@[show, move]] completion:^{
-                    _animating = NO;
-                }];
-            }];
+        BOOL end = !reversed ? [self _movePlayerRightWithDuration:animationDuration]
+                             : [self _movePlayerLeftWithDuration:animationDuration];
+        if (end) {
             return;
         }
-        
-        [self.player runAction:[SKAction moveToX:self.player.position.x + COLUMN_WIDTH duration:.07f] completion:^{
-            _animating = NO;
-        }];
-        return;
     }
+    !reversed ? [self _movePlayerLeftWithDuration:animationDuration]
+              : [self _movePlayerRightWithDuration:animationDuration];
+    return;
+}
+
+- (BOOL)_movePlayerLeftWithDuration:(NSTimeInterval)duration {
     
     _currentRow--;
     if (_currentRow < 1) {
         
         _currentRow = 5;
         
-        SKAction *rightEdge = [SKAction moveToX:0.0f duration:.045f];
+        SKAction *rightEdge = [SKAction moveToX:0.0f duration:duration/2];
         SKAction *hide = [SKAction hide];
         
         [self.player runAction:[SKAction sequence:@[rightEdge,hide]] completion:^{
+            
             CGPoint position = self.player.position;
             position.x = self.size.width;
             self.player.position = position;
@@ -387,22 +399,95 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
                 _animating = NO;
             }];
         }];
-        return;
+        return YES;
     }
     
-    [self.player runAction:[SKAction moveToX:self.player.position.x - COLUMN_WIDTH duration:.07f] completion:^{
+    [self.player runAction:[SKAction moveToX:self.player.position.x - COLUMN_WIDTH
+                                    duration:duration]
+                completion:^{
         _animating = NO;
     }];
+    
+    return YES;
+}
+
+- (BOOL)_movePlayerRightWithDuration:(NSTimeInterval)duration {
+    
+    _currentRow++;
+    if (_currentRow > 5) {
+        
+        _currentRow = 1;
+        
+        SKAction *rightEdge = [SKAction moveToX:self.size.width duration:duration/2];
+        SKAction *hide = [SKAction hide];
+        
+        [self.player runAction:[SKAction sequence:@[rightEdge,hide]] completion:^{
+            CGPoint position = self.player.position;
+            position.x = 0;
+            self.player.position = position;
+            
+            SKAction *show = [SKAction unhide];
+            SKAction *move = [SKAction moveToX:BARRIER_WIDTH + COLUMN_WIDTH/2 duration:rightEdge.duration];
+            [self.player runAction:[SKAction sequence:@[show, move]] completion:^{
+                _animating = NO;
+            }];
+        }];
+        return YES;
+    }
+    
+    [self.player runAction:[SKAction moveToX:self.player.position.x + COLUMN_WIDTH
+                                    duration:duration]
+                completion:^{
+        _animating = NO;
+    }];
+    return YES;
 }
 
 - (void)didBeginContact:(SKPhysicsContact *)contact {
     
+    // Find the physics body thats not the player
     SKNode *otherBody = (contact.bodyA.node != self.player) ? contact.bodyA.node : contact.bodyB.node;
     
     [(HDObjectNode *)otherBody collisionWithPlayer:self.player completion:^(BOOL update, HDObjectType type) {
+        
+        // If games over, returm
+        if (_gameOver) {
+            return;
+        }
+        
+        // Stop calling update and remoe animations
+        _gameOver = YES;
+        
+        // Stop playing background music
         [[HDSoundManager sharedManager] setPlayLoop:NO];
+        
+        // Play Explosion sound
         [self runAction:self.explosion withKey:HDSoundKey];
-        [self _saveMe];
+        
+        // Vibrate
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+        
+        SKAction *right = [SKAction rotateToAngle:.002f duration:.08f];
+        SKAction *left  = [SKAction rotateToAngle:-.002f duration:.08f];
+        SKAction *final = [SKAction repeatAction:[SKAction sequence:@[right, left]] count:3];
+        
+        // Perform shake animation
+        [self.objectLayerNode runAction:final completion:^{
+            
+            // When animations complete, return to center and remove animations
+            [self.objectLayerNode runAction:[SKAction rotateToAngle:0.0f duration:.15f]];
+            
+            // Scroll the HUD node
+            [self.hudLayerNode runAction:[SKAction moveToY:self.size.height/2 duration:.4]];
+            
+             // Scroll maze to the top, then dismiss View Controller
+            [self.objectLayerNode runAction:[SKAction moveToY:self.objectLayerNode.position.y + self.size.height*1.3
+                                                     duration:.4] completion:^{
+                [self.objectLayerNode removeAllActions];
+                [self _endGame];
+            }];
+            
+        }];
     }];
 }
 
@@ -418,7 +503,7 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     sprite.name = HDPlayerKey;
     
     SKNode *playerNode = [SKNode node];
-    playerNode.position    = CGPointMake(self.size.width/2, sprite.size.height);
+    playerNode.position    = CGPointMake(self.size.width/2, 0.0f);
     playerNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:sprite.size.width/2];
     playerNode.physicsBody.dynamic        = YES;
     playerNode.physicsBody.allowsRotation = YES;
@@ -443,7 +528,7 @@ NSString * const HDLevelLayoutNotificationKey = @"layoutNotificationKey";
     
     HDBarrierNode *node = [HDBarrierNode node];
     node.position    = position;
-    node.name        = HDPlatformKey;
+    node.name        = HDHorizontalBarrierKey;
     node.barrierType = type;
     node.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:sprite.size];
     node.physicsBody.dynamic = NO;

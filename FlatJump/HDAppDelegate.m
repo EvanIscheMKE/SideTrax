@@ -20,6 +20,7 @@
 #import "HDSoundManager.h"
 
 NSString * const HDFirstRunKey = @"first";
+NSString * const HDMenuClicked = @"menuClicked.wav";
 NSString * const iOS8AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%d";
 @interface HDAppDelegate ()<GKGameCenterControllerDelegate>
 @property (nonatomic, strong) UINavigationController *navigationController;
@@ -49,6 +50,7 @@ NSString * const iOS8AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%d
         [[HDSettingsManager sharedManager] configureSettingsForFirstRun];
     }
     
+    [[HDSoundManager sharedManager] preloadSounds:@[HDMenuClicked]];
     [[HDSoundManager sharedManager] preloadLoopWithName:HDMusicLoopKey];
   
     
@@ -58,7 +60,7 @@ NSString * const iOS8AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%d
 #pragma mark - View Hierarchy
 
 - (void)returnHome {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:NO];
 }
 
 - (void)presentGameViewController {
@@ -69,6 +71,9 @@ NSString * const iOS8AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%d
 #pragma mark - UIActivityController 
 
 - (IBAction)rateThisApp:(id)sender {
+    
+    [[HDSoundManager sharedManager] playSound:HDMenuClicked];
+    
     NSURL *rateThisApp = [NSURL URLWithString:[NSString stringWithFormat:iOS8AppStoreURLFormat,TRACKS_APPLICATION_ID]];
     if ([[UIApplication sharedApplication] canOpenURL:rateThisApp]) {
         [[UIApplication sharedApplication] openURL:rateThisApp];
@@ -76,6 +81,8 @@ NSString * const iOS8AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%d
 }
 
 - (IBAction)presentActivityViewController:(id)sender {
+    
+    [[HDSoundManager sharedManager] playSound:HDMenuClicked];
     
     NSArray *activityItems = @[[self _frontViewControllerScreenShot]];
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:activityItems
@@ -106,6 +113,8 @@ NSString * const iOS8AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%d
 
 - (IBAction)presentLeaderboardViewController:(id)sender {
     
+    [[HDSoundManager sharedManager] playSound:HDMenuClicked];
+    
     GKGameCenterViewController *controller = [[GKGameCenterViewController alloc] init];
     controller.gameCenterDelegate    = self;
     controller.leaderboardIdentifier = @"YOLO";
@@ -120,10 +129,15 @@ NSString * const iOS8AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%d
 #pragma mark - IAP
 
 - (IBAction)restoreIAP:(id)sender {
+    
+    [[HDSoundManager sharedManager] playSound:HDMenuClicked];
+    
     [[HDJumperIAdHelper sharedHelper] restoreCompletedTransactions];
 }
 
 - (IBAction)removeAds:(id)sender {
+    
+    [[HDSoundManager sharedManager] playSound:HDMenuClicked];
     
     [[HDJumperIAdHelper sharedHelper] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
         

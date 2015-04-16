@@ -9,11 +9,7 @@
 @import SpriteKit;
 @import UIKit;
 
-typedef NS_OPTIONS(int8_t, HDDirectionState) {
-    HDDirectionStateRegular = 1,
-    HDDirectionStateReversed = 2,
-    HDDirectionStateNone
-};
+#import "HDAppDelegate.h"
 
 extern NSString * const HDLevelLayoutNotificationKey;
 @class HDGridManager;
