@@ -9,8 +9,5 @@
 @import iAd;
 @import UIKit;
 
-@interface HDBackgroundView : UIView
-@end
-
 @interface HDIntroViewController : UIViewController<ADBannerViewDelegate>
 @end

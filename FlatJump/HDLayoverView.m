@@ -6,14 +6,13 @@
 //  Copyright (c) 2015 Evan William Ische. All rights reserved.
 //
 
+#import "HDButton.h"
+#import "HDHelper.h"
 #import "HDAppDelegate.h"
 #import "HDLayoverView.h"
 #import "UIColor+FlatColors.h"
 #import "HDSettingsManager.h"
 #import "HDSoundManager.h"
-
-#define TRANSFORM_SCALE_X [UIScreen mainScreen].bounds.size.width  / 375.0f
-#define TRANSFORM_SCALE_Y [UIScreen mainScreen].bounds.size.height / 667.0f
 
 @interface HDColoredView : UIView
 @end
@@ -106,7 +105,7 @@
         [self.container.layer addSublayer:layer];
         
         CGRect toggleBounds = CGRectMake(0.0f, 0.0f, CGRectGetHeight(layer.bounds) * 1.6f, CGRectGetHeight(layer.bounds) * 1.3f);
-        UIButton *toggle = [UIButton buttonWithType:UIButtonTypeCustom];
+        HDButton *toggle = [HDButton buttonWithType:UIButtonTypeCustom];
         toggle.frame = toggleBounds;
         toggle.layer.cornerRadius = CGRectGetMidY(toggleBounds);
         [toggle addTarget:self action:@selector(_toggleSettings:) forControlEvents:UIControlEventTouchUpInside];

@@ -8,15 +8,12 @@
 
 @import SpriteKit;
 
-typedef NS_OPTIONS(u_int8_t, HDObjectType) {
+typedef NS_OPTIONS(NSUInteger, HDObjectType) {
     HDObjectTypePlatform = 3,
     HDObjectTypeNone     = 0
 };
 
-typedef void (^CompletionBlock)(BOOL update, HDObjectType type);
-typedef void (^RemovalBlock)(BOOL remove);
-
 @interface HDObjectNode : SKNode
-- (void)collisionWithPlayer:(SKNode *)player completion:(CompletionBlock)completion;
-- (void)checkNodePositionForRemoval:(CGFloat)position completion:(RemovalBlock)completion;
+- (BOOL)collisionWithPlayer:(SKNode *)player;
+- (BOOL)checkNodePositionForRemoval:(CGFloat)position ;
 @end

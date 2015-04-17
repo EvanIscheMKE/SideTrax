@@ -11,7 +11,7 @@
 
 @implementation HDBarrierNode
 
-- (void)collisionWithPlayer:(SKNode *)player completion:(CompletionBlock)completion {
+- (BOOL)collisionWithPlayer:(SKNode *)player {
     
     [player removeAllChildren];
     [player removeAllActions];
@@ -22,9 +22,7 @@
     NSTimeInterval delayInSeconds = explosion.numParticlesToEmit / explosion.particleBirthRate + explosion.particleLifetime;
     [explosion performSelector:@selector(removeFromParent) withObject:nil afterDelay:delayInSeconds];
 
-    if (completion) {
-        completion(YES, HDObjectTypePlatform);
-    };
+    return YES;
 }
 
 @end

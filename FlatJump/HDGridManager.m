@@ -10,43 +10,48 @@
 #import "HDGridManager.h"
 
 static const NSUInteger startingRow = 6;
-static const NSUInteger firstRow = 0;
-static const NSUInteger lastRow = 4;
+static const NSUInteger firstColumn = 0;
+static const NSUInteger lastColumn = 4;
 @implementation HDGridManager {
+    NSMutableDictionary *_openColumn;
     NSMutableDictionary *_gridIndex;
     NSMutableArray *_indexes;
+    NSArray *_borderColumnIndexs;
+}
+
+- (instancetype)init {
+    if (self = [super init]) {
+        _indexes = [NSMutableArray new];
+        _gridIndex = [NSMutableDictionary new];
+        _openColumn = [NSMutableDictionary new];
+        _borderColumnIndexs = @[@(firstColumn),@(lastColumn)];
+    }
+    return self;
 }
 
 #pragma mark - Public
 
-- (NSNumber *)coinTypeAtRow:(NSInteger)row column:(NSInteger)column {
-    return _gridIndex[[NSIndexPath indexPathForRow:row inSection:column]];
+- (BOOL)presentBarrierForRow:(NSInteger)row column:(NSInteger)column {
+    return [_gridIndex[[NSIndexPath indexPathForRow:row inSection:column]] boolValue];
 }
 
-- (void)displayRowBordersForRowAtIndex:(NSUInteger)index completion:(GridBlock)completion {
+- (void)displayRowBordersForRowAtIndex:(NSUInteger)rowIndex completion:(GridBlock)completion {
     
-    // From row 0-3 just present the up arrows
-    if (index < 6) {
-        // Rows 3-5 present up arrows and borders, call completion block and return
-        if (index > 3) {
-            if (completion) {
-                completion(YES,HDArrowDirectionUp);
-            }
-            return;
-        }
+    // From row 0-startingRow just present the up arrows
+    if (rowIndex < startingRow) {
         if (completion) {
-            completion(NO,HDArrowDirectionUp);
+            completion(YES,HDArrowDirectionUp);
         }
         return;
     }
     
     // Find the index for each open row
-    NSNumber *previousRowIndex = [self indexOfOpenCellForRow:index - 1];
-    NSNumber *currentRowIndex  = [self indexOfOpenCellForRow:index];
+    NSNumber *previousRowIndex = _openColumn[@(rowIndex - 1)];
+    NSNumber *currentRowIndex  = _openColumn[@(rowIndex)];
     
     // Check if the open row's index is an end index(0,4)
-    BOOL currentIndexWithinScope  = [@[@0,@4] containsObject:currentRowIndex];
-    BOOL previousIndexWithinScope = [@[@0,@4] containsObject:previousRowIndex];
+    BOOL currentIndexWithinScope  = [_borderColumnIndexs containsObject:currentRowIndex];
+    BOOL previousIndexWithinScope = [_borderColumnIndexs containsObject:previousRowIndex];
     
     BOOL displayBorders = NO;
     
@@ -84,96 +89,58 @@ static const NSUInteger lastRow = 4;
     // Get a background thread
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         
-        
-        if (!_gridIndex) {
-            _gridIndex = [NSMutableDictionary dictionary];
-        } else {
-            NSUInteger length = 2;
+        if (_indexes.count) {
+            const NSUInteger length = 2;
             if (self.range.length != length) {
                 self.range = NSMakeRange(self.range.location, length);
             }
         }
-        
-        if (!_indexes) {
-            _indexes = [NSMutableArray array];
-        }
-        
-        
-        NSInteger previousIdx = _indexes ? [[_indexes lastObject] integerValue] : 2;
+    
+        NSUInteger previousIdx = _indexes ? [[_indexes lastObject] integerValue] : 2;
         for (NSUInteger row = self.range.location; row < self.range.location + self.range.length; row++) {
             
             if (row < startingRow) {
                 continue;
             }
             
-            BOOL consecutive = NO;
-            
-            BOOL firstCheck;
-            BOOL secondCheck;
-            if (_indexes.count > 2) {
-                firstCheck  = [@[@(firstRow), @(lastRow)] containsObject:[_indexes lastObject]];
-                secondCheck = [@[@(firstRow), @(lastRow)] containsObject:_indexes[[_indexes count] - 2]];
-                if (firstCheck && secondCheck) {
-                    consecutive = YES;
-                }
-            }
-            
-            NSInteger currentIdx = 0;
-            if (previousIdx == firstRow && !consecutive) {
-                
-                if ([self _rollTheDice]) {
-                    currentIdx = 3;
-                } else {
-                    currentIdx = lastRow;
-                }
-                
-            } else if (previousIdx == lastRow && !consecutive) {
-
-                if ([self _rollTheDice]) {
-                    currentIdx = 1;
-                } else {
-                    currentIdx = firstRow;
-                }
-                
+            NSUInteger openColumnIdx = 0;
+            if (row == startingRow) {
+                openColumnIdx = 2;
             } else {
                 
-                if (previousIdx != lastRow && previousIdx != firstRow) {
-                    currentIdx = (arc4random() % NumberOfColumns);
-                    while ((abs((int)currentIdx - (int)previousIdx) > 2) || currentIdx == previousIdx) {
-                        currentIdx = (arc4random() % NumberOfColumns);
+                BOOL consecutiveEdgeColumns = NO;
+                if (_indexes.count > 2) {
+                    if ([_borderColumnIndexs containsObject:[_indexes lastObject]] &&
+                        [_borderColumnIndexs containsObject:_indexes[[_indexes count] - 2]]) {
+                        consecutiveEdgeColumns = YES;
                     }
                 }
                 
-                if (previousIdx == lastRow) {
-                    currentIdx = [self _rollTheDice] ? 2 : 3;
-                }
-                
-                if (previousIdx == firstRow) {
-                    currentIdx = [self _rollTheDice] ? 1 : 2;
-                }
-            }
-            
-            if (row == startingRow) {
-                currentIdx = 2;
-            }
-            
-            NSNumber *objectType = nil;
-            for (NSUInteger column = 0; column < NumberOfColumns; column++) {
-                
-                if (column == currentIdx) {
-                    objectType = @0;
+                if (previousIdx == firstColumn && !consecutiveEdgeColumns) {
+                    openColumnIdx = [self _rollTheDice] ? 3 : lastColumn;
+                } else if (previousIdx == lastColumn && !consecutiveEdgeColumns) {
+                    openColumnIdx = [self _rollTheDice] ? 1 : firstColumn;
                 } else {
-                    objectType = @1;
+                    if (previousIdx == lastColumn) {
+                        openColumnIdx = [self _rollTheDice] ? 2 : 3;
+                    } else if (previousIdx == firstColumn) {
+                        openColumnIdx = [self _rollTheDice] ? 1 : 2;
+                    } else {
+                        openColumnIdx = (arc4random() % NumberOfColumns);
+                        while ((abs((int)openColumnIdx - (int)previousIdx) > 2) || openColumnIdx == previousIdx) {
+                            openColumnIdx = (arc4random() % NumberOfColumns);
+                        }
+                    }
                 }
-                
-                previousIdx = currentIdx;
-                
-                _gridIndex[[NSIndexPath indexPathForRow:row inSection:column]] = objectType;
             }
-            [_indexes addObject:@(currentIdx)];
+            
+            [_indexes addObject:@(openColumnIdx)];
+            _openColumn[@(row)] = @(openColumnIdx);
+            previousIdx = openColumnIdx;
         }
+        
+        // Call completion block when back on the main thread
         if (completion){
-            // Call completion block when back on the main thread
             dispatch_async(dispatch_get_main_queue(), ^{
                 completion();
             });

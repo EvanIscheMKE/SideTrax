@@ -19,12 +19,13 @@
 		384537BA1ADED59500B7CA19 /* HDGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 384537B91ADED59400B7CA19 /* HDGameScene.m */; };
 		384537BD1ADEF30E00B7CA19 /* HDSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 384537BC1ADEF30E00B7CA19 /* HDSoundManager.m */; };
 		384537BF1ADEF54300B7CA19 /* Reformat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 384537BE1ADEF54300B7CA19 /* Reformat.mp3 */; };
-		384537C21ADF0ED300B7CA19 /* UIButton+SoundAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 384537C11ADF0ED300B7CA19 /* UIButton+SoundAdditions.m */; };
+		384537C21ADF0ED300B7CA19 /* HDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 384537C11ADF0ED300B7CA19 /* HDButton.m */; };
 		384537C41ADF147400B7CA19 /* menuClicked.wav in Resources */ = {isa = PBXBuildFile; fileRef = 384537C31ADF147400B7CA19 /* menuClicked.wav */; };
 		3862E8E11AD0EFEF00D76B1E /* HDGameCenterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3862E8E01AD0EFEF00D76B1E /* HDGameCenterManager.m */; };
 		3881D7281AD204380068338D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3881D7271AD204380068338D /* StoreKit.framework */; };
 		3881D72B1AD2198F0068338D /* HDLayoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3881D72A1AD2198F0068338D /* HDLayoverView.m */; };
 		3881D72E1AD322BF0068338D /* HDSettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3881D72D1AD322BF0068338D /* HDSettingsManager.m */; };
+		388F5B591AE07C3B009F72BD /* HDHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 388F5B581AE07C3B009F72BD /* HDHelper.m */; };
 		389C7D1D1AC5D554005EF91B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D1C1AC5D554005EF91B /* main.m */; };
 		389C7D201AC5D554005EF91B /* HDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D1F1AC5D554005EF91B /* HDAppDelegate.m */; };
 		389C7D231AC5D554005EF91B /* HDGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C7D221AC5D554005EF91B /* HDGameViewController.m */; };
@@ -97,8 +98,8 @@
 		384537BB1ADEF30E00B7CA19 /* HDSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDSoundManager.h; sourceTree = "<group>"; };
 		384537BC1ADEF30E00B7CA19 /* HDSoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDSoundManager.m; sourceTree = "<group>"; };
 		384537BE1ADEF54300B7CA19 /* Reformat.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Reformat.mp3; sourceTree = "<group>"; };
-		384537C01ADF0ED300B7CA19 /* UIButton+SoundAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+SoundAdditions.h"; sourceTree = "<group>"; };
-		384537C11ADF0ED300B7CA19 /* UIButton+SoundAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+SoundAdditions.m"; sourceTree = "<group>"; };
+		384537C01ADF0ED300B7CA19 /* HDButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDButton.h; sourceTree = "<group>"; };
+		384537C11ADF0ED300B7CA19 /* HDButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDButton.m; sourceTree = "<group>"; };
 		384537C31ADF147400B7CA19 /* menuClicked.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = menuClicked.wav; sourceTree = "<group>"; };
 		3862E8DF1AD0EFEF00D76B1E /* HDGameCenterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDGameCenterManager.h; sourceTree = "<group>"; };
 		3862E8E01AD0EFEF00D76B1E /* HDGameCenterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDGameCenterManager.m; sourceTree = "<group>"; };
@@ -107,6 +108,8 @@
 		3881D72A1AD2198F0068338D /* HDLayoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDLayoverView.m; sourceTree = "<group>"; };
 		3881D72C1AD322BF0068338D /* HDSettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDSettingsManager.h; sourceTree = "<group>"; };
 		3881D72D1AD322BF0068338D /* HDSettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDSettingsManager.m; sourceTree = "<group>"; };
+		388F5B571AE07C3B009F72BD /* HDHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDHelper.h; sourceTree = "<group>"; };
+		388F5B581AE07C3B009F72BD /* HDHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDHelper.m; sourceTree = "<group>"; };
 		389C7D171AC5D554005EF91B /* FlatJump.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlatJump.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		389C7D1B1AC5D554005EF91B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		389C7D1C1AC5D554005EF91B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -350,6 +353,8 @@
 		389C7D4C1AC5D870005EF91B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				388F5B571AE07C3B009F72BD /* HDHelper.h */,
+				388F5B581AE07C3B009F72BD /* HDHelper.m */,
 				381D2AA11ACDB8DC009F9F4F /* IAP */,
 				38193D731ADF781600969B57 /* Manager */,
 			);
@@ -368,8 +373,8 @@
 				389C7D731AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m */,
 				38B6318D1AD798F1009F7CAE /* SKSpriteNode+HDSpriteNodeAdditions.h */,
 				38B6318E1AD798F1009F7CAE /* SKSpriteNode+HDSpriteNodeAdditions.m */,
-				384537C01ADF0ED300B7CA19 /* UIButton+SoundAdditions.h */,
-				384537C11ADF0ED300B7CA19 /* UIButton+SoundAdditions.m */,
+				384537C01ADF0ED300B7CA19 /* HDButton.h */,
+				384537C11ADF0ED300B7CA19 /* HDButton.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -515,6 +520,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				388F5B591AE07C3B009F72BD /* HDHelper.m in Sources */,
 				389C7D5E1AC5E026005EF91B /* UIColor+FlatColors.m in Sources */,
 				389C7D531AC5DAF8005EF91B /* HDBarrierNode.m in Sources */,
 				389C7D4F1AC5D8A8005EF91B /* SKColor+HDColor.m in Sources */,
@@ -526,7 +532,7 @@
 				384537BA1ADED59500B7CA19 /* HDGameScene.m in Sources */,
 				381D2A9F1ACDB8D6009F9F4F /* HDJumperIAdHelper.m in Sources */,
 				389C7D711AC642F4005EF91B /* HDGridManager.m in Sources */,
-				384537C21ADF0ED300B7CA19 /* UIButton+SoundAdditions.m in Sources */,
+				384537C21ADF0ED300B7CA19 /* HDButton.m in Sources */,
 				389C7D201AC5D554005EF91B /* HDAppDelegate.m in Sources */,
 				389C7D1D1AC5D554005EF91B /* main.m in Sources */,
 				384537BD1ADEF30E00B7CA19 /* HDSoundManager.m in Sources */,
@@ -680,7 +686,7 @@
 				PRODUCT_MODULE_NAME = FlatJump;
 				PRODUCT_NAME = FlatJump;
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -696,7 +702,7 @@
 				PRODUCT_MODULE_NAME = FlatJump;
 				PRODUCT_NAME = FlatJump;
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

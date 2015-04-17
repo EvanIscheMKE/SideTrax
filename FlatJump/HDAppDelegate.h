@@ -8,13 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#define BARRIER_WIDTH roundf(14 * TRANSFORM_SCALE_X)
-
-#define TRANSFORM_SCALE_X [UIScreen mainScreen].bounds.size.width  / 375.0f
-#define TRANSFORM_SCALE_Y [UIScreen mainScreen].bounds.size.height / 667.0f
-
-#define COLUMN_WIDTH floorf((([UIScreen mainScreen].bounds.size.width) - (BARRIER_WIDTH * 2))/5)
-
 #define GAME_FONT_WITH_SIZE(x) [UIFont fontWithName:@"KimberleyBl-Regular" size:x]
 
 typedef NS_OPTIONS(int8_t, HDDirectionState) {

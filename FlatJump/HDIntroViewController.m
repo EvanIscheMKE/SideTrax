@@ -10,6 +10,8 @@
 @import SpriteKit;
 @import QuartzCore;
 
+#import "HDButton.h"
+#import "HDHelper.h"
 #import "HDLayoverView.h"
 #import "HDGridManager.h"
 #import "HDAppDelegate.h"
@@ -17,40 +19,11 @@
 #import "UIColor+FlatColors.h"
 #import "HDPointsManager.h"
 #import "HDIntroViewController.h"
-#import "UIButton+SoundAdditions.h"
 #import "HDSettingsManager.h"
 #import "HDSoundManager.h"
 
-@implementation HDBackgroundView
-
-- (instancetype)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
-        self.backgroundColor = [UIColor flatSTBackgroundColor];
-    }
-    return self;
-}
-
-- (void)drawRect:(CGRect)rect {
-    
-    UIColor *stripeColor = [UIColor flatSTAccentColor];
-    
-    const CGFloat startXPosition = CGRectGetMidX(self.bounds) - (NumberOfColumns/2.0f * COLUMN_WIDTH);
-    for (NSUInteger column = 0; column < NumberOfColumns; column++) {
-        
-        UIColor *fillColor = (column % 2 == 0) ? self.backgroundColor : stripeColor;
-        
-        [fillColor setFill];
-        CGRect stripeFrame = CGRectMake(startXPosition + (COLUMN_WIDTH * column), 0.0f, COLUMN_WIDTH, CGRectGetHeight(self.bounds));
-        UIBezierPath *stripe = [UIBezierPath bezierPathWithRect:stripeFrame];
-        [stripe fill];
-    }
-}
-
-@end
-
 @implementation HDIntroViewController {
     ADBannerView *_bannerView;
-    UIView *_labelsContainer;
     UIView *_containerView;
     UILabel *_highscoreLbl;
     UILabel *_scoreLbl;
@@ -63,15 +36,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:IAPHelperProductPurchasedNotification
                                                   object:nil];
-}
-
-- (void)loadView {
-    
-    self.view = [[HDBackgroundView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
-    _containerView = [[UIView alloc] initWithFrame:self.view.bounds];
-    _containerView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:_containerView];
 }
 
 - (void)viewDidLoad {
@@ -89,6 +53,13 @@
     
     _isContainerVisible = YES;
     
+    self.view.backgroundColor = [UIColor flatSTBackgroundColor];
+    
+    CGRect bounds = self.view.bounds;
+    _containerView = [[UIView alloc] initWithFrame:bounds];
+    _containerView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:_containerView];
+    
     // Check if the user has purchased remove ads IAP, if not
     if (![[NSUserDefaults standardUserDefaults] boolForKey:IAPremoveAdsProductIdentifier]) {
         
@@ -104,18 +75,77 @@
         position.y = -CGRectGetMidY(_bannerView.bounds);
         _bannerView.center = position;
     }
-
-    // Create label container, scale it to screensize
-    _labelsContainer = [self _labelsContainer];
-    _labelsContainer.center = self.view.center;
-    _labelsContainer.transform = CGAffineTransformMakeScale(TRANSFORM_SCALE_Y, TRANSFORM_SCALE_Y);
-    [_containerView addSubview:_labelsContainer];
+    
+    // Current score label
+    _scoreLbl = [[UILabel alloc] init];
+    _scoreLbl.textColor = [UIColor whiteColor];
+    _scoreLbl.font      = GAME_FONT_WITH_SIZE(62.0f);
+    _scoreLbl.text      = [NSString stringWithFormat:@"%zd",0];
+    [_scoreLbl sizeToFit];
+    _scoreLbl.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
+    
+    // Current score title Label
+    UILabel *scoreTitleLbl = [[UILabel alloc] init];
+    scoreTitleLbl.textColor = [UIColor flatSTRedColor];
+    scoreTitleLbl.font      = GAME_FONT_WITH_SIZE(28.0f);
+    scoreTitleLbl.text      = NSLocalizedString(@"score", nil);
+    [scoreTitleLbl sizeToFit];
+    scoreTitleLbl.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMinY(_scoreLbl.frame) - (8.0f * TRANSFORM_SCALE_Y));
+    
+    // Highscore Label
+    _highscoreLbl = [[UILabel alloc] init];
+    _highscoreLbl.attributedText = [self attributedStringFromHighscore:53];
+    [_highscoreLbl sizeToFit];
+    _highscoreLbl.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMaxY(_scoreLbl.frame) + (8.0f * TRANSFORM_SCALE_Y));
+    
+    // Title Label
+    UILabel *title = [[UILabel alloc] init];
+    title.textColor = [UIColor flatSTEmeraldColor];
+    title.font = GAME_FONT_WITH_SIZE(52.0f);
+    title.text = @"SIDE TRAX";
+    [title sizeToFit];
+    title.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds) - CGRectGetHeight(self.view.bounds)/5);
+    
+    // Get rid of redundant code
+    for (UILabel *label in @[_scoreLbl, scoreTitleLbl, _highscoreLbl, title]) {
+        label.textAlignment = NSTextAlignmentCenter;
+        label.frame = CGRectIntegral(label.frame);
+        [_containerView addSubview:label];
+    }
+    
+    CGRect beginBounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds)/1.8f, CGRectGetHeight(_containerView.bounds)/12.0f);
+    HDButton *begin = [HDButton buttonWithType:UIButtonTypeCustom];
+    [begin setImage:[UIImage imageNamed:@"Play"] forState:UIControlStateNormal];
+    begin.frame = beginBounds;
+    begin.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds) +  CGRectGetHeight(self.view.bounds)/5);
+    begin.backgroundColor = [UIColor flatSTEmeraldColor];
+    [begin addTarget:self action:@selector(_liftOff:) forControlEvents:UIControlEventTouchUpInside];
+    
+    CGRect reverseBounds = CGRectMake(0.0f, 0.0f, 65.0f, 65.0f);
+    HDButton *reverse = [HDButton buttonWithType:UIButtonTypeCustom];
+    reverse.tag = 5;
+    [reverse addSoundNamed:HDMenuClicked forControlEvent:UIControlEventTouchUpInside];
+    [reverse setImage:[UIImage imageNamed:@"Arrow-Out"] forState:UIControlStateNormal];
+    [reverse setImage:[UIImage imageNamed:@"Arrow-In"] forState:UIControlStateSelected];
+    reverse.selected = [HDSettingsManager sharedManager].reversed;
+    reverse.frame = reverseBounds;
+    reverse.backgroundColor = [UIColor flatSTButtonColor];
+    reverse.center = CGPointMake(CGRectGetMidX(self.view.bounds)/2.5, CGRectGetMidY(self.view.bounds));
+    reverse.transform = CGAffineTransformMakeRotation(-(M_PI_4/2));
+    [reverse addTarget:self action:@selector(_reverseControl:) forControlEvents:UIControlEventTouchUpInside];
+    
+    for (HDButton *button in @[begin, reverse]) {
+        button.layer.cornerRadius = CGRectGetMidY(button.bounds);
+        button.adjustsImageWhenHighlighted = NO;
+        button.adjustsImageWhenDisabled = NO;
+        [_containerView addSubview:button];
+    }
     
     // Number of buttons needed
     const NSUInteger buttonCount = 5;
     
     // Bottom button sizes, scale accordingly
-    const CGSize buttonSize = CGSizeMake(roundf(45.0f * TRANSFORM_SCALE_X), roundf(45.0f * TRANSFORM_SCALE_X));
+    const CGSize buttonSize = CGSizeMake(ceilf(CGRectGetWidth(self.view.bounds)/8.5f), ceilf(CGRectGetWidth(self.view.bounds)/8.5f));
     
     // Spacing between Buttons
     const CGFloat padding = roundf(buttonSize.width/5);
@@ -123,10 +153,13 @@
     // Starting Origin X-Axis
     const CGFloat startxOrigin = ceil(CGRectGetMidX(self.view.bounds) - ((buttonSize.width + padding) * ((buttonCount -1)/2)));
     
+    NSLog(@"%@",NSStringFromCGSize(buttonSize));
+    
     // Loop through button count
     for (NSUInteger i = 0; i < buttonCount; i++) {
         CGRect buttonBounds = CGRectMake(0.0f, 0.0f, buttonSize.width, buttonSize.height);
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        HDButton *button = [HDButton buttonWithType:UIButtonTypeCustom];
+        [button addSoundNamed:HDMenuClicked forControlEvent:UIControlEventTouchUpInside];
         button.adjustsImageWhenHighlighted = NO;
         button.adjustsImageWhenDisabled    = NO;
         button.frame = buttonBounds;
@@ -154,7 +187,7 @@
                         forState:UIControlStateNormal];
                 [button setTitleColor:[UIColor flatSTRedColor]
                              forState:UIControlStateNormal];
-                [button addTarget:self
+                [button addTarget:[HDAppDelegate sharedDelegate]
                            action:@selector(removeAds:)
                  forControlEvents:UIControlEventTouchUpInside];
                 break;
@@ -188,84 +221,6 @@
     }
 }
 
-- (UIView *)_labelsContainer {
-    
-    // static bounds, transform for scale.
-    CGRect bounds = CGRectMake(0.0f, 0.0f, 375.0f, 300.0f);
-    UIView *container = [[UIView alloc] initWithFrame:bounds];
-    
-    CGRect beginBounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(container.bounds)/1.8f, CGRectGetHeight(container.bounds)/5.0f);
-    UIButton *begin = [UIButton buttonWithType:UIButtonTypeCustom];
-    [begin setImage:[UIImage imageNamed:@"Play"] forState:UIControlStateNormal];
-    begin.frame = beginBounds;
-    begin.center = CGPointMake(CGRectGetMidX(container.bounds), CGRectGetHeight(container.bounds) - CGRectGetMidY(beginBounds));
-    begin.backgroundColor = [UIColor flatSTEmeraldColor];
-    [begin addTarget:self
-              action:@selector(_liftOff:)
-    forControlEvents:UIControlEventTouchUpInside];
-    
-    CGRect reverseBounds = CGRectMake(0.0f, 0.0f, 65.0f, 65.0f);
-    UIButton *reverse = [UIButton buttonWithType:UIButtonTypeCustom];
-    [reverse setImage:[UIImage imageNamed:@"Arrow-Out"] forState:UIControlStateNormal];
-    [reverse setImage:[UIImage imageNamed:@"Arrow-In"] forState:UIControlStateSelected];
-    reverse.selected = [HDSettingsManager sharedManager].reversed;
-    reverse.frame = reverseBounds;
-    reverse.backgroundColor = [UIColor flatSTButtonColor];
-    reverse.center = CGPointMake(CGRectGetMidX(container.bounds)/2.5, CGRectGetMidY(container.bounds));
-    reverse.transform = CGAffineTransformMakeRotation(-(M_PI_4/2));
-    [reverse addTarget:self
-                action:@selector(_reverseControl:)
-      forControlEvents:UIControlEventTouchUpInside];
-    
-    for (UIButton *button in @[begin, reverse]) {
-        button.layer.cornerRadius = CGRectGetMidY(button.bounds);
-        button.adjustsImageWhenHighlighted = NO;
-        button.adjustsImageWhenDisabled = NO;
-        [container addSubview:button];
-    }
-    
-    // Current score label
-    _scoreLbl = [[UILabel alloc] init];
-    _scoreLbl.textColor = [UIColor whiteColor];
-    _scoreLbl.font      = GAME_FONT_WITH_SIZE(62.0f);
-    _scoreLbl.text      = [NSString stringWithFormat:@"%zd",0];
-    [_scoreLbl sizeToFit];
-    _scoreLbl.center = CGPointMake(CGRectGetMidX(container.bounds), CGRectGetMidY(container.bounds));
-    
-    // Current score title Label
-    UILabel *scoreTitleLbl = [[UILabel alloc] init];
-    scoreTitleLbl.textColor = [UIColor flatSTRedColor];
-    scoreTitleLbl.font      = GAME_FONT_WITH_SIZE(28.0f);
-    scoreTitleLbl.text      = NSLocalizedString(@"score", nil);
-    [scoreTitleLbl sizeToFit];
-    scoreTitleLbl.center = CGPointMake(CGRectGetMidX(container.bounds),
-                                  CGRectGetMinY(_scoreLbl.frame) - 8.0f);
-    
-    // Highscore Label
-    _highscoreLbl = [[UILabel alloc] init];
-    _highscoreLbl.attributedText = [self attributedStringFromHighscore:53];
-    [_highscoreLbl sizeToFit];
-    _highscoreLbl.center = CGPointMake(CGRectGetMidX(container.bounds),
-                                      CGRectGetMaxY(_scoreLbl.frame) + 8.0f);
-    
-    // Title Label
-    UILabel *title = [[UILabel alloc] init];
-    title.textColor = [UIColor flatSTEmeraldColor];
-    title.font = GAME_FONT_WITH_SIZE(52.0f);
-    title.text = @"SIDE TRAX";
-    [title sizeToFit];
-    title.center = CGPointMake(CGRectGetMidX(container.bounds), CGRectGetMidY(title.bounds));
-    
-    // Get rid of redundant code
-    for (UILabel *label in @[_scoreLbl, scoreTitleLbl, _highscoreLbl, title]) {
-        label.textAlignment = NSTextAlignmentCenter;
-        label.frame = CGRectIntegral(label.frame);
-        [container addSubview:label];
-    }
-    
-    return container;
-}
-
 - (NSAttributedString *)attributedStringFromHighscore:(NSUInteger)highscore {
     
     NSDictionary *baseAttributes = @{ NSForegroundColorAttributeName: [UIColor flatSTRedColor],
@@ -282,18 +237,15 @@
     return string;
 }
 
-- (IBAction)_reverseControl:(UIButton *)sender {
+- (IBAction)_reverseControl:(HDButton *)sender {
     
     // If animations already started return
     if (_animating) {
         return;
     }
     
-    // Play menu clicked sound
-    [[HDSoundManager sharedManager] playSound:HDMenuClicked];
-    
     // Get a refernce to the button that triggered this
-    UIButton *reverse = sender;
+    HDButton *reverse = sender;
     
     _animating = YES;
     [CATransaction begin]; {
@@ -342,9 +294,6 @@
 }
 
 - (IBAction)_openSettingsMenu:(id)sender {
-    
-    [[HDSoundManager sharedManager] playSound:HDMenuClicked];
-    
     HDLayoverView *layover = [[HDLayoverView alloc] init];
     [layover show];
 }
@@ -352,13 +301,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    // Update score labels to reflect past gamea
+    // Update score labels to reflect past game
     _scoreLbl.text = [NSString stringWithFormat:@"%zd",[[HDPointsManager sharedManager] score]];
     _highscoreLbl.attributedText = [self attributedStringFromHighscore:[[HDPointsManager sharedManager] highScore]];
     
     for (UILabel *label in @[_scoreLbl, _highscoreLbl]) {
         [label sizeToFit];
-        label.center = CGPointMake(CGRectGetMidX(_labelsContainer.bounds), label.center.y);
+        label.center = CGPointMake(CGRectGetMidX(_containerView.bounds), label.center.y);
         label.frame = CGRectIntegral(label.frame);
     }
 }

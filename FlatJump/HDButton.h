@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIButton (SoundAdditions)
+@interface HDButton : UIButton
 - (void)addSoundNamed:(NSString *)name forControlEvent:(UIControlEvents)controlEvent;
 @end

@@ -45,7 +45,7 @@
     [super viewDidLoad];
     
     self.gridManager = [[HDGridManager alloc] init];
-    self.gridManager.range = NSMakeRange(0, 10); // Inital 12 rows, layout more as needed
+    self.gridManager.range = NSMakeRange(0, NumberOfRows); // Inital 10 rows, layout more as needed
     [self.gridManager loadGridFromRangeWithCallback:nil];
     
     // Check if the user has purchased remove ads IAP, if not
