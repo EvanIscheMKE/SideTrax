@@ -17,6 +17,7 @@
     [player removeAllActions];
     
     SKEmitterNode *explosion = [SKEmitterNode explosionNode];
+    explosion.zPosition = 100;
     [player addChild:explosion];
         
     NSTimeInterval delayInSeconds = explosion.numParticlesToEmit / explosion.particleBirthRate + explosion.particleLifetime;

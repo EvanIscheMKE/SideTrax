@@ -7,12 +7,13 @@
 */
 
 
-"music" = "Musiikki";
-"sound" = "Kuulostaa";
-"restore" = "Palauta Osto";
-"setting" = "Asetukset";
-"on" = "Päällä";
-"off" = "Pois";
-"score" = "Pisteet";
-"tracks" = "Kappaleet";
-"instruction" = "Napauta vasemmalle tai oikealle liikkua";
+"best"  = "PARAS";
+"music" = "MUSIIKKI";
+"sound" = "KUULOSTAA";
+"restore" = "PALAUTA OSTO";
+"setting" = "ASETUKSET";
+"on" = "PääLLä";
+"off" = "POIS";
+"score" = "PISTEET";
+"tracks" = "KAPPALEET";
+"instruction" = "NAPAUTA VASEMMALLE TAI OIKEALLE LIIKKUA";

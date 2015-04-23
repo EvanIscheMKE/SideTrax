@@ -6,12 +6,14 @@
   Copyright (c) 2015 Evan William Ische. All rights reserved.
 */
 
-"music" = "Música";
-"sound" = "Som";
-"restore" = "Restaurar Compra";
-"setting" = "Definições";
-"on" = "Em";
-"off" = "Fora";
-"score" = "Ponto";
-"tracks" = "Faixas";
-"instruction" = "Toque esquerda ou direita para mover";
+
+"best"  = "O MELHOR";
+"music" = "MUSICA";
+"sound" = "SOM";
+"restore" = "RESTAURAR COMPRA";
+"setting" = "DEFINIçõES";
+"on" = "EM";
+"off" = "FORA";
+"score" = "PONTO";
+"tracks" = "FAIXAS";
+"instruction" = "TOQUE ESQUERDA OU DIREITA PARA MOVER";

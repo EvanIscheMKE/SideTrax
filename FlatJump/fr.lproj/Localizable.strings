@@ -7,12 +7,13 @@
 */
 
 
-"music" = "Musique";
-"sound" = "Son";
-"restore" = "Restaurer Achat";
-"setting" = "Paramètres";
-"on" = "Sur";
-"off" = "De";
-"score" = "But";
+"best"  = "MEILLEUR";
+"music" = "MUSIQUE";
+"sound" = "SON";
+"restore" = "RESTAURER ACHAT";
+"setting" = "PARAMETRES";
+"on" = "SUR";
+"off" = "DE";
+"score" = "BUT";
 "tracks" = "Rails";
-"instruction" = "Appuyez sur gauche ou la droite pour déplacer";
+"instruction" = "APPUYEZ SUR GAUCHE OU LA DROITE POUR DEPLACER";

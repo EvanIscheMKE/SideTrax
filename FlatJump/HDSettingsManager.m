@@ -19,8 +19,8 @@ NSString * const HDReversedKey = @"reversed";
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:HDSoundKey];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:HDMusicKey];
     [[NSUserDefaults standardUserDefaults] setBool:NO  forKey:HDReversedKey];
-    self.sound = [[NSUserDefaults standardUserDefaults] boolForKey:HDSoundKey];
-    self.music = [[NSUserDefaults standardUserDefaults] boolForKey:HDMusicKey];
+    self.sound    = [[NSUserDefaults standardUserDefaults] boolForKey:HDSoundKey];
+    self.music    = [[NSUserDefaults standardUserDefaults] boolForKey:HDMusicKey];
     self.reversed = [[NSUserDefaults standardUserDefaults] boolForKey:HDReversedKey];
 }
 

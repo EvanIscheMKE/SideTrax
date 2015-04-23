@@ -6,12 +6,14 @@
   Copyright (c) 2015 Evan William Ische. All rights reserved.
 */
 
-"music" = "Musikk";
-"sound" = "Lyd";
-"restore" = "Gjenopprette Purchase";
-"setting" = "Innstillinger";
+
+"best"  = "BESTE";
+"music" = "MUSIKK";
+"sound" = "LYD";
+"restore" = "GJENOPPRETTE";
+"setting" = "INNSTILLINGER";
 "on" = "På";
-"off" = "Av";
-"score" = "Score";
-"tracks" = "Spor";
-"instruction" = "Trykke venstre eller høyre for å flytte";
+"off" = "AV";
+"score" = "SCORE";
+"tracks" = "SPOR";
+"instruction" = "TRYKKE VENSTRE ELLER høyre FOR å FLYTTE";

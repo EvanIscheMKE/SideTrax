@@ -10,10 +10,6 @@
 
 @implementation UIColor (FlatColors)
 
-//+ (UIColor *)red:()red green:(UIColor *)green blue:(UIColor *)blue {
-//    return [UIColor colorWithRed:() green:<#(CGFloat)#> blue:<#(CGFloat)#> alpha:<#(CGFloat)#>]
-//}
-
 + (UIColor *)flatSTButtonColor {
     return [UIColor colorWithRed:(60/255.0f) green:(68/255.0f) blue:(77/255.0f) alpha:1];
 }

@@ -43,11 +43,10 @@ NSString * const HDNormalReversedLeaderboardKey = @"LevelCountReversedNormal";
                                                       object:[GKLocalPlayer localPlayer]
                                                        queue:nil
                                                   usingBlock:^(NSNotification *note) {
-                                                      NSLog(@"%@",note);
+                                                    
                                                   }];
     
     [GKLocalPlayer localPlayer].authenticateHandler = ^(UIViewController* viewController, NSError *error) {
-        NSLog(@"%@",error);
     };
 }
 

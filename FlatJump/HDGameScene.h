@@ -14,7 +14,10 @@
 extern NSString * const HDLevelLayoutNotificationKey;
 @class HDGridManager;
 @interface HDGameScene : SKScene
-@property (nonatomic, strong) HDGridManager *gridManager;
+@property (nonatomic, weak) HDGridManager *gridManager;
 @property (nonatomic, assign) HDDirectionState direction;
+@property (nonatomic, copy) dispatch_block_t updateDatabase;
 - (void)layoutChildrenNode;
+- (void)moveLeft;
+- (void)moveRight;
 @end

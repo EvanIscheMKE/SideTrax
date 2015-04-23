@@ -7,7 +7,7 @@
 */
 
 
-
+"best"  = "BEST";
 "music" = "MUSIC";
 "sound" = "SOUND";
 "restore" = "RESTORE PURCHASES";
@@ -15,5 +15,4 @@
 "on" = "ON";
 "off" = "OFF";
 "score" = "SCORE";
-"tracks" = "Tracks";
 "instruction" = "TAP LEFT OR RIGHT TO MOVE";

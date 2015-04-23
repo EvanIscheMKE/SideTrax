@@ -7,13 +7,13 @@
 */
 
 
-
-"music" = "Musik";
-"sound" = "Lyd";
-"restore" = "Gendan Indkøb";
-"setting" = "Indstillinger";
+"best"  = "BESTE";
+"music" = "MUSIKK";
+"sound" = "LYD";
+"restore" = "GJENOPPRETTE";
+"setting" = "INNSTILLINGER";
 "on" = "På";
-"off" = "Af";
-"score" = "Score";
-"tracks" = "Tracks";
-"instruction" = "Tryk til venstre eller højre for at flytte";
+"off" = "AV";
+"score" = "SCORE";
+"tracks" = "SPOR";
+"instruction" = "TRYKKE VENSTRE ELLER høyre FOR å FLYTTE";

@@ -13,7 +13,7 @@
 #import "HDSoundManager.h"
 
 NSString * const HDMusicLoopKey = @"Reformat.mp3";
-@interface HDSoundManager ()<AVAudioPlayerDelegate>
+@interface HDSoundManager ()
 @property (nonatomic, getter=isSoundSessionActive, assign) BOOL soundSessionActive;
 @property (nonatomic, strong) AVAudioPlayer *loopPlayer;
 @end
@@ -29,7 +29,7 @@ NSString * const HDMusicLoopKey = @"Reformat.mp3";
     return _soundController;
 }
 
-#pragma mark - Sounds Manager For UIKit
+#pragma mark - Background Music
 
 - (void)setPlayLoop:(BOOL)playLoop {
     
@@ -46,11 +46,10 @@ NSString * const HDMusicLoopKey = @"Reformat.mp3";
 }
 
 - (void)preloadLoopWithName:(NSString *)filename {
-   
+    
     NSError *error = nil;
     NSString *soundPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:filename];
     self.loopPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:soundPath] error:&error];
-    self.loopPlayer.delegate = self;
     self.loopPlayer.numberOfLoops = -1; /* Will continue to play until we tell it to stop. */
     [self.loopPlayer prepareToPlay];
     
@@ -60,18 +59,21 @@ NSString * const HDMusicLoopKey = @"Reformat.mp3";
     }
 }
 
+#pragma mark - UIKit Sounds
+
 - (void)preloadSounds:(NSArray *)soundNames {
     
-    if (!_sounds) {
+    if (_sounds) {
         
-        _sounds = [NSMutableDictionary dictionary];
-        for (NSString *effect in soundNames) {
-            NSError *error = nil;
-            NSString *soundPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent: effect];
-            AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:soundPath] error:&error];
-            [player prepareToPlay];
-            _sounds[effect] = player;
-        }
+    }
+    
+    _sounds = [NSMutableDictionary dictionary];
+    for (NSString *effect in soundNames) {
+        NSError *error = nil;
+        NSString *soundPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent: effect];
+        AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:soundPath] error:&error];
+        [player prepareToPlay];
+        _sounds[effect] = player;
     }
 }
 
@@ -95,12 +97,8 @@ NSString * const HDMusicLoopKey = @"Reformat.mp3";
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     
     NSError *error = nil;
-    if (audioSession.otherAudioPlaying) {
-        [audioSession setCategory: AVAudioSessionCategoryAmbient error:&error];
-    } else {
-        [audioSession setCategory: AVAudioSessionCategorySoloAmbient error:&error];
-    }
-    
+    NSString *category = (audioSession.otherAudioPlaying) ? AVAudioSessionCategoryAmbient : AVAudioSessionCategorySoloAmbient;
+    [audioSession setCategory:category error:&error];
     [audioSession setActive:YES error:&error];
     
     self.soundSessionActive = YES;
@@ -108,14 +106,14 @@ NSString * const HDMusicLoopKey = @"Reformat.mp3";
 
 - (void)stopAudio {
     
+    self.playLoop = NO;
     if (!self.isSoundSessionActive){
         return;
     }
     
-    self.playLoop = NO;
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     
     NSError *error = nil;
-    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     [audioSession setActive:NO error:&error];
     
     if (error) {
@@ -123,13 +121,6 @@ NSString * const HDMusicLoopKey = @"Reformat.mp3";
     } else {
         self.soundSessionActive = NO;
     }
-}
-
-#pragma mark - AVAudioPlayerDelegate
-
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
-    [player stop];
-    [player prepareToPlay];
 }
 
 @end

@@ -6,13 +6,13 @@
   Copyright (c) 2015 Evan William Ische. All rights reserved.
 */
 
-
-"music" = "Musica";
-"sound" = "Suono";
-"restore" = "Ripristinare Acquisto";
-"setting" = "Impostazioni";
-"on" = "Su";
-"off" = "Spento";
-"score" = "Punto";
+"best"  = "MIGLIORE";
+"music" = "MUSICA";
+"sound" = "SUONO";
+"restore" = "RIPRISTINARE";
+"setting" = "IMPOSTAZIONI";
+"on" = "SU";
+"off" = "SPENTO";
+"score" = "PUNTO";
 "tracks" = "Tracce";
-"instruction" = "Toccare a sinistra oa destra per spostarsi";
+"instruction" = "TOCCARE A SINISTRA OA DESTRA PER SPOSTARSI";

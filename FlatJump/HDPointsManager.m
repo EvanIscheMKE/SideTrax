@@ -7,8 +7,10 @@
 //
 
 #import "HDPointsManager.h"
+#import "HDSettingsManager.h"
 
 NSString * const HDHighScoreKey = @"highScoreKey";
+NSString * const HDReversedHighScoreKey = @"reversedKey";
 @implementation HDPointsManager
 
 + (instancetype)sharedManager {
@@ -23,15 +25,25 @@ NSString * const HDHighScoreKey = @"highScoreKey";
 - (instancetype)init {
     
     if (self = [super init]) {
-        self.score = 0;
-        self.highScore = [[NSUserDefaults standardUserDefaults] integerForKey:HDHighScoreKey];
+        self.score             = 0;
+        self.highScore         = [[NSUserDefaults standardUserDefaults] integerForKey:HDHighScoreKey];
+        self.reversedHighScore = [[NSUserDefaults standardUserDefaults] integerForKey:HDReversedHighScoreKey];
     }
     return self;
 }
 
 - (void)saveState {
-    self.highScore = MAX(self.score, self.highScore);
-    [[NSUserDefaults standardUserDefaults] setInteger:self.highScore forKey:HDHighScoreKey];
+    
+    BOOL reversed = [HDSettingsManager sharedManager].reversed;
+    if (reversed) {
+        self.reversedHighScore = MAX(self.score, self.reversedHighScore);
+        [[NSUserDefaults standardUserDefaults] setInteger:self.reversedHighScore
+                                                   forKey:HDReversedHighScoreKey];
+    } else {
+        self.highScore = MAX(self.score, self.highScore);
+        [[NSUserDefaults standardUserDefaults] setInteger:self.highScore
+                                                   forKey:HDHighScoreKey];
+    }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

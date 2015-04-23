@@ -72,7 +72,7 @@
     
     // Set up our subviews
     self.backgroundView                 = [[UIView alloc] initWithFrame:keyWindow.bounds];
-    self.backgroundView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.3f];
+    self.backgroundView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
     self.backgroundView.alpha           = 0.0f;
     [self addSubview:self.backgroundView];
     

@@ -19,15 +19,14 @@
     boost.particlePositionRange = CGVectorMake(8.0f, 0.0);
     boost.numParticlesToEmit = 0;
     boost.particleBirthRate  = 200;
-    boost.particleLifetime   = 1.5f;
-    boost.particleColor      = [UIColor flatSTRedColor];
+    boost.particleLifetime   = .5f;
+    boost.particleColor      = color;
     boost.particleSpeed      = 200.0f;
     boost.particleSpeedRange = 100.0f;
     boost.particleScale      = .3f;
     boost.particleScaleSpeed = -0.5f;
     boost.particleColorBlendFactor = 1.0f;
     boost.yAcceleration      = 0;
-    boost.zPosition          = 0;
     
     return boost;
 }

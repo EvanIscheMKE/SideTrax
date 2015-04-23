@@ -8,21 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
-static const NSInteger NumberOfRows    = 10;
+static const NSInteger NumberOfRows    = 500;
 static const NSInteger NumberOfColumns = 5;
 
-typedef NS_OPTIONS(u_int8_t, HDArrowDirection) {
+typedef NS_OPTIONS(NSUInteger, HDArrowDirection) {
     HDArrowDirectionLeft  = 0,
     HDArrowDirectionRight = 4,
-    HDArrowDirectionUp    = 5,
     HDArrowDirectionNone
 };
 
-typedef void(^GridBlock)(BOOL displayBorders, HDArrowDirection direction);
+extern NSString * const HDDisplayBorderKey;
+extern NSString * const HDColumnIndexKey;
+extern NSString * const HDDirectionKey;
+
+extern const NSUInteger startingRow;
 @interface HDGridManager : NSObject
 @property (nonatomic, assign) NSRange range;
-- (BOOL)presentBarrierForRow:(NSInteger)row column:(NSInteger)column;
-- (void)displayRowBordersForRowAtIndex:(NSUInteger)rowIndex completion:(GridBlock)completion;
+- (NSDictionary *)infoForRow:(NSInteger)row;
 - (void)loadGridFromRangeWithCallback:(dispatch_block_t)completion;
 @end
 

@@ -23,7 +23,6 @@ NSString * const HDFirstRunKey = @"first";
 NSString * const HDMenuClicked = @"menuClicked.wav";
 NSString * const iOS8AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%d";
 @interface HDAppDelegate ()<GKGameCenterControllerDelegate>
-@property (nonatomic, strong) UINavigationController *navigationController;
 @end
 
 @implementation HDAppDelegate
@@ -36,11 +35,8 @@ NSString * const iOS8AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%d
     
     application.statusBarHidden = YES;
     
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:[HDIntroViewController new]];
-    self.navigationController.navigationBarHidden = YES;
-    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = self.navigationController;
+    self.window.rootViewController = [HDIntroViewController new];
     [self.window makeKeyAndVisible];
     
     [[HDGameCenterManager sharedManager] authenticateGameCenter];
@@ -58,12 +54,12 @@ NSString * const iOS8AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%d
 #pragma mark - View Hierarchy
 
 - (void)returnHome {
-    [self.navigationController popToRootViewControllerAnimated:NO];
+    [self.window.rootViewController dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)presentGameViewController {
    HDGameViewController *viewController = [[HDGameViewController alloc] init];
-   [self.navigationController pushViewController:viewController animated:NO];
+   [self.window.rootViewController presentViewController:viewController animated:NO completion:nil];
 }
 
 #pragma mark - UIActivityController 
@@ -109,7 +105,7 @@ NSString * const iOS8AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%d
     
     GKGameCenterViewController *controller = [[GKGameCenterViewController alloc] init];
     controller.gameCenterDelegate    = self;
-    controller.leaderboardIdentifier = @"YOLO";
+    controller.leaderboardIdentifier = HDNormalLeaderboardKey;
     controller.viewState             = GKGameCenterViewControllerStateLeaderboards;
     [self.window.rootViewController presentViewController:controller animated:YES completion:nil];
 }

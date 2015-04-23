@@ -19,4 +19,7 @@ extern const CGFloat ipadBoundsInset;
 + (CGFloat)universalBarrierWidth;
 + (CGFloat)universalRowHeight;
 + (CGFloat)universalColumnWidth;
++ (CGFloat)verticalBarrierHeight;
++ (CGFloat)verticalBarrierWidth;
++ (CGSize)verticalBarrierSize;
 @end
