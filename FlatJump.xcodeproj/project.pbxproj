@@ -16,6 +16,7 @@
 		38217C491ACDE9190038156A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38217C481ACDE9190038156A /* QuartzCore.framework */; };
 		38217C4B1ACDE9240038156A /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38217C4A1ACDE9240038156A /* iAd.framework */; };
 		383109E21ADC4C5700A5775F /* Whoosh.wav in Resources */ = {isa = PBXBuildFile; fileRef = 383109E11ADC4C5700A5775F /* Whoosh.wav */; };
+		383F4F451AE8ADFC0048848F /* SkNode+NodeAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 383F4F441AE8ADFC0048848F /* SkNode+NodeAdditions.m */; };
 		384537BA1ADED59500B7CA19 /* HDGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 384537B91ADED59400B7CA19 /* HDGameScene.m */; };
 		384537BD1ADEF30E00B7CA19 /* HDSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 384537BC1ADEF30E00B7CA19 /* HDSoundManager.m */; };
 		384537BF1ADEF54300B7CA19 /* Reformat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 384537BE1ADEF54300B7CA19 /* Reformat.mp3 */; };
@@ -96,6 +97,8 @@
 		38217C481ACDE9190038156A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		38217C4A1ACDE9240038156A /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		383109E11ADC4C5700A5775F /* Whoosh.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Whoosh.wav; sourceTree = "<group>"; };
+		383F4F431AE8ADFC0048848F /* SKNode+NodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKNode+NodeAdditions.h"; sourceTree = "<group>"; };
+		383F4F441AE8ADFC0048848F /* SkNode+NodeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SkNode+NodeAdditions.m"; sourceTree = "<group>"; };
 		384537B91ADED59400B7CA19 /* HDGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDGameScene.m; sourceTree = "<group>"; };
 		384537BB1ADEF30E00B7CA19 /* HDSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDSoundManager.h; sourceTree = "<group>"; };
 		384537BC1ADEF30E00B7CA19 /* HDSoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDSoundManager.m; sourceTree = "<group>"; };
@@ -386,6 +389,8 @@
 				389C7D731AC71045005EF91B /* SKEmitterNode+HDEmitterAdditions.m */,
 				384537C01ADF0ED300B7CA19 /* HDButton.h */,
 				384537C11ADF0ED300B7CA19 /* HDButton.m */,
+				383F4F431AE8ADFC0048848F /* SKNode+NodeAdditions.h */,
+				383F4F441AE8ADFC0048848F /* SkNode+NodeAdditions.m */,
 				388038D71AE1AC5C0009CCDC /* UIImage+ImageAdditions.h */,
 				388038D81AE1AC5C0009CCDC /* UIImage+ImageAdditions.m */,
 			);
@@ -552,6 +557,7 @@
 				389C7D1D1AC5D554005EF91B /* main.m in Sources */,
 				384537BD1ADEF30E00B7CA19 /* HDSoundManager.m in Sources */,
 				3881D72E1AD322BF0068338D /* HDSettingsManager.m in Sources */,
+				383F4F451AE8ADFC0048848F /* SkNode+NodeAdditions.m in Sources */,
 				389C7D4B1AC5D869005EF91B /* HDPointsManager.m in Sources */,
 				3862E8E11AD0EFEF00D76B1E /* HDGameCenterManager.m in Sources */,
 				38B93B421ACCBDC7003A0586 /* HDIntroViewController.m in Sources */,

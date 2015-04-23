@@ -18,7 +18,7 @@
 #import "HDSoundManager.h"
 #import "HDSettingsManager.h"
 
-@interface HDGameViewController () <UITextFieldDelegate>
+@interface HDGameViewController ()
 @property (nonatomic, assign) BOOL paused;
 @property (nonatomic, strong) HDGameScene *scene;
 @property (nonatomic, strong) HDGridManager *gridManager;
@@ -27,9 +27,6 @@
 @implementation HDGameViewController {
     __weak SKView *_skView;
     UIButton *_pauseBtn;
-    
-    // REMOVE BEFORE SUBMITTING
-    BOOL keyboardShown;
 }
 
 - (void)dealloc {
@@ -47,20 +44,6 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:nil];
-    
-    UITextView *hiddenTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    [hiddenTextView setHidden:YES];
-    hiddenTextView.text = @"aa";
-    hiddenTextView.delegate = self;
-    hiddenTextView.selectedRange = NSMakeRange(1, 0);
-    [self.view addSubview:hiddenTextView];
-    
-    [hiddenTextView becomeFirstResponder];
-    if (keyboardShown)
-        [hiddenTextView resignFirstResponder];
     
     self.gridManager = [[HDGridManager alloc] init];
     self.gridManager.range = NSMakeRange(0, 500); // Inital 100 rows
@@ -194,49 +177,5 @@
     
     return pauseBtn;
 }
-
-
-
-
-- (void)textViewDidChangeSelection:(UITextView *)textView {
-    
-    /******TEXT FIELD CARET CHANGED******/
-    
-    if (textView.selectedRange.location == 2) {
-        
-        [self.scene moveRight];
-        NSLog(@"down");
-        // End of text - down arrow pressed
-        textView.selectedRange = NSMakeRange(1, 0);
-        
-    } else if (textView.selectedRange.location == 0) {
-        
-        [self.scene moveLeft];
-        NSLog(@"up");
-        // Beginning of text - up arrow pressed
-        textView.selectedRange = NSMakeRange(1, 0);
-        
-    }
-    
-    //  Check if text has changed and replace with original
-    if (![textView.text isEqualToString:@"aa"])
-        textView.text = @"aa";
-}
-
-- (void)keyboardWillAppear:(NSNotification *)aNotification {
-    keyboardShown = YES;
-}
-
-- (void)keyboardWillDisappear:(NSNotification *)aNotification {
-    keyboardShown = NO;
-}
-
-
-
-
-
-
-
-
 
 @end

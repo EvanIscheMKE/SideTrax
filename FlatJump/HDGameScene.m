@@ -93,7 +93,7 @@ NSString * const HDEmitterKey = @"HDEmitterKey";
         
         _score      = 0;
         _currentRow = 2;
-        _gameSpeed  = 300;
+        _gameSpeed  = 270 * TRANSFORM_SCALE_X;
         _maxSpeed   = _gameSpeed + 35;
         _range      = NSMakeRange(0, 14);
         
@@ -236,12 +236,10 @@ NSString * const HDEmitterKey = @"HDEmitterKey";
 
     NSTimeInterval delta = (_lastTimerStamp == 0.0) ? 0.0 : currentTime - _lastTimerStamp;
 
-    NSLog(@"DELTA %f",delta);
-    
-//    // Check for a large spike from the pause button
-//    if (delta > 0.017f) {
-//        delta = 0.017f;
-//    }
+    // Check for a large spike from the pause button
+    if (delta > 0.017f) {
+        delta = 0.017f;
+    }
     
     CGPoint position = _player.position;
     position.y += delta * _gameSpeed;

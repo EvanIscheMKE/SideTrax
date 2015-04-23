@@ -8,7 +8,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface SKEmitterNode (HDEmitterAdditions)
+@interface SKEmitterNode (EmitterAdditions)
 + (SKEmitterNode *)playerBoostWithColor:(SKColor *)color;
 + (SKEmitterNode *)explosionNode;
 @end
