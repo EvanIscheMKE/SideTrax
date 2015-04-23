@@ -23,6 +23,11 @@
 #import "HDGameCenterManager.h"
 #import "HDHelper.h"
 #import "UIImage+ImageAdditions.h"
+#import "HDTextureManager.h"
+
+#define SYSTEM_VERSION_LESS_THAN(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+
+#define PREIOS8_SCALE SYSTEM_VERSION_LESS_THAN(@"8.0") ? 1/[[UIScreen mainScreen] scale] : 1
 
 typedef NS_OPTIONS(NSUInteger, HDCollisionCategory) {
     HDCollisionCategoryNone     = 0x0,      // 00000000
@@ -69,9 +74,7 @@ NSString * const HDEmitterKey = @"HDEmitterKey";
     
     SKLabelNode *_scoreLblNode;
     SKLabelNode *_instructionNode;
-    
-    NSMutableDictionary *_textureDictionary;
-    
+
     NSRange _range;
 
     NSInteger  _currentRow;
@@ -93,8 +96,8 @@ NSString * const HDEmitterKey = @"HDEmitterKey";
         
         _score      = 0;
         _currentRow = 2;
-        _gameSpeed  = 270 * TRANSFORM_SCALE_X;
-        _maxSpeed   = _gameSpeed + 35;
+        _gameSpeed  = 280 * TRANSFORM_SCALE_X;
+        _maxSpeed   = _gameSpeed + 25;
         _range      = NSMakeRange(0, 14);
         
         _maxPlayerPositionY = size.height/3.0f;
@@ -103,21 +106,13 @@ NSString * const HDEmitterKey = @"HDEmitterKey";
         _barrierWidth = [HDHelper universalBarrierWidth];
         _rowHeight    = [HDHelper universalRowHeight];
         _columnWidth  = [HDHelper universalColumnWidth];
-        
-        NSLog(@"COLUMN WIDTH:%f",_columnWidth);
-        
-        _textureDictionary = [NSMutableDictionary dictionary];
-        _textureDictionary[@"rightArrow"] = [SKTexture textureWithImageNamed:@"RightArrow"];
-        _textureDictionary[@"leftArrow"]  = [SKTexture textureWithImageNamed:@"LeftArrow"];
-        _textureDictionary[@"vertical"]   = [SKTexture textureWithImage:[UIImage shadowedBarrier:[HDHelper verticalBarrierSize]]];
-        _textureDictionary[@"horizontal"] = [SKTexture textureWithImage:[UIImage shadowedBarrier:CGSizeMake(_columnWidth, _barrierWidth)]];
-        _textureDictionary[@"endpiece"]   = [SKTexture textureWithImage:[UIImage shadowedBarrier:CGSizeMake([HDHelper verticalBarrierWidth], _barrierWidth)]];
     
         self.whoosh    = [SKAction playSoundFileNamed:@"Whoosh.wav"    waitForCompletion:NO];
         self.explosion = [SKAction playSoundFileNamed:@"Explosion.wav" waitForCompletion:NO];
         
         _backgroundNode = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImage:[UIImage backgroundImage]]];
         _backgroundNode.position = CGPointMake(size.width/2, size.height + size.height/2);
+        _backgroundNode.scale = PREIOS8_SCALE;
         [self addChild:_backgroundNode];
         
         _objectLayerNode = [SKNode node];
@@ -366,7 +361,9 @@ NSString * const HDEmitterKey = @"HDEmitterKey";
         SKAction *position    = [SKAction moveToX:self.size.width/2 - (2*_columnWidth)
                                          duration:rightEdge.duration];
         [_player runAction:rightEdge completion:^{
+            _player.hidden = YES;
             _player.position = CGPointMake(-self.player.size.width/2, _player.position.y);
+            _player.hidden = NO;
             [_player runAction:position completion:^{
                 [_player removeAllActions];
                 _animating = NO;
@@ -459,8 +456,8 @@ NSString * const HDEmitterKey = @"HDEmitterKey";
 
 - (SKNode *)_createPlayer {
     
-    CGSize playerSize = CGSizeMake(roundf(20.0f * TRANSFORM_SCALE_Y), roundf(20.0f * TRANSFORM_SCALE_Y));
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImage:[UIImage playerWithSize:playerSize]]];
+    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithTexture:[[HDTextureManager sharedManager] textureWithName:HDPlayerTextureKey]];
+    sprite.scale =  PREIOS8_SCALE;
     sprite.zPosition = 99;
     sprite.name = HDPlayerKey;
     
@@ -480,28 +477,34 @@ NSString * const HDEmitterKey = @"HDEmitterKey";
     SKEmitterNode *boost = [SKEmitterNode playerBoostWithColor:[UIColor flatEmeraldColor]];
     boost.name       = HDEmitterKey;
     boost.targetNode = self.scene;
-    boost.zPosition  = 100;
-    boost.position   = CGPointMake(0.0f, -sprite.size.height/2 + 3.0f);
+    boost.zPosition  = 50;
+    boost.position   = CGPointMake(0.0f, -sprite.size.height/2 + roundf(3.0f * TRANSFORM_SCALE_X));
     [sprite addChild:boost];
+    
+    NSLog(@"%@",boost);
     
     return playerNode;
 }
 
 - (SKSpriteNode *)_barrierSpriteWithType:(HDBarrierType)type size:(CGSize)size shadow:(BOOL)shadow {
+    
     SKSpriteNode *sprite;
     switch (type) {
         case HDBarrierTypeHorizontal:
-            sprite = [SKSpriteNode spriteNodeWithTexture:_textureDictionary[@"horizontal"]];
+            sprite = [SKSpriteNode spriteNodeWithTexture:[[HDTextureManager sharedManager] textureWithName:HDHorizontalKey]];
+            sprite.scale = PREIOS8_SCALE;
             break;
         case HDBarrierTypeVertical:
             if (shadow) {
-                sprite = [SKSpriteNode spriteNodeWithTexture:_textureDictionary[@"vertical"]];
+                sprite = [SKSpriteNode spriteNodeWithTexture:[[HDTextureManager sharedManager] textureWithName:HDVerticalKey]];
+                sprite.scale =  PREIOS8_SCALE;
             } else {
                 sprite = [SKSpriteNode spriteNodeWithColor:[UIColor flatSTEmeraldColor] size:size];
             } break;
         case HDBarrierTypeEndPiece:
             if (shadow) {
-                sprite = [SKSpriteNode spriteNodeWithTexture:_textureDictionary[@"endpiece"]];
+                sprite = [SKSpriteNode spriteNodeWithTexture:[[HDTextureManager sharedManager] textureWithName:HDEndPieceKey]];
+                sprite.scale =  PREIOS8_SCALE;
             } else {
                 sprite = [SKSpriteNode spriteNodeWithColor:[UIColor flatSTEmeraldColor] size:size];
             } break;
@@ -534,9 +537,9 @@ NSString * const HDEmitterKey = @"HDEmitterKey";
     
     SKSpriteNode *arrowSprite;
     if (direction == HDArrowDirectionLeft) {
-        arrowSprite = [SKSpriteNode spriteNodeWithTexture:_textureDictionary[@"leftArrow"]];
+        arrowSprite = [SKSpriteNode spriteNodeWithTexture:[[HDTextureManager sharedManager] textureWithName:HDLeftArrowKey]];
     } else {
-        arrowSprite = [SKSpriteNode spriteNodeWithTexture:_textureDictionary[@"rightArrow"]];
+        arrowSprite = [SKSpriteNode spriteNodeWithTexture:[[HDTextureManager sharedManager] textureWithName:HDRightArrowKey]];
     }
     arrowSprite.scale = TRANSFORM_SCALE_Y;
     arrowSprite.zPosition = 80;

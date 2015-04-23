@@ -41,7 +41,7 @@ const CGFloat rowHeightMultiplier = 1.9f;
 }
 
 + (CGFloat)universalBarrierWidth {
-    return IS_IPAD ? ipadBarrierWidth : roundf(iphoneBarrierWidth * TRANSFORM_SCALE_X);
+    return roundf(iphoneBarrierWidth * TRANSFORM_SCALE_X);
 }
 
 + (CGFloat)universalRowHeight {
@@ -49,7 +49,7 @@ const CGFloat rowHeightMultiplier = 1.9f;
 }
 
 + (CGFloat)universalColumnWidth {
-    return IS_IPAD ? ceilf([[self class] ipadBoundsWithInset]/5): floorf([[self class] iphoneColumnWidth]/5);
+    return floorf([[self class] iphoneColumnWidth]/5);
 }
 
 + (CGSize)verticalBarrierSize {

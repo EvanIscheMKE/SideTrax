@@ -17,6 +17,7 @@
 #import "HDGameViewController.h"
 #import "HDSoundManager.h"
 #import "HDSettingsManager.h"
+#import "HDTextureManager.h"
 
 @interface HDGameViewController ()
 @property (nonatomic, assign) BOOL paused;
@@ -78,12 +79,14 @@
     [super viewWillLayoutSubviews];
     if (!_skView.scene) {
         
+        [[HDTextureManager sharedManager] preloadTexturesWithCompletion:nil];
+        
         self.scene = [HDGameScene sceneWithSize:_skView.bounds.size];
         self.scene.direction = [HDSettingsManager sharedManager].reversed;
         self.scene.gridManager = self.gridManager;
-        self.scene.scaleMode = SKSceneScaleModeAspectFill;
         [_skView presentScene:self.scene];
         [self.scene layoutChildrenNode];
+        
         
         __weak typeof(self) weakSelf = self;
        dispatch_block_t update = ^{

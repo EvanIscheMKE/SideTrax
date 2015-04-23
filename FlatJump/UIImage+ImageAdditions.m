@@ -72,7 +72,8 @@
 
 + (UIImage *)playerWithSize:(CGSize)size {
     
-    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    NSLog(@"SIZE %@",NSStringFromCGSize(size));
+    UIGraphicsBeginImageContextWithOptions(size, NO, [[UIScreen mainScreen] scale]);
 
     const CGFloat layerOffset = roundf(size.width/7);
     
